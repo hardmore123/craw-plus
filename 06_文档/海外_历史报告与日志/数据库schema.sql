@@ -1,3 +1,7 @@
+-- ⚠️ 历史旧版 schema（2026-09 早期，表数/列已过时）。当前权威建表 DDL 在
+-- ../../01_项目代码/overseas/schema.sql（核心27表）+ db.py（迁移），
+-- 数据库结构说明见 ../../01_项目代码/docs/数据库结构说明.md。本文件仅作历史追溯。
+
 CREATE TABLE crawl_error (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     run_id      INTEGER REFERENCES crawl_run(id),

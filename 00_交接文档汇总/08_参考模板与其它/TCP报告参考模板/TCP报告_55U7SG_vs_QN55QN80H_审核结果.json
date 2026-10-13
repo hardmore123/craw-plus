@@ -1,0 +1,14 @@
+{
+  "issues": [
+    {
+      "type": "missing_gap_note",
+      "severity": "minor",
+      "detail": "报告未标注数据缺口（Rtings/拆机/成本）"
+    }
+  ],
+  "critical": 0,
+  "major": 0,
+  "minor": 1,
+  "score": 9.8,
+  "passed": true
+}
