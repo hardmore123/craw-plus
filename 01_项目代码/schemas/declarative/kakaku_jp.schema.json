@@ -1,0 +1,34 @@
+{
+  "_comment": "価格.com 抽取规则。评价抓取主要由 scripts/crawl_kakaku_reviews.py 用适配器方法完成；此处仅登记锚点与关键选择器，便于 probe 自检与后续扩展。DOM 改版只改本文件与 adapter.py。",
+  "anchor": "body",
+
+  "search": {
+    "container": "a[href*='/item/']",
+    "sku": { "self_attr": "href" },
+    "url_template": "https://kakaku.com/item/{sku}/"
+  },
+
+  "review_list": {
+    "_note": "review.kakaku.com/review/<item>/ 每条评价",
+    "container": ".reviewBoxWt",
+    "date": "p.entryDate",
+    "rating_cell": ".revRateBox table.total td",
+    "title": ".reviewTitle a",
+    "body": "p.revEntryCont",
+    "detail_link": "a[href*='ReviewCD=']"
+  },
+
+  "bbs_list": {
+    "_note": "bbs.kakaku.com/bbs/<item>/ 每帖",
+    "container": "div.box06",
+    "author": ".title a.impact05",
+    "body": ".boxIn > p",
+    "write_no": "p.date"
+  },
+
+  "release": {
+    "_note": "商品页发售日",
+    "selectors": ["p.p-prdMakerInfo_txt"],
+    "contains": "発売"
+  }
+}

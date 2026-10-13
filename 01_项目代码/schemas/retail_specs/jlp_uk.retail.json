@@ -1,0 +1,300 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "jlp_uk",
+  "name": "John Lewis",
+  "country": "United Kingdom",
+  "channel": "John Lewis",
+  "region": "uk",
+  "base_url": "https://www.johnlewis.com",
+  "currency": "GBP",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "uk_ru_probe/2026-09-26",
+  "status": "candidate",
+  "anchor": "h1",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "search": {
+    "container": "a.ProductLink_container__9t6hS",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "h2",
+        "h3",
+        "[class*='title']",
+        "a[class*='product']"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "min_candidates": 5,
+      "fallback_per_model": true,
+      "retries": 3
+    },
+    "search_url_template": "{base}/search?search-term={q}"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-title']",
+        "[data-testid='product-title']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-brand]",
+        "meta[itemprop='brand']",
+        "[class*='brand']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[class*='model']",
+        "[itemprop='model']",
+        "[data-testid='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[class*='size']"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-testid='price']",
+        "[class*='price']:not([class*='was']):not([class*='list']):not([class*='original'])",
+        "[itemprop='price']",
+        "meta[property='product:price:amount']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='priceCurrency']",
+        "meta[property='product:price:currency']"
+      ],
+      "transform": "currency",
+      "default": "GBP"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='list-price']",
+        "[class*='rrp']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid='add-to-cart']",
+        "[class*='add-to-cart']",
+        "button[class*='cart']",
+        "[class*='in-stock']"
+      ],
+      "transform": "in_stock"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "remote",
+        "cable",
+        "adapter",
+        "charger",
+        "antenna",
+        "soporte",
+        "montaje",
+        "control remoto",
+        "replacement",
+        "compatible",
+        "for hisense",
+        "for samsung",
+        "for lg",
+        "for sony",
+        "for tcl"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 50,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "nav_timeout_ms": 30000,
+    "max_retries": 3
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.9
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [class*='review-item'], [data-testid*='review'], [data-hook='review'], [class*='review-card']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id",
+        "self_attr_alt": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']",
+          "[data-hook*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "[data-hook*='reviewTitle']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "[data-hook*='reviewText']",
+          "[data-hook*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']",
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time",
+          "[class*='review-date']",
+          "[data-hook*='review-date']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "limit": 5
+      }
+    }
+  },
+  "_autofix_search": {
+    "date": "2026-10-10",
+    "tool": "scripts/autofix_search.py",
+    "evidence": {
+      "links": 72,
+      "verified_models": [
+        "QE55S95H:1899.0",
+        "OLED65G64LW:2999.0"
+      ]
+    },
+    "tried": [
+      "{base}/search?search-term={q} [Samsung tv] 200 links=72"
+    ]
+  }
+}

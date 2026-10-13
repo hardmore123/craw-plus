@@ -1,0 +1,286 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "coppel_mx",
+  "name": "Coppel",
+  "country": "Mexico",
+  "channel": "Coppel",
+  "region": "mx",
+  "base_url": "https://www.coppel.com",
+  "currency": "MXN",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "反抽象: sites/coppel_mx/adapter.py + schema.json | 2026-09-25 复测确认blocked: 403 Access Denied (html=311B, 代理出口IP被封, 需墨西哥住宅IP)",
+  "status": "blocked",
+  "anchor": "h1",
+  "search": {
+    "container": "a.cpl-card__body[href*='/pdp/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[data-testid*='product'][data-testid*='name']",
+        "h3",
+        "h2"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[data-testid='pdp_product_name']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "kv": {
+        "container": "table tr",
+        "key_contains": "modelo",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "clean_text",
+      "jsonld": "model"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[data-testid='pdp_product_name']"
+      ],
+      "kv": {
+        "container": "table tr",
+        "key_contains": "tamaño en pulgadas",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-testid='pdp_discounted_price']",
+        "[data-testid='pdp_price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[data-testid='pdp_discounted_price']",
+        "[data-testid='pdp_price']"
+      ],
+      "transform": "currency_mx",
+      "jsonld": "offers.priceCurrency",
+      "default": "MXN"
+    },
+    "list_price": {
+      "selectors": [
+        "[data-testid='pdp_price']",
+        "[data-testid='pdp_list_price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "button[data-testid='add_to_cart_modal_cta']:not([disabled]):not([aria-disabled='true'])"
+      ],
+      "transform": "bool_present",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid='pdp_price_details']",
+        "[data-testid='pdp_discounted_price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "table tr",
+      "key": "td:first-child",
+      "value": "td:nth-child(2)",
+      "limit": 160
+    }
+  ],
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid*='rating']",
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[data-testid*='review-count']",
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "reviews": {
+    "container": "[data-testid*='review'], .pr-review, article[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[data-testid*='rating']",
+          ".pr-rating-stars",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[data-testid*='review-title']",
+          ".pr-rd-review-headline",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[data-testid*='review-text']",
+          ".pr-rd-description-text",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[data-testid*='author']",
+          ".pr-rd-author-nickname",
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[data-testid*='date']",
+          ".pr-rd-review-date",
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-testid*='helpful']",
+          ".pr-helpful-count"
+        ],
+        "transform": "int"
+      },
+      "review_url": {
+        "selectors": []
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "[data-testid*='review'] img, .pr-review img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "icon"
+        ],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "[data-testid*='review'] video source, .pr-review video source",
+        "attr": "src",
+        "limit": 10
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "control remoto",
+        "funda",
+        "cable",
+        "adaptador",
+        "accesorio"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "click_more",
+      "click_texts": [
+        "mostrar más",
+        "mostrar mas",
+        "ver más",
+        "ver mas",
+        "load more",
+        "show more",
+        "view more"
+      ],
+      "click_selector": "",
+      "max_reviews": 100,
+      "max_pages": 8
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 5.0,
+    "retail_page_wait": "h1",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

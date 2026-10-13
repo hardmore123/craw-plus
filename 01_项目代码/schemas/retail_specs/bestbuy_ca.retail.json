@@ -1,0 +1,349 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "bestbuy_ca",
+  "name": "Best Buy",
+  "country": "Canada",
+  "channel": "Best Buy",
+  "region": "ca",
+  "base_url": "https://www.bestbuy.ca",
+  "currency": "CAD",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "2026-09-20 新建（该站此前**没有 RetailSpec**，属任务表里的 C 层缺口）。抽取路径以 adapter.py 的 JSON-LD 为主；★CSS 选择器未经真实 PDP 校准（本机对 bestbuy.ca 应用页恒 403）。",
+  "status": "candidate",
+  "_design_2026_09_20": {
+    "★合规（先看这条）": "robots.txt 明确 **Disallow: /en-ca/search 与 /en-ca/Search**（站内搜索页禁抓）、Disallow: /en-ca/create-review/（写路径）。同时**显式 Allow: /en-ca/product/、/en-ca/category/、/en-ca/brand/**，并公布 Sitemap: https://www.bestbuy.ca/sitemap_index.xml。→ 结论：**不要走站内搜索**，走 sitemap。",
+    "★推荐路径（确定性，且绕开被禁路径）": "用 scripts/bestbuy_ca_catalog.py build 建本地商品目录（38 个 sitemap，实测可下载，每个约 1.3~2.2 万条商品 URL），再 match 把型号清单映射成 SKU + PDP URL。这样「某型号有没有上架」变成**确定性存在性问题**，而不是模糊搜索问题——既没有误抓，也不会因为搜索相关性差而误判 no_item。",
+    "★可达性（本机实测 2026-09-20）": "robots.txt / sitemap_index.xml / sitemapN.xml.gz **全部 200 可下载**；但 /en-ca、/en-ca/category/...、/en-ca/product/... 即使通过**真实浏览器（Edge，含 stealth）也是 403 'Access Denied'（正文仅 297~324 字节）**。这是站点边缘按 IP/ASN 硬拦——不是缺请求头、不是要渲染、也不是验证码。★所以**价格/网评抽取目前在本机无法校准**，需要能通行的加拿大出口 IP。",
+    "★与 bestbuy.com 的差别": "两家是不同公司、不同后台。bestbuy.com 的搜索参数是 st/cp/intl，bestbuy.ca 的是 search/page；前者的评价已不用 BazaarVoice，后者 adapter 注释称走 BazaarVoice（★未验证，见 reviews._pending）。不要把通用法照抄。",
+    "★误抓红线": "与 US 一致，见 docs/BestBuy美国站_参照加拿大Amazon经验_方案与红线.md §4：配件/开盒词 reject + 尺寸守卫 + PDP 权威型号精确校验 + 价格区校验。"
+  },
+  "anchor": "h1",
+  "discovery": {
+    "_note": "★本 spec 的推荐入口：不搜索，直接由 sitemap 目录给出 PDP URL。见 scripts/bestbuy_ca_catalog.py。",
+    "source": "sitemap",
+    "index_url": "https://www.bestbuy.ca/sitemap_index.xml",
+    "product_url_pattern": "https://www.bestbuy.ca/en-ca/product/<slug>/<sku>",
+    "sku_regex": "/en-ca/product/[^/]+/(\\d+)"
+  },
+  "search": {
+    "_robots_warning": "★★robots.txt 明确 Disallow: /en-ca/search —— 这一段**不应用于抓取**，仅为框架兼容与离线样本保留。生产路径请走 discovery.sitemap。",
+    "container": "a[href*='/product/']",
+    "sku": {
+      "regex": "/en-ca/product/[^/]+/(\\d+)"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "url_template": "https://www.bestbuy.ca/en-ca/product/{sku}",
+    "wait_ms": 8000,
+    "scroll_passes": 12,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2
+    }
+  },
+  "product": {
+    "_note": "以 JSON-LD 为主（adapter.parse_product → retail_common.jsonld_product_payload）：name→title、brand.name→brand、mpn/sku/model→model、offers.price→price、aggregateRating→评分汇总。下面的 CSS 是 JSON-LD 缺失时的兜底，**未校准**。",
+    "title": {
+      "selectors": [
+        "h1",
+        "[data-automation='product-title']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "jsonld": "brand.name",
+      "selectors": [
+        "[data-automation='brand-name']",
+        "a[href*='/en-ca/brand/']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "_note": "★闸三的权威来源。JSON-LD 的 mpn 优先；Best Buy CA 的商品页也会在规格表里写 Model。校准后若发现 JSON-LD 无 mpn，必须补规格表抽取，否则闸三不成立。",
+      "jsonld": "mpn",
+      "selectors": [
+        "[data-automation='model-number']",
+        "[data-automation='specifications'] tr"
+      ],
+      "regex": "Model\\s*(?:Number|No\\.?|#)?\\s*[:\\-]\\s*([A-Za-z0-9][A-Za-z0-9._\\-+/]{2,39})",
+      "transform": "clean_text"
+    },
+    "category": {
+      "selectors": [
+        "[data-automation='breadcrumb'] li:last-child a"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "_note": "★价格优先 JSON-LD offers.price。★仍必须过闸四（价格区祖先链校验，参照 overseas/sites/amazon_common.py 的 32A4NV 配件价事故）：商品页同样有推荐位/配件轮播。校准前先跑价格候选诊断。★注意 Best Buy CA 是 marketplace：同一商品可能有第三方卖家报价，需确认取的是 Best Buy 自营价还是最低价——这属于业务口径，需明确。",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-automation='product-price']",
+        ".productPricingContainer .price",
+        "[itemprop='price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "transform": "currency",
+      "default": "CAD"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[data-automation='regular-price']",
+        ".was-price"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[data-automation='add-to-cart']",
+        "button.addToCartButton"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "[data-automation='specifications'] tr, .specifications-table tr",
+      "key": "th, td:first-child",
+      "value": "td:last-child",
+      "limit": 150
+    },
+    {
+      "type": "kvlist",
+      "container": "[data-automation='specifications'] li, ul.specs li",
+      "limit": 150
+    }
+  ],
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[data-automation='rating'] [itemprop='ratingValue']",
+        "[data-automation='average-rating']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[data-automation='review-count']",
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "_confirmed_2026_09_24": {
+      "后端": "★已实测确认：bestbuy.ca 评价走 BazaarVoice firebird（bfd）API，与站点边缘无关（PDP 403 不影响评价接口）。",
+      "探测路径": "apps.bazaarvoice.com/deployments/bestbuy-ca/main_site/production/en_CA/{swat_reviews-config.js(给 displayCode=18193), api-config.js(给 client=bestbuy-ca, site=main_site)}",
+      "token": "Bv-Bfd-Token: 18193,main_site,en_CA （静态可推导，同 Costco 路径；★与 Costco 差别：displayCode 裸 18193 不带 env 后缀）",
+      "Origin要求": "缺 Origin 返回 401 Unauthorized（实测），必须带 Origin: https://www.bestbuy.ca",
+      "代理抖动": "出口代理瞬时 502/503/500 需重试 2~3 次（同一 SKU 首次 502、重试 200 实测）",
+      "实测结果": "9 产品：4 有评价（253 条明细入库，summary 记 numReviews 0/1/52/559/752），5 个 2026 新品/翻新机 0 评价（留空不造假）"
+    },
+    "source": "bazaarvoice_bfd",
+    "bv": {
+      "client": "bestbuy-ca",
+      "display_code": "18193",
+      "site": "main_site",
+      "locale": "en_CA",
+      "origin": "https://www.bestbuy.ca",
+      "content_locale": "en_CA,en_US,fr_CA",
+      "page_size": 100,
+      "max_pages": 10,
+      "max_reviews": 100
+    },
+    "container": "[data-automation='review'], .review-item, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "_note": "JSON-LD 的 review @id 优先（retail_common 已实现）；DOM 路径取容器 id，缺则内容指纹兜底。",
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[data-automation='review-rating']",
+          ".reviewRating"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[data-automation='review-title']",
+          "h3.reviewTitle"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[data-automation='review-comment']",
+          ".reviewComment",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[data-automation='review-author']",
+          ".reviewAuthor"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "meta[itemprop='datePublished']",
+          "[data-automation='review-date']"
+        ],
+        "attr": "content",
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-automation='helpful-count']"
+        ],
+        "transform": "int"
+      },
+      "verified": {
+        "selectors": [
+          "[data-automation='verified-purchase']"
+        ],
+        "transform": "bool_present"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3,
+      "_min_core_len_note": "★同 US：加拿大清单 621 条里有 26 条主干 ≤3 位（Hisense S7N 等 24 条 3 位、UX 2 条 2 位）。沿用 min_core_len=4 会让 S7N 这类主力系列主干匹配被整条跳过。降到 3 的前提同样是闸三（PDP 权威型号精确相等）成立。主干仅 2 位的 2 条（UX）仍不做主干匹配，判 no_item 属预期。",
+      "core_size_tokens": [
+        "class",
+        "inch",
+        "in",
+        "\"",
+        "series"
+      ]
+    },
+    "reject": {
+      "_note": "★加拿大站同样是 marketplace，且同样有开盒/翻新与配件。",
+      "title_contains_any": [
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "cable",
+        "adapter",
+        "screen protector",
+        "soundbar",
+        "projector",
+        "open-box",
+        "open box",
+        "refurbished",
+        "pre-owned",
+        "preowned",
+        "renewed"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 50,
+      "max_pages": 10,
+      "_pending_2026_09_20": "★type 待定：确认后端后再改成 url_page / query_param / click_more。max_reviews=50 与加拿大线对齐。"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "interval_sec": 9.0,
+    "retail_page_wait": "script[type='application/ld+json'], .productPricingContainer, h1",
+    "_note": "本机对 bestbuy.ca 应用页恒 403（真实浏览器也一样），需加拿大可通行出口 IP。若实测 PDP 服务端渲染够用，可加 detail_http=true 降级到纯 HTTP。",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

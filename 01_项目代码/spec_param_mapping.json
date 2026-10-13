@@ -1,0 +1,254 @@
+[
+  {
+    "param_code": "PEAK_BRIGHTNESS",
+    "param_name": "峰值亮度",
+    "category": "画质",
+    "matched_item_count": 50,
+    "extract": "(\\d[\\d,]*)\\s*nits",
+    "sample_items": [
+      "DISPLAY｜System brightness – typical",
+      "PICTURE (PROCESSING)｜Auto Brightness Control",
+      "soundBarVideoFeatures｜Peak Luminance",
+      "Brightness uniformity(Demura adjustment)",
+      "Ambient Mode Brightness/Color Sensor"
+    ]
+  },
+  {
+    "param_code": "DIMMING_ZONES",
+    "param_name": "分区控光",
+    "category": "画质",
+    "matched_item_count": 29,
+    "extract": "(\\d+)\\s*(?:zones|zones|区)",
+    "sample_items": [
+      "DISPLAY｜Mini-LED/Local Dimming Type",
+      "DYNAMIC BACKLIGHT CONTROL",
+      "Dynamic Backlight Control",
+      "VIDEO｜Dynamic Backlight",
+      "DISPLAY｜Dimming Zones"
+    ]
+  },
+  {
+    "param_code": "REFRESH_RATE",
+    "param_name": "刷新率",
+    "category": "画质",
+    "matched_item_count": 85,
+    "extract": "(\\d+)\\s*Hz",
+    "sample_items": [
+      "Native Refresh Rate",
+      "newtvcategPictureProcessing｜Motion enhancer(Native Hz)",
+      "Refresh Rate",
+      "Summary｜Display Refresh Rate in Hertz",
+      "Picture Quality｜Native Refresh Rate"
+    ]
+  },
+  {
+    "param_code": "CHIP",
+    "param_name": "画质芯片",
+    "category": "画质",
+    "matched_item_count": 57,
+    "extract": null,
+    "sample_items": [
+      "Picture Processor",
+      "Display｜Processor",
+      "pim-grp-trE5XrW9｜Operating System",
+      "PICTURE(PROCESSING) - Picture Processor",
+      "pim-grp-trE5XrW9｜Number of Tuners(Terrestrial/Cable)"
+    ]
+  },
+  {
+    "param_code": "SYSTEM",
+    "param_name": "智能系统",
+    "category": "智能",
+    "matched_item_count": 409,
+    "extract": null,
+    "sample_items": [
+      "TV Stand Width(W x D) Position 1",
+      "Inputs and Outputs｜Composite Video Input(s)",
+      "STAND WIDTH(NARROW POSITION)",
+      "SEL-software｜Closed Captions(Analog)",
+      "スマート機能｜Anyview 家庭服务器/客户端"
+    ]
+  },
+  {
+    "param_code": "GAMING",
+    "param_name": "游戏特性",
+    "category": "游戏",
+    "matched_item_count": 146,
+    "extract": null,
+    "sample_items": [
+      "Game Feature｜Game bar",
+      "Modo de juego automático(ALLM)",
+      "Auto Game Mode(ALLM)",
+      "Freesync Premium Pro",
+      "lightFieldConnectivity｜Auto Low Latency Mode(ALLM)"
+    ]
+  },
+  {
+    "param_code": "COLOR_GAMUT",
+    "param_name": "色域",
+    "category": "画质",
+    "matched_item_count": 50,
+    "extract": "(\\d+)\\s*%",
+    "sample_items": [
+      "Quantum Dot Color",
+      "QLED",
+      "soundBarVideoFeatures｜TRILUMINOS",
+      "TRILUMINOS",
+      "At a Glance｜TRILUMINOS"
+    ]
+  },
+  {
+    "param_code": "HDMI",
+    "param_name": "HDMI 2.1",
+    "category": "连接",
+    "matched_item_count": 291,
+    "extract": "(\\d+)\\s*(?:x|×)?\\s*HDMI",
+    "sample_items": [
+      "HDMI 3",
+      "eARC/ARC",
+      "Versión HDMI",
+      "HDMI2.1に規定される機能",
+      "Voice Search"
+    ]
+  },
+  {
+    "param_code": "SCREEN_SIZE",
+    "param_name": "屏幕尺寸",
+    "category": "设计",
+    "matched_item_count": 87,
+    "extract": "(\\d+\\.?\\d*)\\s*(?:inch|\\\"|吋|型)",
+    "sample_items": [
+      "最小テレビ台天板サイズ(cm)",
+      "Dimensions and weight｜Screen Size(cm, measured diagonally)",
+      "動画・表示サイズ切換え",
+      "Standing screen display size",
+      "Display｜Screen Size"
+    ]
+  },
+  {
+    "param_code": "RESOLUTION",
+    "param_name": "分辨率",
+    "category": "画质",
+    "matched_item_count": 498,
+    "extract": null,
+    "sample_items": [
+      "Resolution",
+      "Versión HDMI",
+      "Retour audio via HDMI(ARC)",
+      "録画再生｜外接HDD副节目录制",
+      "lightFieldConnectivity｜HDMI Audio Return Channel(ARC)"
+    ]
+  },
+  {
+    "param_code": "HDR",
+    "param_name": "HDR格式",
+    "category": "画质",
+    "matched_item_count": 148,
+    "extract": null,
+    "sample_items": [
+      "HDR Optimisé par IA",
+      "AI HDR Remastering",
+      "HDR-Formate",
+      "Consumo Energetico Annuale SDR/HDR",
+      "基本仕様｜HDR 支持"
+    ]
+  },
+  {
+    "param_code": "CONTRAST",
+    "param_name": "对比度",
+    "category": "画质",
+    "matched_item_count": 58,
+    "extract": "(\\d[\\d,]*)\\s*(?::|/|to)\\s*1",
+    "sample_items": [
+      "高コントラスト",
+      "OTTIMIZZAZIONE DEL CONTRASTO",
+      "Dynamic contrast",
+      "High Contrast",
+      "Picture/Display｜Contrast ratio(typical)"
+    ]
+  },
+  {
+    "param_code": "WIFI",
+    "param_name": "Wi-Fi",
+    "category": "连接",
+    "matched_item_count": 58,
+    "extract": null,
+    "sample_items": [
+      "ネットワーク機能｜Wi-Fi Direct 模式",
+      "入力・出力｜内置 Wi-Fi",
+      "lightFieldConnectivity｜Wi-Fi Standard",
+      "Versione wifi",
+      "無線LAN機能7"
+    ]
+  },
+  {
+    "param_code": "BLUETOOTH",
+    "param_name": "蓝牙",
+    "category": "连接",
+    "matched_item_count": 76,
+    "extract": null,
+    "sample_items": [
+      "Bluetooth Surround Ready",
+      "Bluetooth Audio-Unterstützung",
+      "Bluetooth｜内置无线 LAN",
+      "Connectivity｜Bluetooth® Support",
+      "Bluetooth™"
+    ]
+  },
+  {
+    "param_code": "DOLBY_ATMOS",
+    "param_name": "杜比全景声",
+    "category": "画质",
+    "matched_item_count": 29,
+    "extract": null,
+    "sample_items": [
+      "Dolby audio",
+      "Dolby Atoms対応",
+      "Unterstützung des Dolby Audioformats",
+      "Dolby Vision Atmos",
+      "AUDIO - Dolby Atmos"
+    ]
+  },
+  {
+    "param_code": "POWER_CONSUMPTION",
+    "param_name": "功耗",
+    "category": "设计",
+    "matched_item_count": 155,
+    "extract": "(\\d+)\\s*kWh",
+    "sample_items": [
+      "Power Consumption(in Operation)",
+      "Power Consumption (Max)",
+      "Power Consumption(On Mode) for Energy Star",
+      "消費電力｜节能标准达成率",
+      "消費電力｜五级评价"
+    ]
+  },
+  {
+    "param_code": "WEIGHT",
+    "param_name": "重量",
+    "category": "设计",
+    "matched_item_count": 286,
+    "extract": "(\\d+\\.?\\d*)\\s*kg",
+    "sample_items": [
+      "Dimensions / Weight｜TV Weight with stand(lbs)",
+      "Produktgewicht mit Stand(kg)",
+      "TV with Stand(Outside for Soundbar)(Weight)",
+      "Product Weight With Stand(lbs)",
+      "Set Weight with Stand"
+    ]
+  },
+  {
+    "param_code": "DIMENSIONS",
+    "param_name": "尺寸",
+    "category": "设计",
+    "matched_item_count": 500,
+    "extract": null,
+    "sample_items": [
+      "スタンドボックス寸法(奥行き)",
+      "Regulation and Standard Compliance｜VESA® Hole Pitch(W x H)",
+      "Dimensions｜Wall mount compatible",
+      "lfdDimensionsWeight｜VESA® Hole Pitch(W x H)",
+      "基本仕様｜VESA Spec"
+    ]
+  }
+]

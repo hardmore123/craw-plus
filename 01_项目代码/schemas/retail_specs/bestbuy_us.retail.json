@@ -1,0 +1,358 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "bestbuy_us",
+  "name": "Best Buy",
+  "country": "USA",
+  "channel": "Best Buy",
+  "region": "us",
+  "base_url": "https://www.bestbuy.com",
+  "currency": "USD",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "2026-09-20 v0.2：参照加拿大 Amazon 线经验（crawl_ca_retail.py / retail_spec.py）+ Costco US 实测模式重写。新增品牌级批量搜索、尺寸守卫、开盒/配件 reject、死循环安全阀。★选择器仍未在美国真实 DOM 上校准。",
+  "status": "candidate",
+  "_design_2026_09_20": {
+    "★前置条件": "★连不上的根因已查明，不是 Best Buy 反爬：本机所在公司内网准入网关（10.18.0.250/disable/disable.htm，白名单名「工业设计白名单」）直接拦掉 bestbuy.com，HTTPS 还被企业根证书中间人（SEC_E_UNTRUSTED_ROOT），出口 IP 是中国。必须先换到能出网的美国线路，再跑 scripts/diag_bestbuy_us.py --only ip 确认。★注意：非美国 IP 的返回是 HTTP 200 + <title>Best Buy International: Select your Country</title>，不是 403——只判状态码会把「拿到国际选择页」误当成「搜索页选择器失效」，进而把 405 个型号全判 no_item（静默丢数据）。已应对：overseas/infra.py 的 _BLOCK_MARKERS 增加 'best buy international'；adapter.search_url 带 intl=nosplash。",
+    "本 spec 的选择器状态": "★全部为未校准候选。来源是 sites/bestbuy_us/schema.json 的草案（该文件自己写着「需美国代理访问真实 PDP 后校准」），由 build_retail_specs.py 反抽象而来，从未命中过真实页面。跑完 scripts/diag_bestbuy_us.py 后按实测输出覆盖，并把 status 改成 verified。",
+    "★型号搜不到怎么办": "分五类，混在一起就会误抓或静默丢数据：A 该站确实没上架（渠道专供型号，如 Costco 上架 55QD75SFC 而品牌清单是 55QD7QF）→ no_item；B 同系列有货但尺寸不符 → no_item 并写明站上尺寸；C 搜索页没渲染/被拦 → ★必须记 failed 或 blocked，绝不允许记 no_item（否则把抓取失败伪装成「没有上架」，静默丢数据）；D 候选全被 reject 规则排除 → 配置问题，需核对 spec；E Best Buy 特有：站内搜索是模糊匹配，会把 soundbar/挂架/开盒机/同系列别尺寸排在前面 → 靠下面三道闸拦。四类归因文本由 overseas/retail_spec.py::explain_no_match 生成，no_item 的 message 必须带上它。",
+    "★误抓三道闸": "1) match.reject：配件词 + ★开盒/翻新词；2) match.verify.core_size_tokens：尺寸守卫（Best Buy 标题是 '65\" Class - U7N Series' 这类分隔式写法，紧贴式匹配不命中）；3) 详情页 product.model_candidates 精确相等（crawl_ca_retail.py::_payload_matches_model：有权威型号且都不等就直接否掉，不退回标题/URL 子串匹配）。另有第 4 道：价格必须落在主价格容器内（参照 overseas/sites/amazon_common.py::price_in_region 的 32A4NV 配件价事故），拿不到判定时保守拒绝。",
+    "★防死循环": "站级熔断 blocked_streak_limit=5（连续 5 个型号被拦即跳过该站剩余型号）；品牌搜索失败熔断 max_search_failures=2；评价翻页 max_pages + page_all_known；★品牌级 force=true + fallback_per_model=false，保证 405 个型号最多 5 次搜索（每品牌 1 次），而不是逐型号搜 405 次。",
+    "★未验证即有害": "本项目既有红线：不写入未验证的选择器。因此 reviews 段暂不声明 source（不启用 BV 接口），paginate.reviews.type 保持 none，等 scripts/diag_bestbuy_us.py 给出后端判定后再填。",
+    "★死SKU会301到无关商品": "Best Buy 的旧形态 URL /site/<skuId>.p?skuId=<skuId> 会 301 到 canonical 形态，但**已下架的 SKU 可能 301 到完全不相关的商品，而不是 404**。所以「重定向成功」不能当作「型号存在」的证据——必须用闸三（PDP 上的 Model: 与目标型号精确相等）来确认身份。这条是 Best Buy 特有的误抓入口。"
+  },
+  "_compliance_2026_09_20": {
+    "★robots.txt": "well-known.dev 镜像（扫于 2026-09-12；★实时文件比镜像新，镜像可能落后一版）显示：通用组（*、googlebot、bingbot 等）有 **Disallow: */site/searchpage.jsp?st=*（搜索页对通用爬虫与 Googlebot/Bingbot 被禁）**、Disallow: /api/*.json、/browse-api/*、/pricing/*、/availability/*、/fulfillment/*、/site/reviews/submission*（只禁写路径）。**/site/reviews/<slug>/<skuId> 评价展示页未被禁；/ugc/ 下没有任何规则**（即 /ugc/v2/reviews 未被 robots 禁）。另有 AI 发现组显式 Allow: /site/。无穷爬延迟（无 Crawl-delay）。",
+    "★ToS": "Best Buy 使用条款明确禁止用任何引擎/软件/工具/代理/爬虫/机器人来浏览或搜索其站点（第三方归档标注为 CFAA 相关条款）。这是一个**合规风险**，需要业务方确认授权口径后再规模化。",
+    "★反爬": "Akamai Bot Manager（实测 Set-Cookie: ak_bmsc / bm_s / bm_so；traffic-scan 另见 _abck）+ Google reCAPTCHA（_GRECAPTCHA），未见 DataDome/PerimeterX 证据。拦截页特征：HTTP 403 + title 'Access Denied' + 正文 'Reference #18.…'（该文案的公开捕获较旧，2025/26 未复验）。★TLS/JA3 指纹不匹配时 Akamai 可能**静默丢弃（只超时，不给 403）**，所以超时也可能是被拦。数据中心 IP 通常几个请求内就被挑战 → **必须美国住宅 IP**。",
+    "★合规处置建议": "本 spec 的搜索路径与 robots 的 Disallow 规则存在冲突。落地前需要三选一：(1) 用 sitemaps.bestbuy.com 的 _bsin / _pdp / _rnr 站点地图做确定性 SKU 发现，绕开 /site/searchpage.jsp；(2) 由业务方出具对 bestbuy.com 的抓取授权；(3) 明确接受该风险并留痕。★不要把这件事埋在技术方案里不做声张。"
+  },
+  "anchor": "h1",
+  "search": {
+    "container": "ol.sku-item-list > li.sku-item, li.sku-item, div.shop-sku-list-item",
+    "_container_note": "外部证据实锤 ol.sku-item-list > li.sku-item。★有来源说搜索网格是纯 HTML 可解析（Scrapfly 就是这么做的），也有来源说必须要 JS——**两种说法都存在，必须实测**；本 spec 按需要浏览器配置（fetch.requires_browser=true），若实测纯 HTTP 够用可再降。",
+    "sku": {
+      "self_attr": "data-sku-id",
+      "attr": "data-sku-id",
+      "selectors": [
+        "a[data-sku-id]",
+        "[data-sku-id]"
+      ],
+      "_note": "★不要给 search.sku 配 regex 兜底：_parse_search_with_spec 里 regex/jsonld 是对整页 HTML 生效（Extractor 用整页 html 构造），会把每张卡片解析成同一个 SKU，seen 去重后只剩 1 个候选。只能走容器自身属性或容器内选择器。已知可行替代：网格 li 上的 data-sku-id / data-testid 带 SKU；div.sku-model span.sku-value 的第 2 个值也是 SKU（第 1 个是 Model）。"
+    },
+    "title": {
+      "selectors": [
+        "h4.sku-title a",
+        ".sku-title a",
+        "h4 a",
+        ".sku-title"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "attr": "href",
+      "selectors": [
+        "h4.sku-title a",
+        ".sku-title a",
+        "a[href*='.p?skuId=']",
+        "a[href*='/site/']"
+      ]
+    },
+    "url_template": "https://www.bestbuy.com/site/{sku}.p?skuId={sku}",
+    "_url_note": "外部实测证据（本地待确认）：搜索页用 /site/searchpage.jsp?st=<kw>&intl=nosplash，intl=nosplash 抑制国际选择页插屏；翻页用 cp=N（?cp=2/?cp=3），每页 18 条、页码上限 100；必要时补 id=pcat17071。adapter.search_url 已带 intl=nosplash。",
+    "wait_ms": 10000,
+    "scroll_passes": 20,
+    "_scroll_note": "★美国站搜索页慢且懒加载：滚动次数不足会只拿到部分候选，漏掉的型号会被错判成 no_item（Costco US 实测：滚 3 次只有 8 个，滚 20 次才 24 个）。",
+    "batch": {
+      "_note": "★美国站搜索页更慢（渲染 + 滚动常需 10 秒以上）。force=true + fallback_per_model=false 是避免 405 个型号逐个搜的关键开关：一个品牌只搜一次「{brand} tv」，候选池里没有的型号直接判 no_item，不再为它发起搜索。",
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "div.sku-title h1",
+        "h1.heading-5"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "a[data-track='Brand Name']",
+        "div.brand a"
+      ],
+      "jsonld": "brand.name",
+      "transform": "brand"
+    },
+    "model": {
+      "_note": "★这是第一道也是唯一的权威型号来源（crawl_ca_retail._payload_matches_model 认 product.model_candidates）。外部实测证据：Best Buy PDP 的型号是**服务端渲染**的，HTML 里有 'Model:75Q651G' 与紧邻的 'SKU:6579448'，且型号会拼进 <title>（\"... 75Q651G - Best Buy\"）——所以闸三可行，整页 regex 兜底在 PDP 上是安全的（一页一个型号；注意搜索页整页 regex 会退化，见 search.sku 的 _note）。",
+      "selectors": [
+        "div.model span.product-data-value",
+        "[data-testid='model-number']",
+        "[data-testid='modelNumber'] .product-data-value",
+        ".product-data-value"
+      ],
+      "regex": "Model\\s*(?:Number|No\\.?|#)?\\s*[:\\-]\\s*([A-Za-z0-9][A-Za-z0-9._\\-+/]{2,39})",
+      "jsonld": "mpn",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[data-testid='screen-size'] .product-data-value"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "_note": "★价格是**服务端渲染**的（PDP 初始 HTML 里就有 '$499.99Your price for this item is $499.99'），不需要等 React 水合。外部证据：DOM 实锤是 div.priceView-hero-price 与 div#pricing-price-<skuId>（priceView-customer-price 与 priceView-hero-price 是**同一个元素**，不是外层容器）；更结构化的路子是 SSR 里的 Apollo 载荷 productBySkuId.price.customerPrice（字段：sku_id/pdp_url/customer_price/regular_price/total_savings/member_savings/finance_option/show_large_price）。★★静默错数据陷阱：没有 locDestZip cookie 时，库存/配送会按总部 ZIP 55423 / store 7 渲染——价格可能不是用户所在地的价格，必须记录并在汇报里标注。另有 [data-testid='price-block-customer-price'] 类选择器——那些是**搜索网格**的，不是 PDP 的。★价格仍必须过闸四（祖先链校验，参照 amazon_common 的 32A4NV 配件价事故）。",
+    "price": {
+      "selectors": [
+        "div.priceView-hero-price span[aria-hidden='true']",
+        ".priceView-customer-price span[aria-hidden='true']",
+        "[data-testid='customer-price']"
+      ],
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "transform": "currency",
+      "default": "USD"
+    },
+    "list_price": {
+      "_note": "★外部证据：div.pricing-price__regular-price 与 priceView-regular-price 均**无证据**（前者可能是臆造）。真正实锤的是页面文案 'Comp. Value: $749.99' / 'Save $250'。校准前先跑 diag --only price 看祖先容器，不要沿用这里的候选。",
+      "selectors": [
+        "div.priceView-regular-price",
+        "[data-testid='regular-price']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "button.add-to-cart-button",
+        "[data-button-state='ADD_TO_CART']"
+      ],
+      "jsonld": "offers.availability",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "div.priceView-hero-price span[aria-hidden='true']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": ".specs-table .row, ul.specifications li, [data-testid='spec-row']",
+      "limit": 150
+    }
+  ],
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid='customer-rating'] .ugc-c-review-average",
+        ".ugc-review-average"
+      ],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        ".c-reviews .c-review-count",
+        "[data-testid='review-count']"
+      ],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "_pending_2026_09_20": {
+      "状态": "★后端未现场确认，因此不声明 source（不启用 BV 接口）。先用 scripts/diag_bestbuy_us.py --only reviews 定类。",
+      "先验证据_指向非BV": "截至 2026-09：urlscan 里 domain:api.bazaarvoice.com AND page.domain:www.bestbuy.com 为 0 命中，apps.bazaarvoice.com 亦 0 命中，页面出现 bazaarvoice 域名的最后记录在 2022-12。**结论：不要在 spec 里配 BV**。残留的 BV 痕迹只在数据模型里（问题对象的 bazaarvoiceId 字段、VerifiedPurchaser 徽章），浏览器已不再请求 BV 域名。",
+      "B_首选候选_站内一手JSON接口": "https://www.bestbuy.com/ugc/v2/reviews?page=1&pageSize=20&sku=<SKU>&sort=MOST_RECENT —— 来自两个独立来源（Scrapfly 已发布爬虫 + 一篇指南），且**不需要渲染 JS（纯 HTTP）**，解析 totalPages / topics。旁证：urlscan 里 bestbuy.com 确实请求带 ugc + v2 的路径。★但响应 schema 与 pageSize 上限**未实测**；/ugc/v1/ 无任何证据，不要用。",
+      "C_兜底_站内原生评价页": "https://www.bestbuy.com/site/reviews/<slug>/<skuId>（SSR，实测 20 条/页，页面写 'Page 1 Showing 1-20 of 47 reviews'），参数 ?rating=1-5 / ?page= / ?pageSize=20 / ?sort=BEST_REVIEW / ?sku= / ?variant=A，锚点 #user-reviews；排序可选 Most Relevant / Most Helpful / Most Recent / Oldest / Highest Rating / Lowest Rating。属 url_page 或 query_param。★此页**未被 robots.txt 禁抓**（禁的是 /site/reviews/submission* 这个写路径）。",
+      "A_bazaarvoice_bfd": "仅当实测抓到 apps.bazaarvoice.com/bfd/v1/clients/<client>/... 且带 Bv-Bfd-Token 时才用（当前证据下几乎不可能）。",
+      "D_客户端挂件需点击": "首屏有、滚动或点击后增长 → 用 click_more（配 click_selector + click_repeats）。",
+      "汇总评分来源": "首选 SSR Apollo 载荷：product-info.reviewInfo = {averageRating, reviewCount}（实测样本 4.9 / 2913）。搜索网格卡片用 div.c-ratings-reviews p.visually-hidden，正则 'Rating ([\\d.]+) out of \\d+ stars with ([\\d,]+) reviews?'；无评分哨兵文案是 'Not Yet Reviewed'。★JSON-LD aggregateRating 证据互相冲突，未实测前不要依赖。",
+      "红线": "在判定之前不许写死评价选择器——未验证的配置有害。"
+    },
+    "container": "li.review-item, div.review-item-content, [data-testid='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "_note": "原 schema 无唯一评价键，先取容器自身 id；缺则 crawl_ca_retail._normalise_reviews 用内容指纹兜底。若走 BV 接口，键取评价 Id。",
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "p.visually-hidden",
+          ".c-review-average",
+          "[data-testid='review-rating']",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "h4.review-title",
+          ".review-title"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "div.ugc-review-body p",
+          "p.pre-white-space",
+          ".review-content"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".ugc-author",
+          "div.user-attribute .name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "time.submission-date",
+          ".review-date",
+          "[itemprop='datePublished']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "button.feedback-positive .count",
+          ".helpful-count"
+        ],
+        "transform": "int"
+      },
+      "verified": {
+        "selectors": [
+          ".ugc-verified-purchaser",
+          "[data-testid='verified-purchase']"
+        ],
+        "transform": "bool_present"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3,
+      "_min_core_len_note": "★必须是 3，不能沿用 4：美国型号清单 405 条里有 32 条的主干是 3 位（Hisense U8N/U7N/U6N 等主力系列，65U8N→U8N），设 4 会让整条主干匹配被跳过，这些型号只能靠精确匹配，而 Best Buy 标题常写成 '65\" Class U8N Series'（分隔式）→ 会被大量误判 no_item。降到 3 的前提是闸三（PDP 权威型号精确相等）必须成立：候选匹配放宽只会多开一个 PDP，不会直接产出错价。另有 6 条主干仅 2 位（UX/MX/HW），仍不做主干匹配，判 no_item 属预期，不要为它们再放宽。",
+      "_size_tokens_note": "★Best Buy 标题与 Costco 同构：'65\" Class - U7N Series'，尺寸与系列被分隔词隔开，紧贴式 (\\d{2,3})core 不命中会让尺寸守卫失效（65 吋价被记到 75 吋头上）。",
+      "core_size_tokens": [
+        "class",
+        "inch",
+        "in",
+        "\"",
+        "series"
+      ]
+    },
+    "reject": {
+      "_note": "★第二组是 Best Buy 特有：站上大量销售 Open-Box / Refurbished，同型号会有更低价的另一个 SKU。不剔除就会把「开盒价」当新品价写进价格监控——这是 Best Buy 版的 32A4NV 事故。注意不要把 'protection plan' / 'bundle' 一律 reject（Costco US 教训：延保打包进标题仍可能是真电视）。",
+      "title_contains_any": [
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "cable",
+        "adapter",
+        "screen protector",
+        "soundbar",
+        "projector",
+        "open-box",
+        "open box",
+        "refurbished",
+        "pre-owned",
+        "preowned",
+        "renewed",
+        "geek squad certified"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 50,
+      "max_pages": 10,
+      "_pending_2026_09_20": "★type 待定：确认后端后再改成 url_page / query_param / click_more。max_reviews=50 与加拿大线对齐（单型号单站最多 50 条）。"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "interval_sec": 10.0,
+    "retail_page_wait": "h1",
+    "_note": "requires_browser=true：搜索页是客户端渲染。若实测 PDP 是服务端渲染，可加 detail_http=true 把商品页降到纯 HTTP（Costco US 的做法：每个 PDP 从 10~20 秒降到 1~2 秒）。",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

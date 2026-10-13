@@ -1,0 +1,229 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "saturn_de",
+  "name": "Saturn",
+  "country": "Germany",
+  "channel": "Saturn",
+  "region": "DE",
+  "base_url": "https://www.saturn.de",
+  "currency": "EUR",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "_de_sites_probe 实测探测 2026-09-25; 评价来源探测 2026-09-26 LIMIT5: 5/5 PDP 403 Cloudflare 'Just a moment...' JS挑战 → blocked, 评价来源未确认(同集团 mediamarkt_de 同出口IP 200可达; 不标none因被拦≠无评价) | 2026-10-11 MMS 集团共享规则(mediamarkt_de 实测): search.html?query + mms-product-card + jsonld 变体选中 + mms_graphql 评价 | 2026-10-11 MMS 集团共享规则(mediamarkt_de 实测): search.html?query + mms-product-card + jsonld 变体选中 + mms_graphql 评价",
+  "status": "candidate",
+  "anchor": "h1",
+  "search": {
+    "container": "a[data-test='mms-router-link-product-list-item-link']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[data-test='product-title']"
+      ],
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "scroll_passes": 3,
+    "search_url_template": "{base}/de/search.html?query={q}",
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2,
+      "min_candidates": 3,
+      "retries": 3
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']",
+        "[data-testid*='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[data-testid*='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld_first": true,
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-test='mms-price']",
+        "[data-test='branded-price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "EUR"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[data-test='mms-strike-price-type-rrp']"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "specs": [],
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": [
+        "aggregateRating.reviewCount",
+        "aggregateRating.ratingCount"
+      ],
+      "selectors": [
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "source": "mms_graphql",
+    "_note": "MMS 集团 PWA：评价底层 BazaarVoice，站方自家 GraphQL(GetProductReviews) 包了一层。第1页随 SSR 内联 __PRELOADED_STATE__.apolloState(GraphqlReview 实体)，第2页起点评价区分页按钮才发请求。自己拼 URL 重放会被 WAF 拦(429/403)，故 overseas/mms_reviews.py 不重放、只在真实页面点分页截获站方响应。评价按商品族聚合(reviewProductId 可能是同系列别尺寸)，串尺寸条数记入 meta.cross_product，来源商品号写进 review_url 锚点 #mms-src-product=",
+    "limit": 60
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3,
+      "core_size_tokens": [
+        "class",
+        "inch",
+        "in",
+        "\"",
+        "zoll",
+        "series"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "soundbar",
+        "projektor",
+        "wandhalterung",
+        "halterung",
+        "standfuß",
+        "kabel",
+        "fernbedienung",
+        "zubehör",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "cable",
+        "adapter",
+        "screen protector"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "click_more",
+      "max_reviews": 1000,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "detail_http": false,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1, script[type='application/ld+json']",
+    "nav_timeout_ms": 30000,
+    "max_retries": 3
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.9
+  },
+  "_block_status": "2026-10-11 US 出口搜索页 403(反爬)。规则按 mediamarkt_de 实测同栈写好，待换欧洲出口实测验证。"
+}

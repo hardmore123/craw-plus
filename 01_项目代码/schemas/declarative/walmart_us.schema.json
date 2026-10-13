@@ -1,0 +1,60 @@
+{
+  "_comment": "Walmart 美国站抽取规则（草案）。需美国代理访问真实 PDP 后按实测 DOM/__NEXT_DATA__ 校准；价格/评分优先走 JSON-LD schema.org Product 兜底。",
+  "anchor": "h1",
+
+  "search": {
+    "container": "div[data-item-id], div[data-testid='list-view'] > div",
+    "sku": { "self_attr": "data-item-id" },
+    "title": { "selectors": ["a span[data-automation-id='product-title']", "span.lh-title"] },
+    "url_template": "https://www.walmart.com/ip/{sku}"
+  },
+
+  "product": {
+    "title": { "selectors": ["h1[itemprop='name']", "h1.prod-ProductTitle", "h1"], "transform": "clean_text" },
+    "brand": { "selectors": ["a[data-seo-id='brand-name']", ".prod-brandName"], "jsonld": "brand.name", "transform": "brand" },
+    "model": { "jsonld": "model", "transform": "clean_text" },
+    "size": { "selectors": ["[data-testid='screen-size']"], "transform": "size_inch" }
+  },
+
+  "price": {
+    "price": {
+      "selectors": ["span[itemprop='price']", "span[data-testid='price-wrap'] span", "div.price-characteristic"],
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": { "jsonld": "offers.priceCurrency", "transform": "currency" },
+    "list_price": { "selectors": ["span.strike-through", ".was-price"], "transform": "money" },
+    "in_stock": { "selectors": ["button[data-automation-id='atc']", "[data-testid='add-to-cart']"], "transform": "in_stock" },
+    "raw_text": { "selectors": ["span[itemprop='price']"], "transform": "clean_text" }
+  },
+
+  "specs": [
+    { "type": "kvlist", "container": "div.specification-table tr, [data-testid='product-specs'] div", "limit": 150 }
+  ],
+
+  "summary": {
+    "avg_rating": {
+      "selectors": ["span.rating-number", "[itemprop='ratingValue']"],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": ["a[data-testid='reviews-count']", "[itemprop='reviewCount']"],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+
+  "reviews": {
+    "container": "div[data-testid='reviews-section'] li, div.review-card, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "rating": { "selectors": ["[itemprop='ratingValue']", ".review-rating"], "transform": "rating" },
+      "title": { "selectors": ["h3.review-title", ".review-title"], "transform": "clean_text" },
+      "body": { "selectors": ["span.review-text", ".review-body"], "transform": "clean_text" },
+      "author": { "selectors": [".review-footer-userNickname", ".author"], "transform": "clean_text" },
+      "review_date": { "selectors": ["div.review-date", "time"], "transform": "clean_text" },
+      "helpful_count": { "selectors": [".like-button-count", ".helpful-count"], "transform": "int" }
+    }
+  }
+}

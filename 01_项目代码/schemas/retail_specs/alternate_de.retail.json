@@ -1,0 +1,328 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "alternate_de",
+  "name": "Alternate",
+  "country": "Germany",
+  "channel": "Alternate",
+  "region": "DE",
+  "base_url": "https://www.alternate.de",
+  "currency": "EUR",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "_de_sites_probe 实测探测 2026-09-25；_alternate_de_probe2 评价复核 2026-09-25（23款 Hisense 电视评价区全显示 Keine Produktbewertungen vorhanden → source=none）",
+  "status": "candidate",
+  "anchor": "h1",
+  "search": {
+    "container": "a.card",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3
+    },
+    "search_url_template": "{base}/listing.xhtml?q={q}"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']",
+        "[data-testid*='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[data-testid*='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "_note": "重建: 原 spec price 段把 jsonld/selectors 写在顶层（非 price.price 结构），按 RetailSpec 规范重建为标准 5 字段。Alternate 是德国电商，价格走 JSON-LD Product.offers，selectors 兜底。",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "EUR"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [],
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "source": "jsonld",
+    "container": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+    "limit": 40,
+    "jsonld": {
+      "product_type": "Product",
+      "aggregateRating": "aggregateRating",
+      "review_array": "review",
+      "field_map": {
+        "review_key": "datePublished|author.name",
+        "rating": "reviewRating.ratingValue",
+        "title": "name",
+        "body": "description",
+        "author": "author.name",
+        "review_date": "datePublished"
+      }
+    },
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[itemprop='name']",
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3,
+      "core_size_tokens": [
+        "class",
+        "inch",
+        "in",
+        "\"",
+        "zoll",
+        "series"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "soundbar",
+        "projektor",
+        "wandhalterung",
+        "halterung",
+        "standfuß",
+        "kabel",
+        "fernbedienung",
+        "zubehör",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "cable",
+        "adapter",
+        "screen protector"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {},
+  "incremental": {},
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "detail_http": false,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1, script[type='application/ld+json']",
+    "nav_timeout_ms": 30000,
+    "max_retries": 3
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.9
+  },
+  "_autofix_search": {
+    "date": "2026-10-11",
+    "tool": "scripts/autofix_search.py",
+    "evidence": {
+      "links": 24,
+      "verified_models": [
+        "75E8S:1169.0",
+        "GQ75QN72FATXZG:1149.0"
+      ]
+    },
+    "tried": [
+      "{base}/suche/{q}/ [Hisense tv] 404 links=0",
+      "{base}/search?q={q} [Hisense tv] 404 links=0",
+      "{base}/search?text={q} [Hisense tv] 404 links=0",
+      "{base}/search?query={q} [Hisense tv] 404 links=0",
+      "{base}/buscar?q={q} [Hisense tv] 404 links=0",
+      "{base}/busca?q={q} [Hisense tv] 404 links=0",
+      "{base}/catalogsearch/result/?q={q} [Hisense tv] 404 links=0",
+      "{base}/search/?q={q} [Hisense tv] 404 links=0",
+      "{base}/s?k={q} [Hisense tv] 404 links=0",
+      "{base}/?s={q}&post_type=product [Hisense tv] 200 links=0",
+      "{base}/{q}?_q={q}&map=ft [Hisense tv] 404 links=0",
+      "{base}/search?keyword={q} [Hisense tv] 404 links=0"
+    ]
+  }
+}

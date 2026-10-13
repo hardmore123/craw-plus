@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>竞品对阵分析 · 日本线 65寸旗舰 · 电视产品运营平台</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#fff; --border:#e4e7ed; --text:#303133; --text2:#606266; --text3:#909399;
+    --our:#e23d2c; --our-bg:#fdf2f0; --lead:#67c23a; --lead-bg:#f0f9eb;
+    --weak:#e6a23c; --weak-bg:#fdf6ec; --gap:#909399; --gap-bg:#f4f4f5;
+    --primary:#2c6cf6; --primary-bg:#ecf2fe;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+  .wrap{max-width:1400px;margin:0 auto;padding:20px;}
+  h1{font-size:22px;margin-bottom:4px;}
+  .sub{color:var(--text2);font-size:13px;margin-bottom:18px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:16px;}
+  .card h2{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .card h2 .tag{font-size:12px;font-weight:400;color:var(--text3);background:var(--gap-bg);padding:2px 8px;border-radius:10px;}
+  .desc{color:var(--text2);font-size:13px;margin-bottom:14px;}
+
+  /* 对阵对象选择条 */
+  .selector{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .model-chip{display:flex;flex-direction:column;align-items:center;padding:10px 14px;border:2px solid var(--border);border-radius:8px;min-width:130px;background:#fff;cursor:default;transition:.2s;}
+  .model-chip.our{border-color:var(--our);background:var(--our-bg);}
+  .model-chip .brand{font-size:12px;color:var(--text3);font-weight:600;}
+  .model-chip .model{font-size:15px;font-weight:700;margin:2px 0;}
+  .model-chip .price{font-size:13px;color:var(--primary);font-weight:600;}
+  .model-chip .tier{font-size:11px;color:var(--text3);}
+  .model-chip.our .brand{color:var(--our);}
+  .role-badge{font-size:10px;padding:1px 6px;border-radius:8px;background:var(--our);color:#fff;margin-top:4px;}
+  .role-badge.comp{background:var(--primary);}
+
+  /* SPEC 对比表 */
+  table.spec{width:100%;border-collapse:collapse;font-size:13px;}
+  table.spec th,table.spec td{border:1px solid var(--border);padding:8px 10px;text-align:center;vertical-align:middle;}
+  table.spec th{background:#fafafa;font-weight:600;color:var(--text2);font-size:12px;position:sticky;top:0;}
+  table.spec td.param{background:#fafafa;font-weight:600;text-align:left;min-width:110px;}
+  table.spec td.our{background:var(--our-bg);font-weight:600;}
+  table.spec td.lead{color:var(--lead);font-weight:700;}
+  table.spec td.weak{color:var(--weak);font-weight:700;}
+  table.spec td.gap{color:var(--gap);}
+  .arrow{font-size:11px;margin-left:4px;}
+  .arrow.up{color:var(--lead);} .arrow.down{color:var(--weak);}
+  .src{font-size:10px;color:var(--text3);display:block;margin-top:2px;}
+  .cat-tag{font-size:10px;padding:1px 6px;border-radius:8px;background:var(--primary-bg);color:var(--primary);}
+  .cat-tag.画质{background:#f0f9eb;color:#67c23a;}
+  .cat-tag.智能{background:#fdf6ec;color:#e6a23c;}
+  .cat-tag.游戏{background:#ecf2fe;color:#2c6cf6;}
+  .cat-tag.连接{background:#f4f4f5;color:#909399;}
+  .cat-tag.音质{background:#fdf2f0;color:#e23d2c;}
+  .cat-tag.设计{background:#f0f9eb;color:#67c23a;}
+
+  /* 雷达图 */
+  #radar{width:100%;height:480px;}
+
+  /* 卖点 */
+  .selling{display:flex;flex-wrap:wrap;gap:8px;}
+  .sell-tag{padding:6px 12px;border-radius:16px;font-size:13px;background:var(--primary-bg);color:var(--primary);border:1px solid #c8d9fc;}
+  .sell-tag .conf{font-size:10px;color:var(--text3);margin-left:6px;}
+
+  /* AI 结论卡 */
+  .conclusion{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .concl-col{border-radius:8px;padding:14px;}
+  .concl-col h3{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .concl-col.adv{background:var(--lead-bg);border:1px solid #b3e19d;}
+  .concl-col.dis{background:var(--weak-bg);border:1px solid #f5dab1;}
+  .concl-col.opp{background:var(--primary-bg);border:1px solid #c8d9fc;}
+  .concl-col.adv h3{color:#529b2e;} .concl-col.dis h3{color:#b88230;} .concl-col.opp h3{color:#2c6cf6;}
+  .concl-item{background:#fff;border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:13px;}
+  .concl-item .conf{float:right;font-size:11px;color:var(--text3);}
+  .concl-item .ev{font-size:11px;color:var(--text3);display:block;margin-top:3px;}
+
+  /* 指标条 */
+  .metrics{display:flex;gap:20px;margin-bottom:12px;flex-wrap:wrap;}
+  .metric{flex:1;min-width:120px;background:#fafafa;border-radius:6px;padding:10px 14px;text-align:center;}
+  .metric .num{font-size:24px;font-weight:700;}
+  .metric .lbl{font-size:12px;color:var(--text3);}
+  .metric.lead .num{color:var(--lead);} .metric.weak .num{color:var(--weak);} .metric.opp .num{color:var(--primary);}
+
+  .footer{color:var(--text3);font-size:11px;text-align:center;margin-top:8px;}
+  .gap-list{font-size:12px;color:var(--text2);}
+  .gap-list li{margin:4px 0;}
+  .gap-list .warn{color:var(--weak);font-weight:600;}
+  @media(max-width:768px){.conclusion{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>竞品对阵分析 · 日本线 65寸旗舰</h1>
+  <div class="sub">SPEC 归一化对比 · AI 自动标注优劣势 · 点击参数可溯源 · 数据快照 2026-09-09（kakaku 价格 + 各品牌日本官网 SPEC）</div>
+
+  <!-- 核心指标 -->
+  <div class="card">
+    <h2>核心指标 <span class="tag">海信 65U8R 视角</span></h2>
+    <div class="metrics">
+      <div class="metric lead"><div class="num" id="m-lead">4</div><div class="lbl">领先参数数</div></div>
+      <div class="metric weak"><div class="num" id="m-weak">4</div><div class="lbl">落后参数数</div></div>
+      <div class="metric opp"><div class="num" id="m-opp">4</div><div class="lbl">机会点数</div></div>
+      <div class="metric"><div class="num" style="color:var(--our)">¥149,800</div><div class="lbl">我方最低价（JPY）</div></div>
+      <div class="metric"><div class="num">-48%</div><div class="lbl">低于竞品均价</div></div>
+      <div class="metric"><div class="num">6</div><div class="lbl">对阵型号数</div></div>
+    </div>
+  </div>
+
+  <!-- 对阵对象选择条 -->
+  <div class="card">
+    <h2>对阵对象选择 <span class="tag">65寸旗舰档 · AI 推荐组合</span></h2>
+    <div class="desc">已采纳 AI 推荐组合：海信 65U8R（我方）vs TCL/Sony/REGZA/Sharp/Panasonic 同档旗舰。价格来自 kakaku 2026-09-09 最低价。</div>
+    <div class="selector" id="selector"></div>
+  </div>
+
+  <!-- SPEC 归一化对比表 -->
+  <div class="card">
+    <h2>SPEC 归一化对比 <span class="tag">AI 自动标注优劣势 · 术语经归一化映射表对齐</span></h2>
+    <div class="desc">基于 dim_spec_normalization_map 对齐同族术语（如 QD/QLED/量子ドット 视为同族）。<span style="color:var(--lead)">↑领先</span> · <span style="color:var(--weak)">↓落后</span> · <span style="color:var(--gap)">—待维护</span>。分析逻辑示例：价格 ¥149,800 &lt; ¥220,448 → 价格领先；HDR格式6种 &gt; 3种 → HDR领先。</div>
+    <div style="overflow-x:auto;">
+      <table class="spec" id="specTable"></table>
+    </div>
+  </div>
+
+  <!-- 能力雷达图 -->
+  <div class="card">
+    <h2>能力雷达图 <span class="tag">画质·音质·智能·游戏·连接·设计 六维对比</span></h2>
+    <div class="desc">点击维度可查看该维度的参数构成与判定依据。海信 65U8R 在画质、游戏、设计维度领先，智能、连接维度为短板。</div>
+    <div id="radar"></div>
+  </div>
+
+  <!-- 营销卖点提取 -->
+  <div class="card">
+    <h2>营销卖点提取 <span class="tag">AI 抓取详情页宣传文案 · 标注置信度</span></h2>
+    <div class="selling" id="selling"></div>
+  </div>
+
+  <!-- AI 对阵结论卡 -->
+  <div class="card">
+    <h2>AI 对阵结论卡 <span class="tag">优势点 / 劣势点 / 机会点 · 可溯源</span></h2>
+    <div class="conclusion" id="conclusion"></div>
+    <div style="margin-top:14px;">
+      <button style="padding:8px 16px;border:1px solid var(--primary);background:var(--primary);color:#fff;border-radius:6px;cursor:pointer;font-size:13px;">一键生成可导出对阵报告</button>
+      <button style="padding:8px 16px;border:1px solid var(--border);background:#fff;color:var(--primary);border-radius:6px;cursor:pointer;font-size:13px;margin-left:8px;">机会点转入决策工作台</button>
+    </div>
+  </div>
+
+  <!-- 归一化缺口提示 -->
+  <div class="card">
+    <h2>归一化映射缺口 <span class="tag">待维护 · 给出候选映射</span></h2>
+    <ul class="gap-list" id="gaps"></ul>
+  </div>
+
+  <div class="footer">数据来源：日本线 SPEC 品牌官网（2026-09-28导出）+ kakaku 价格监控（2026-09-09）· 归一化映射表 dim_spec_normalization_map（status=PENDING 待人工确认）· AI 结论由规格对比生成，置信度标注</div>
+</div>
+
+<script>
+const DATA = {"comparison_name": "65寸旗舰对阵（日本线 2026Q3）", "size_inch": 65, "price_band": "旗舰", "snapshot_date": "2026-09-09", "currency": "JPY", "description": "基于日本线 kakaku 价格监控（2026-09-09）+ 各品牌日本官网 SPEC 提取的 65 寸旗舰对阵。Hisense 65U8R 为我方型号，对阵 TCL/Sony/REGZA/Sharp/Panasonic 同档旗舰。", "models": [{"brand": "Hisense", "model": "65U8R", "role": "our", "price_jpy": 149800, "price_tier": "高性价比旗舰", "source_url": "https://kakaku.com/item/K0001687325/"}, {"brand": "TCL", "model": "65C855", "role": "competitor", "price_jpy": 220448, "price_tier": "中高端旗舰", "source_url": "https://kakaku.com/item/K0001620704/"}, {"brand": "Sony", "model": "K-65XR70", "role": "competitor", "price_jpy": 318863, "price_tier": "高端旗舰", "source_url": "https://kakaku.com/item/K0001787489/"}, {"brand": "REGZA", "model": "65Z970R", "role": "competitor", "price_jpy": 274206, "price_tier": "高端旗舰", "source_url": "https://kakaku.com/item/K0001684572/"}, {"brand": "Sharp", "model": "4T-C65HN2", "role": "competitor", "price_jpy": 275000, "price_tier": "高端旗舰", "source_url": "https://kakaku.com/item/K0001799883/"}, {"brand": "Panasonic", "model": "TV-65W97C", "role": "competitor", "price_jpy": 356400, "price_tier": "顶级旗舰", "source_url": "https://kakaku.com/item/K0001785267/"}], "spec_matrix": {"PEAK_BRIGHTNESS": {"param_code": "PEAK_BRIGHTNESS", "param_name": "峰值亮度", "param_name_ja": "ピーク輝度", "category": "画质", "unit": "nits", "is_numeric": 1, "higher_is_better": 1, "note": "日本线SPEC无直接nits数值，按背光类型+画质引擎推断档位；需北美线product_spec补全数值", "values": {"Hisense": {"raw": "Mini-LED PRO", "display": "Mini-LED PRO（高輝度）", "numeric": null, "tier": "高"}, "TCL": {"raw": "直下式LED", "display": "直下式LED", "numeric": null, "tier": "中"}, "Sony": {"raw": "XR コントラスト ブースター 204 / XR バックライト マスタードライブ", "display": "XR背光大师驱动+对比度增强204", "numeric": null, "tier": "高"}, "REGZA": {"raw": "4K液晶パネル（Mini LEDバックライト）", "display": "Mini LED背光", "numeric": null, "tier": "高"}, "Sharp": {"raw": null, "display": "—（待维护）", "numeric": null, "tier": null}, "Panasonic": {"raw": "VA×Mini LED", "display": "VA×Mini LED", "numeric": null, "tier": "高"}}}, "DIMMING_ZONES": {"param_code": "DIMMING_ZONES", "param_name": "分区控光", "param_name_ja": "ローカルディミング", "category": "画质", "unit": "zones", "is_numeric": 1, "higher_is_better": 1, "note": "日本线仅TCL有局部调光标注●，其余按Mini-LED背光推断；zones数值需product_spec补全", "values": {"Hisense": {"raw": "Mini-LED PRO", "display": "Mini-LED PRO", "numeric": null, "tier": "高"}, "TCL": {"raw": "●", "display": "局部调光●", "numeric": null, "tier": "有"}, "Sony": {"raw": "XR バックライト マスタードライブ", "display": "XR背光大师驱动", "numeric": null, "tier": "高"}, "REGZA": {"raw": "Mini LEDバックライト", "display": "Mini LED背光", "numeric": null, "tier": "高"}, "Sharp": {"raw": null, "display": "—（待维护）", "numeric": null, "tier": null}, "Panasonic": {"raw": "VA×Mini LED", "display": "VA×Mini LED", "numeric": null, "tier": "高"}}}, "REFRESH_RATE": {"param_code": "REFRESH_RATE", "param_name": "刷新率", "param_name_ja": "リフレッシュレート/倍速", "category": "画质", "unit": "Hz", "is_numeric": 1, "higher_is_better": 1, "note": "海信/TCL/REGZA 支持144Hz游戏模式；Sony/Sharp/Panasonic 倍速面板", "values": {"Hisense": {"raw": "120Hz倍速（ゲームモード時144Hz VRRに対応）", "display": "144Hz（游戏模式）", "numeric": 144, "tier": "高"}, "TCL": {"raw": "DLG 240Hz", "display": "DLG 240Hz", "numeric": 240, "tier": "最高"}, "Sony": {"raw": "倍速駆動パネル/XR モーション クラリティー", "display": "倍速面板+XR运动清晰", "numeric": 120, "tier": "中"}, "REGZA": {"raw": "120Hz倍速（ゲームモード 144Hz VRR対応）", "display": "144Hz（游戏模式）", "numeric": 144, "tier": "高"}, "Sharp": {"raw": null, "display": "—（待维护）", "numeric": null, "tier": null}, "Panasonic": {"raw": null, "display": "—（待维护）", "numeric": null, "tier": null}}}, "CHIP": {"param_code": "CHIP", "param_name": "画质芯片", "param_name_ja": "画質エンジン/プロセッサー", "category": "画质", "unit": null, "is_numeric": 0, "higher_is_better": null, "note": "归一化映射组4：信芯AI画质芯片族 ↔ AI Picture(Samsung)/XR(Sony)/AIPQ(TCL)/レグザエンジン(REGZA)", "values": {"Hisense": {"raw": "HI-VIEW AIエンジン PRO", "display": "HI-VIEW AI引擎 PRO"}, "TCL": {"raw": "AIPQ Engine Max III", "display": "AIPQ Engine Max III"}, "Sony": {"raw": "プロセッサー「XR」", "display": "XR处理器"}, "REGZA": {"raw": "レグザエンジンZRα", "display": "REGZA引擎 ZRα"}, "Sharp": {"raw": null, "display": "—（待维护）"}, "Panasonic": {"raw": null, "display": "—（待维护）"}}}, "SYSTEM": {"param_code": "SYSTEM", "param_name": "智能系统", "param_name_ja": "システム/OS", "category": "智能", "unit": null, "is_numeric": 0, "higher_is_better": null, "note": "归一化映射组5：VIDAA ↔ Tizen/webOS/Google TV/Android TV/My Home Screen。海信VIDAA生态弱于Google TV系", "values": {"Hisense": {"raw": "VIDAA", "display": "VIDAA", "weakness_flag": true}, "TCL": {"raw": "Android TV Google TV", "display": "Google TV（Android TV）"}, "Sony": {"raw": "Google TV", "display": "Google TV"}, "REGZA": {"raw": "ざんまいスマートアクセス（Android TV）", "display": "Google TV（Android TV）"}, "Sharp": {"raw": "AQUOS ファミリンク", "display": "AQUOS家庭链接"}, "Panasonic": {"raw": "My Home Screen", "display": "My Home Screen"}}}, "GAMING": {"param_code": "GAMING", "param_name": "游戏特性", "param_name_ja": "ゲーム機能", "category": "游戏", "unit": null, "is_numeric": 0, "higher_is_better": 1, "note": "归一化映射组9：游戏模式族。海信144Hz游戏PRO+FreeSync Premium 领先", "values": {"Hisense": {"raw": "144Hz ゲームモードPRO / VRR、ALLM、AMD FreeSync Premium™", "display": "144Hz游戏PRO+FreeSync Premium", "advantage_flag": true}, "TCL": {"raw": "Game Master/VRR/ALLM/DLG 240Hz", "display": "Game Master+DLG 240Hz", "advantage_flag": true}, "Sony": {"raw": "ゲームメニュー ●", "display": "游戏菜单"}, "REGZA": {"raw": "瞬速ゲームモード / VRR / ALLM / AMD FreeSync Premium", "display": "瞬速游戏+FreeSync Premium", "advantage_flag": true}, "Sharp": {"raw": null, "display": "—（待维护）"}, "Panasonic": {"raw": null, "display": "—（待维护）"}}}, "COLOR_GAMUT": {"param_code": "COLOR_GAMUT", "param_name": "色域", "param_name_ja": "広色域/量子ドット", "category": "画质", "unit": "%", "is_numeric": 1, "higher_is_better": 1, "note": "归一化映射组3：量子点族。QLED/量子ドット/Quantum Dot同族。DCI-P3百分比需product_spec补全", "values": {"Hisense": {"raw": "広色域量子ドット", "display": "广色域量子点（QLED）", "tier": "高"}, "TCL": {"raw": "量子ドット（QLED）有り", "display": "量子点QLED", "tier": "高"}, "Sony": {"raw": "量子ドット搭載", "display": "量子点（XR Triluminos）", "tier": "高"}, "REGZA": {"raw": "3次元カラーリマスターPRO", "display": "3D色彩重制PRO", "tier": "中"}, "Sharp": {"raw": null, "display": "—（待维护）", "tier": null}, "Panasonic": {"raw": null, "display": "—（待维护）", "tier": null}}}, "HDMI": {"param_code": "HDMI", "param_name": "HDMI 2.1", "param_name_ja": "HDMI 2.1仕様", "category": "连接", "unit": "口", "is_numeric": 0, "higher_is_better": 1, "note": "归一化映射组7：HDMI族。海信2口HDMI2.1，Sony4口，TCL2口2.1", "values": {"Hisense": {"raw": "HDMI 2.1×2 / HDMI 2.0×2 + eARC/ARC", "display": "HDMI2.1×2 + eARC", "numeric": 2}, "TCL": {"raw": "3個(2個Ver2.1)", "display": "HDMI2.1×2 + HDMI2.0×1", "numeric": 2}, "Sony": {"raw": "4系統 / 4K120fps eARC VRR ALLM SBTM", "display": "HDMI2.1×4 + 4K120 eARC", "numeric": 4, "advantage_flag": true}, "REGZA": {"raw": "4K144p/4K120p VRR eARC ALLM", "display": "4K144 + eARC + VRR", "numeric": null}, "Sharp": {"raw": "4入力/入力3,4のみ4K120Hz対応 VRR/ALLM", "display": "HDMI2.1×2（4K120）", "numeric": 2}, "Panasonic": {"raw": null, "display": "—（待维护）", "numeric": null}}}, "HDR": {"param_code": "HDR", "param_name": "HDR格式", "param_name_ja": "HDR対応", "category": "画质", "unit": null, "is_numeric": 0, "higher_is_better": 1, "note": "归一化映射组8：HDR族。HDR10+/Dolby Vision/HLG同族对比。海信支持最全（6种）", "values": {"Hisense": {"raw": "HDR10/HLG/HDR10+/HDR10+Adaptive/Dolby Vision/Dolby Vision IQ", "display": "HDR10/HLG/HDR10+/DV/DV IQ（6种）", "advantage_flag": true}, "TCL": {"raw": "HDR10+/HLG/DolbyVision IQ/DolbyVision Gaming", "display": "HDR10+/HLG/DV IQ/DV Gaming（4种）"}, "Sony": {"raw": "HDR10/HLG/Dolby Vision", "display": "HDR10/HLG/DV（3种）"}, "REGZA": {"raw": "●", "display": "支持HDR（格式待维护）", "tier": "待维护"}, "Sharp": {"raw": "HDR10/Dolby Vision IQ/HLG", "display": "HDR10/DV IQ/HLG（3种）"}, "Panasonic": {"raw": null, "display": "—（待维护）", "tier": "待维护"}}}, "RESOLUTION": {"param_code": "RESOLUTION", "param_name": "分辨率", "param_name_ja": "画素数", "category": "画质", "unit": null, "is_numeric": 0, "higher_is_better": 1, "note": "全部4K，无差异", "values": {"Hisense": {"display": "3840×2160（4K）"}, "TCL": {"display": "3840×2160（4K UHD）"}, "Sony": {"display": "3840×2160（4K）"}, "REGZA": {"display": "3840×2160（4K）"}, "Sharp": {"display": "3840×2160（4K）"}, "Panasonic": {"display": "3840×2160（4K）"}}}, "SOUND": {"param_code": "SOUND", "param_name": "音响功率", "param_name_ja": "スピーカー最大出力", "category": "音质", "unit": "W", "is_numeric": 1, "higher_is_better": 1, "note": "REGZA 150W遥遥领先，Panasonic 70W，海信/TCL 60W", "values": {"Hisense": {"raw": "60W", "display": "60W", "numeric": 60}, "TCL": {"raw": "60W(10W+10W+10W+10W+20W) ONKYO", "display": "60W（ONKYO+低音炮）", "numeric": 60}, "Sony": {"raw": "40W(10+10+10+10)", "display": "40W（声学多音频）", "numeric": 40}, "REGZA": {"raw": "150W合計", "display": "150W（多单元+低音炮）", "numeric": 150, "advantage_flag": true}, "Sharp": {"raw": "65W", "display": "65W", "numeric": 65}, "Panasonic": {"raw": "70W", "display": "70W", "numeric": 70}}}, "DOLBY_ATMOS": {"param_code": "DOLBY_ATMOS", "param_name": "杜比全景声", "param_name_ja": "Dolby Atmos", "category": "音质", "unit": null, "is_numeric": 0, "higher_is_better": 1, "note": "", "values": {"Hisense": {"raw": "eilex音響処理", "display": "eilex音响处理（Atmos待维护）"}, "TCL": {"raw": "Dolby ATMOS、DTS-X", "display": "Dolby Atmos+DTS-X"}, "Sony": {"raw": "●", "display": "支持Dolby Atmos"}, "REGZA": {"raw": "●（5.1.2ch対応）", "display": "Dolby Atmos 5.1.2ch"}, "Sharp": {"raw": null, "display": "—（待维护）"}, "Panasonic": {"raw": null, "display": "—（待维护）"}}}, "POWER": {"param_code": "POWER_CONSUMPTION", "param_name": "额定功耗", "param_name_ja": "定格消費電力", "category": "设计", "unit": "W", "is_numeric": 1, "higher_is_better": 0, "note": "功耗越低越好；海信247W最低，TCL 380W最高", "values": {"Hisense": {"raw": "247W", "display": "247W", "numeric": 247, "advantage_flag": true}, "TCL": {"raw": "380W", "display": "380W", "numeric": 380}, "Sony": {"raw": "286W", "display": "286W", "numeric": 286}, "REGZA": {"raw": null, "display": "—（待维护）", "numeric": null}, "Sharp": {"raw": "144kWh/年", "display": "144kWh/年", "numeric": null}, "Panasonic": {"raw": "285W", "display": "285W", "numeric": 285}}}}, "radar_dims": {"画质": {"weight_params": ["PEAK_BRIGHTNESS", "DIMMING_ZONES", "REFRESH_RATE", "COLOR_GAMUT", "HDR", "CHIP"], "description": "亮度+控光+刷新+色域+HDR+芯片综合"}, "音质": {"weight_params": ["SOUND", "DOLBY_ATMOS"], "description": "音响功率+杜比全景声"}, "智能": {"weight_params": ["SYSTEM"], "description": "智能系统生态"}, "游戏": {"weight_params": ["GAMING", "REFRESH_RATE", "HDMI"], "description": "游戏特性+刷新率+HDMI2.1"}, "连接": {"weight_params": ["HDMI"], "description": "HDMI2.1接口数"}, "设计": {"weight_params": ["POWER"], "description": "能效/功耗"}}, "ai_conclusion": {"advantage_points": [{"point": "价格领先：65U8R 最低价 ¥149,800，比同档竞品均价 ¥289,623 低 48%", "evidence": "kakaku价格 2026-09-09", "confidence": 0.98}, {"point": "HDR格式最全：支持6种HDR（HDR10/HLG/HDR10+/HDR10+Adaptive/DV/DV IQ），优于Sony/Sharp的3种", "evidence": "spec_row HDR対応行", "confidence": 0.95}, {"point": "游戏能力第一梯队：144Hz游戏PRO+AMD FreeSync Premium，与TCL DLG 240Hz、REGZA瞬速游戏同档", "evidence": "spec_row ゲームモード+HDMI2.1仕様", "confidence": 0.92}, {"point": "能效领先：额定功耗247W为全场最低，优于TCL 380W、Sony 286W", "evidence": "spec_row 定格消費電力", "confidence": 0.9}], "disadvantage_points": [{"point": "智能系统生态弱：VIDAA生态/应用覆盖弱于Google TV（TCL/Sony/REGZA均采用）", "evidence": "归一化映射组5 智能系统族", "confidence": 0.88}, {"point": "HDMI2.1接口数偏少：仅2口HDMI2.1，少于Sony的4口", "evidence": "spec_row HDMI行", "confidence": 0.85}, {"point": "音响功率中规中矩：60W低于REGZA 150W、Panasonic 70W、Sharp 65W", "evidence": "spec_row スピーカー最大出力", "confidence": 0.8}, {"point": "画质芯片品牌认知弱：HI-VIEW AI引擎 PRO在日市场认知度低于Sony XR/REGZA ZRα", "evidence": "spec_row エンジン", "confidence": 0.7}], "opportunity_points": [{"point": "价格带卡位机会：¥14-16万价格带无竞品直接对抗，可主打'旗舰画质+平民价格'", "evidence": "价格分布空隙", "confidence": 0.9}, {"point": "游戏电视细分：144Hz+FreeSync Premium可对标REGZA瞬速游戏，抢PS5/PC玩家", "evidence": "游戏特性对标", "confidence": 0.85}, {"point": "VIDAA本地化机会：针对日本市场强化本地视频App/语音，弥补生态劣势", "evidence": "智能系统族归一化", "confidence": 0.75}, {"point": "Mini-LED PRO背光差异化：以Mini-LED高亮度+低功耗组合打'能效旗舰'标签", "evidence": "背光+功耗组合", "confidence": 0.82}]}, "normalization_gaps": [{"param": "PEAK_BRIGHTNESS", "issue": "日本线SPEC无nits数值，仅有背光类型", "candidate": "需补北美线product_spec的Brightness数值行"}, {"param": "DIMMING_ZONES", "issue": "仅TCL有●标注，其余无zones数值", "candidate": "需补product_spec的Dimming Zones数值"}, {"param": "SYSTEM(SHARP)", "issue": "Sharp未明确OS，仅标注AQUOSファミリンク", "candidate": "待维护：确认Sharp日本线OS"}, {"param": "GAMING(SHARP/Panasonic)", "issue": "游戏特性数据缺失", "candidate": "待维护：补Sharp/Panasonic游戏模式"}]};
+
+// 渲染对阵对象选择条
+const ourBrand = 'Hisense';
+const modelOrder = ['Hisense','TCL','Sony','REGZA','Sharp','Panasonic'];
+const priceMap = {};
+DATA.models.forEach(m=>priceMap[m.brand]=m);
+
+const sel = document.getElementById('selector');
+modelOrder.forEach(brand=>{
+  const m = priceMap[brand];
+  if(!m) return;
+  const div = document.createElement('div');
+  div.className = 'model-chip' + (m.role==='our'?' our':'');
+  div.innerHTML = `
+    <div class="brand">${m.brand}${m.role==='our'?'（我方）':''}</div>
+    <div class="model">${m.model}</div>
+    <div class="price">¥${Number(m.price_jpy).toLocaleString()}</div>
+    <div class="tier">${m.price_tier}</div>
+    ${m.role==='our'?'<span class="role-badge">我方</span>':'<span class="role-badge comp">竞品</span>'}
+  `;
+  sel.appendChild(div);
+});
+
+// 渲染 SPEC 对比表
+const params = DATA.spec_matrix;
+const paramKeys = ['PEAK_BRIGHTNESS','DIMMING_ZONES','REFRESH_RATE','CHIP','SYSTEM','GAMING','COLOR_GAMUT','HDMI','HDR','RESOLUTION','SOUND','DOLBY_ATMOS','POWER'];
+const brands = modelOrder;
+
+const tbl = document.getElementById('specTable');
+// 表头
+let thead = '<thead><tr><th>参数</th><th>分类</th>';
+brands.forEach(b=>{
+  const m=priceMap[b];
+  thead += `<th${m.role==='our'?' style="background:var(--our-bg);color:var(--our)"':''}>${m.brand}<br><b>${m.model}</b><br><span style="font-weight:400;color:var(--primary)">¥${Number(m.price_jpy).toLocaleString()}</span></th>`;
+});
+thead += '</tr></thead>';
+
+let tbody = '<tbody>';
+paramKeys.forEach(pk=>{
+  const p = params[pk];
+  if(!p) return;
+  tbody += `<tr><td class="param">${p.param_name}<br><span class="src">${p.param_name_ja||''}</span></td><td><span class="cat-tag ${p.category}">${p.category}</span></td>`;
+  brands.forEach(b=>{
+    const v = p.values[b];
+    if(!v){ tbody += '<td class="gap">—</td>'; return; }
+    let cls = '';
+    let arrow = '';
+    if(v.advantage_flag){ cls='lead'; arrow='<span class="arrow up">↑领先</span>'; }
+    else if(v.weakness_flag){ cls='weak'; arrow='<span class="arrow down">↓落后</span>'; }
+    if(b===ourBrand && cls==='') cls='our';
+    if(v.display && v.display.includes('待维护')) cls='gap';
+    tbody += `<td class="${cls}">${v.display||'—'}${arrow}</td>`;
+  });
+  tbody += '</tr>';
+});
+tbody += '</tbody>';
+tbl.innerHTML = thead + tbody;
+
+// 渲染能力雷达图
+const radar = echarts.init(document.getElementById('radar'));
+const dims = Object.keys(DATA.radar_dims);
+
+// 为每个品牌计算各维度得分（0-100，基于参数tier/数值相对排名）
+function calcScores(){
+  const scores = {};
+  brands.forEach(b=>{
+    scores[b] = {};
+    dims.forEach(dim=>{
+      scores[b][dim] = calcDimScore(b, dim);
+    });
+  });
+  return scores;
+}
+
+function calcDimScore(brand, dim){
+  const wps = DATA.radar_dims[dim].weight_params;
+  let total = 0, count = 0;
+  wps.forEach(pk=>{
+    const p = params[pk];
+    if(!p) return;
+    const v = p.values[brand];
+    if(!v) { count++; return; } // 缺失算50分中位
+    let score = 50;
+    // 基于 tier
+    if(v.tier==='最高') score=95;
+    else if(v.tier==='高') score=82;
+    else if(v.tier==='中') score=65;
+    else if(v.tier==='有') score=70;
+    else if(v.tier==='待维护'||v.tier===null) score=50;
+    // 基于 numeric 对比
+    if(v.numeric!=null && p.is_numeric){
+      const allNums = brands.map(bb=>p.values[bb]?.numeric).filter(x=>x!=null);
+      if(allNums.length){
+        const mx=Math.max(...allNums), mn=Math.min(...allNums);
+        if(mx>mn){
+          score = p.higher_is_better
+            ? 60 + 35*(v.numeric-mn)/(mx-mn)
+            : 60 + 35*(mx-v.numeric)/(mx-mn);
+        }
+      }
+    }
+    // 优势/劣势标记
+    if(v.advantage_flag) score = Math.max(score, 85);
+    if(v.weakness_flag) score = Math.min(score, 45);
+    // SYSTEM 特殊：Google TV 系生态强
+    if(pk==='SYSTEM' && v.display && !v.display.includes('VIDAA')) score=80;
+    if(pk==='SYSTEM' && v.display && v.display.includes('VIDAA')) score=55;
+    total += score; count++;
+  });
+  return count? Math.round(total/count) : 50;
+}
+
+const scores = calcScores();
+const radarOpt = {
+  tooltip:{trigger:'item'},
+  legend:{bottom:0, data: brands.map(b=>priceMap[b].brand+' '+priceMap[b].model)},
+  radar:{
+    indicator: dims.map(d=>({name:d, max:100})),
+    shape:'polygon',
+    splitNumber:5,
+    axisName:{color:'#606266',fontSize:12},
+    splitLine:{lineStyle:{color:'#e4e7ed'}},
+    splitArea:{areaStyle:{color:['#fafafa','#fff']}},
+    axisLine:{lineStyle:{color:'#e4e7ed'}}
+  },
+  series:[{
+    type:'radar',
+    data: brands.map(b=>{
+      const m=priceMap[b];
+      return {
+        name: m.brand+' '+m.model,
+        value: dims.map(d=>scores[b][d]),
+        areaStyle:{opacity: b===ourBrand?0.3:0.1},
+        lineStyle:{width: b===ourBrand?3:1.5, color: b===ourBrand?'#e23d2c':undefined},
+        itemStyle:{color: b===ourBrand?'#e23d2c':undefined}
+      };
+    })
+  }]
+};
+radar.setOption(radarOpt);
+window.addEventListener('resize',()=>radar.resize());
+
+// 雷达图点击维度查看构成
+radar.on('click', e=>{
+  if(e.name){
+    const dim = e.name;
+    const wps = DATA.radar_dims[dim].weight_params;
+    let msg = `【${dim}】维度参数构成：\n${DATA.radar_dims[dim].description}\n\n`;
+    wps.forEach(pk=>{
+      const p = params[pk];
+      if(!p) return;
+      msg += `${p.param_name}：\n`;
+      brands.forEach(b=>{
+        const v=p.values[b];
+        msg += `  ${priceMap[b].brand}: ${v?.display||'—'}\n`;
+      });
+      msg+='\n';
+    });
+    alert(msg);
+  }
+});
+
+// 营销卖点提取
+const sellTags = [
+  {tag:'Mini-LED PRO 高輝度背光', conf:0.95, brand:'Hisense'},
+  {tag:'144Hz ゲームモードPRO', conf:0.97, brand:'Hisense'},
+  {tag:'AMD FreeSync Premium', conf:0.95, brand:'Hisense'},
+  {tag:'広色域量子ドット（QLED）', conf:0.90, brand:'Hisense'},
+  {tag:'HDR10+/Dolby Vision IQ 6種対応', conf:0.93, brand:'Hisense'},
+  {tag:'HI-VIEW AIエンジン PRO', conf:0.88, brand:'Hisense'},
+  {tag:'低功耗247W 能效旗舰', conf:0.90, brand:'Hisense'},
+  {tag:'DLG 240Hz Game Master', conf:0.92, brand:'TCL'},
+  {tag:'ONKYO+低音炮 60W', conf:0.90, brand:'TCL'},
+  {tag:'XR Processor 認知AI', conf:0.94, brand:'Sony'},
+  {tag:'XR バックライト マスタードライブ', conf:0.93, brand:'Sony'},
+  {tag:'レグザエンジン ZRα', conf:0.91, brand:'REGZA'},
+  {tag:'150W マルチスピーカー', conf:0.96, brand:'REGZA'},
+  {tag:'瞬速ゲームモード+FreeSync', conf:0.89, brand:'REGZA'},
+];
+const sellDiv = document.getElementById('selling');
+sellTags.forEach(s=>{
+  const tag = document.createElement('span');
+  tag.className='sell-tag';
+  tag.innerHTML = `${s.tag}${s.brand!=='Hisense'?'<span class="conf">['+s.brand+']</span>':''}<span class="conf">置信度${(s.conf*100).toFixed(0)}%</span>`;
+  if(s.conf<0.9) tag.style.borderColor='var(--weak)';
+  sellDiv.appendChild(tag);
+});
+
+// AI 结论卡
+const concl = document.getElementById('conclusion');
+const c = DATA.ai_conclusion;
+function renderCol(cls, title, points){
+  let html = `<div class="concl-col ${cls}"><h3>${title}</h3>`;
+  points.forEach(p=>{
+    html += `<div class="concl-item">${p.point}<span class="conf">置信度 ${(p.confidence*100).toFixed(0)}%</span><span class="ev">溯源：${p.evidence}</span></div>`;
+  });
+  html += '</div>';
+  return html;
+}
+concl.innerHTML =
+  renderCol('adv','▲ 优势点', c.advantage_points) +
+  renderCol('dis','▼ 劣势点', c.disadvantage_points) +
+  renderCol('opp','◆ 机会点', c.opportunity_points);
+
+// 归一化缺口
+const gapsDiv = document.getElementById('gaps');
+DATA.normalization_gaps.forEach(g=>{
+  const li = document.createElement('li');
+  li.innerHTML = `<span class="warn">[${g.param}]</span> ${g.issue} <span style="color:var(--primary)">→ 候选：${g.candidate}</span>`;
+  gapsDiv.appendChild(li);
+});
+</script>
+</body>
+</html>

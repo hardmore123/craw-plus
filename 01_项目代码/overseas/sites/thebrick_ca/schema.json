@@ -1,0 +1,221 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/products/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[class*='product-title']",
+        "a[href*='/products/']",
+        "h3"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency",
+      "default": "CAD"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='compare-at']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[class*='add-to-cart']:not([disabled])",
+        "button[type='submit']"
+      ],
+      "transform": "bool_present"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']"
+      ],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "h1",
+        "[class*='sku']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "sku"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "source": "lflgroup_api",
+    "lfl": {
+      "endpoint": "POST https://ecom.api.lflgroup.ca/ecom/item/reviews/get",
+      "required_header": "x-shopify-shop-domain: www.thebrick.com",
+      "sku_source": "product_data_for_bv",
+      "page_size": 100,
+      "max_pages": 30,
+      "max_reviews": 2000,
+      "sort": "dateDesc"
+    },
+    "container": "[class*='review']",
+    "limit": 100,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[itemprop='name']",
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "table tr, [class*='specs'] tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "wall mount",
+        "stand",
+        "screen protector",
+        "cable",
+        "bracket",
+        "adapter",
+        "cover"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

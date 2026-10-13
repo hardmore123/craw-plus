@@ -1,0 +1,276 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "thebrick_ca",
+  "name": "The Brick（加拿大）",
+  "country": "Canada",
+  "channel": "The Brick",
+  "region": "ca",
+  "base_url": "https://www.thebrick.com",
+  "currency": "CAD",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "skill probe 2026-09-17：搜索页 HTTP 200 / PDP 需浏览器（429）",
+  "status": "candidate",
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/products/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[class*='product-title']",
+        "a[href*='/products/']",
+        "h3"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']"
+      ],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "h1",
+        "[class*='sku']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "sku"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency",
+      "default": "CAD"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='compare-at']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[class*='add-to-cart']:not([disabled])",
+        "button[type='submit']"
+      ],
+      "transform": "bool_present"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "table tr, [class*='specs'] tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    }
+  ],
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "source": "jsonld",
+    "container": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+    "limit": 40,
+    "jsonld": {
+      "product_type": "Product",
+      "aggregateRating": "aggregateRating",
+      "review_array": "review",
+      "field_map": {
+        "review_key": "datePublished|author.name",
+        "rating": "reviewRating.ratingValue",
+        "title": "name",
+        "body": "description",
+        "author": "author.name",
+        "review_date": "datePublished"
+      }
+    },
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[itemprop='name']",
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "_review_key_note": "self_attr id 缺则 Extractor 内容哈希兜底",
+    "lfl": {
+      "endpoint": "POST https://ecom.api.lflgroup.ca/ecom/item/reviews/get",
+      "required_header": "x-shopify-shop-domain: www.thebrick.com",
+      "sku_source": "product_data_for_bv",
+      "page_size": 100,
+      "max_pages": 30,
+      "max_reviews": 2000,
+      "sort": "dateDesc"
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "wall mount",
+        "stand",
+        "screen protector",
+        "cable",
+        "bracket",
+        "adapter",
+        "cover"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3_STRONG",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

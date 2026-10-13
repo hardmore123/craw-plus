@@ -1,0 +1,11 @@
+[Unit]
+Description=每周执行日本电视品牌 SPEC 刷新
+
+[Timer]
+# 每周日凌晨执行；错过后服务器恢复时补跑。
+OnCalendar=Sun *-*-* 03:20:00
+Persistent=true
+RandomizedDelaySec=1800
+
+[Install]
+WantedBy=timers.target

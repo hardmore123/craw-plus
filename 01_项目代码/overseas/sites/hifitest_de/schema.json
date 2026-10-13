@@ -1,0 +1,208 @@
+{
+  "anchor": "body",
+  "media": {
+    "review_list": {
+      "container": "a[href*='test'], a[href*='testbericht'], a[href*='review']",
+      "url": {
+        "self_attr": "href"
+      }
+    },
+    "jsonld_mode": "html",
+    "rating_path": "",
+    "pros_path": "",
+    "cons_path": ""
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "#productTitle",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "[data-brand]",
+        "[class*='brand']",
+        "[itemprop='manufacturer']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[itemprop='mpn']",
+        "[data-testid*='model']",
+        "[data-model]"
+      ],
+      "attr": "content",
+      "jsonld": "mpn",
+      "regex": "\\b([A-Z0-9][A-Z0-9._-]{3,25})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|in|pulgada|Zoll|pollici|pouces|インチ|型)",
+      "transform": "size_inch"
+    },
+    "category": {
+      "selectors": [
+        "[itemprop='category']",
+        ".breadcrumb li:last-child",
+        ".breadcrumbs li:last-child"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [class*='review-item'], [data-testid*='review'], [data-hook='review'], [class*='review-card']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id",
+        "self_attr_alt": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']",
+          "[data-hook*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "[data-hook*='reviewTitle']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "[data-hook*='reviewText']",
+          "[data-hook*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']",
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time",
+          "[class*='review-date']",
+          "[data-hook*='review-date']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "limit": 5
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        "meta[itemprop='price']",
+        "[class*='price']:not([class*='old'])",
+        ".price:not(.old-price)",
+        ".product-price"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "EUR"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  }
+}

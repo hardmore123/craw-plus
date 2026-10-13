@@ -1,0 +1,76 @@
+﻿site,site_name,brand,model,size,title,url,price,list_price,currency,in_stock,captured_at
+ananas_rs,Ananas,,,,,https://ananas.rs/proizvod/tcl-televizor-65t69c-65-qled-4k-uhd-google-tv-crni/5973938,1990.0,,,,2026-09-29T12:12:19+00:00
+ananas_rs,Ananas,,,,,https://ananas.rs/proizvod/philips-televizor-40pfs6050-12-40-full-hd-smart-titan-os-crni/6290063,349.0,,,,2026-09-29T12:12:45+00:00
+ananas_rs,Ananas,,,,,https://ananas.rs/proizvod/philips-televizor-75put7630-10-75-google-tv-4k-uhd-smart-tv/6471041,1990.0,,,,2026-09-29T12:13:11+00:00
+ananas_rs,Ananas,,,,,https://ananas.rs/proizvod/fox-televizor-32atv141d-32-dled-hd-ready-crni/6942430,349.0,,,,2026-09-29T12:13:39+00:00
+ananas_rs,Ananas,,,,,https://ananas.rs/proizvod/fox-televizor-32atv141d-32-dled-hd-ready-crni/6942430,349.0,,,,2026-09-30T01:21:54+00:00
+ananas_rs,Ananas,,,,,https://ananas.rs/proizvod/philips-televizor-40pfs6050-12-40-full-hd-smart-titan-os-crni/6290063,349.0,,,,2026-09-30T01:22:22+00:00
+ananas_rs,Ananas,,32ATV141D,32,"Fox Televizor 32ATV141D 32"", DLED, HD Ready, Crni",6942430,8990.0,11990.0,RSD,,2026-09-25T09:12:12+00:00
+ananas_rs,Ananas,Philips,40PFS6050,40,"Philips Televizor 40PFS6050/12, 40"", Full HD, Smart, Titan OS, Crni",6290063,22990.0,27990.0,RSD,,2026-09-25T09:12:12+00:00
+ananas_rs,Ananas,TCL,65T69C,65,"TCL Televizor 65T69C 65"", QLED, 4K UHD, Google TV, Crni",5973938,50990.0,69990.0,RSD,,2026-09-25T09:12:12+00:00
+ananas_rs,Ananas,Philips,75PUT7630,75,"Philips Televizor 75PUT7630/10, 75"", Google TV, 4K UHD, Smart TV",6471041,69990.0,89990.0,RSD,,2026-09-25T09:12:12+00:00
+ananas_rs,Ananas,Philips,Philips,"75""","Philips Televizor 75PUT7630/10, 75"", Google TV, 4K UHD, Smart TV",https://ananas.rs/proizvod/philips-televizor-75put7630-10-75-google-tv-4k-uhd-smart-tv/6471041,69990.0,,RSD,,2026-10-10T15:56:18+00:00
+ananas_rs,Ananas,TCL,Televizor,"65""","TCL Televizor 65T69C 65"", QLED, 4K UHD, Google TV, Crni",https://ananas.rs/proizvod/tcl-televizor-65t69c-65-qled-4k-uhd-google-tv-crni/5973938,50990.0,,RSD,,2026-10-10T15:56:41+00:00
+gigatron_rs,Gigatron,Xiaomi,,,XIAOMI 50 TV A 2026 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/xiaomi-50-tv-a50-2026-6941948705425/p,31999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Xiaomi,,,XIAOMI 55 TV A 2026 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/xiaomi-55-tv-a-2026-4kg-6941948705432/p,36999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Fox,32ATV141D,,FOX 32ATV141D HD,https://gigatron.vtexcommercestable.com.br/fox-32-32atv141d-8606017163664/p,10999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Fox,32DTV270H,,FOX 32DTV270H HD,https://gigatron.vtexcommercestable.com.br/fox-32-32dtv270h-hd-8606017163671/p,11999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,TCL,40S5L,,TCL 40S5L QLED Full HD,https://gigatron.vtexcommercestable.com.br/tcl-40-40s5l-qled-fa-5901292530372/p,28999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,43A6S,,HISENSE 43A6S 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/hisense-43-43a6s-4ks-6942351430102/p,33999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Fox,43DTV231E,,FOX 43DTV231E Full HD,https://gigatron.vtexcommercestable.com.br/fox-43-43dtv231e-f-8606017163527/p,17999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Tesla,43H665BUV,,TESLA 43H665BUV 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/tesla-43-43h665buv-4ks-8606034706356/p,24999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,43NU850B3LA,,LG 43NU850B3LA NANO AI NU85 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/lg-43-43nu850b3la-aeu-8806096714867/p,36999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Philips,43PUS8010,,PHILIPS 43PUS8010/10 4K Ambilight TV,https://gigatron.vtexcommercestable.com.br/philips-43-43pus8010-4ks-8718863053355/p,33999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Philips,43PUS8400,,PHILIPS 43PUS8400/12 Ambilight QLED 4K Ultra HD,477358,36999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,TCL,43T69C,,TCL 43T69C T69C QLED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/tcl-43-43t69c-qled-4kg-5901292528812/p,31999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,50A6Q,,HISENSE 50A6Q 4K Ultra HD,475732,33999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,TCL,50C6K,,TCL 50C6K QD-Mini LED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/tcl-50-50c6k-mled-4kg-5901292528744/p,50.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Tesla,50E655BUS,,TESLA 50E655BUS 4K Ultra HD,472842,31999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Tesla,50H665BUV,,TESLA 50H665BUV 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/tesla-50-50h665buv-4ks-8606034706363/p,29999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Philips,50PUS8510,,Philips 50PUS8510 QLED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/philips-50-50pus8510-4ks-8718863045817/p,44999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,50QNED8MB6C,,LG 50QNED8MB6C QNED8M evo AI Mini LED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/lg-50-50qned8mb6c-aeu-8806096866849/p,50.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,50U7Q,,HISENSE 50U7Q ULED 4K Ultra HD,475710,47999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,55A6Q,,HISENSE 55A6Q 4K Ultra HD,475733,35999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,TCL,55C6K,,TCL 55C6K QD-Mini LED 4K Ultra HD,474126,55.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,55E89Q,,HISENSE 55E89Q ULED Mini LED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/hisense-55-55e89q-4ks-6942351419831/p,55.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Philips,55PUS8400,,PHILIPS 55PUS8400/12 Ambilight QLED 4K Ultra HD,477303,47999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,55QNED70B3C,,LG 55QNED70B3C AI Mini LED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/lg-55-55qned70b3c-aeu-8806096713457/p,55.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,55QNED8MB6C,,LG 55QNED8MB6C evo AI Mini LED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/lg-55-55qned8mb6c-aeu-8806096857861/p,55.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,TCL,55T69C,,TCL 55T69C T69C QLED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/tcl-55-55t69c-qled-4kg-5901292528577/p,41999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,55U8Q,,HISENSE 55U8Q ULED 4K Ultra HD,475718,55.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,65E89Q,,HISENSE 65E89Q ULED Mini LED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/hisense-65-65e89q-4ks-6942351419930/p,65.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,65Q7S,,HISENSE 65Q7S QLED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/hisense-65-65q7s-qled-4ks-6942351431673/p,65.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Fox,65WOS640EU,,FOX 65WOS640EU 4K Ultra HD,479621,45999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Vox,65WSB684U,,VOX 65WSB684U 4K Ultra HD,479654,49999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Hisense,75Q7S,,HISENSE 75Q7S PRO QLED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/hisense-75-75q7s-pro-qled-4ks-6942351433110/p,75.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,OLED55C51LA,,LG OLED55C51LA evo AI C5 4K Ultra HD,472207,55.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,OLED65C51LA,,LG OLED65C51LA evo AI C5 4K Ultra HD,472210,65.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,LG,OLED65C61LA,,LG OLED65C61LA evo AI C6 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/lg-65-oled65c61la-aeu-8806096685969/p,65.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Tesla,Q40E665GFS,,TESLA Q40E665GFS QLED Full HD,https://gigatron.vtexcommercestable.com.br/tesla-40-q40e665gfs-4kg-8606034704420/p,23999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Tesla,Q75E655GUS,,TESLA Q75E655GUS QLED 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/tesla-75-q75e655gus-4kg-8606034703911/p,75.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Samsung,UE43U8072FU,,SAMSUNG UE43U8072FU Crystal 4K Ultra HD,472606,33999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Samsung,UE43U8092HU,,SAMSUNG UE43U8092HU Crystal UHD 4K Ultra HD,https://gigatron.vtexcommercestable.com.br/samsung-43-ue43u8092hu-4ks-8806097977407/p,34999.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+gigatron_rs,Gigatron,Samsung,UE65U8072FU,,SAMSUNG UE65U8072FU Crystal 4K Ultra HD,461104,65.0,,RSD,1,2026-09-25T16:57:45.361823+00:00
+tehnomanija_rs,Tehnomanija,,32GTQ500H,,VOX Smart televizor QLED 32GTQ500H,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/vox-smart-tv-qled-32gtq500h-1261489,16999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Lg,32LQ63006LA,,LG Smart televizor 32LQ63006LA,1192318,27999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,,32RV851SM,,Digitech Smart Televizor 32RV851SM,1237937,14999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Tcl,32S4K,,TCL Smart televizor 32S4K,1260567,19999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,,32SBV684H,,Vox Smart televizor 32SBV684H,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/vox-smart-televizor-32sbv684h-1263737,16999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,,32WOS684BH,,VOX Smart televizor LED 32WOS684BH,1217004,15999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Tcl,40S5K,,TCL Smart televizor 40S5K,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/tcl-smart-televizor-40s5k-1262919,27999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Philips,43PUS7000,12,Philips Smart televizor 43PUS7000/12,1246831,29999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Hisense,43Q7S,,Hisense Smart televizor 43Q7S,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/hisense-smart-televizor-43q7s-1266062,32999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Lg,43QNED70A6A,,LG Smart televizor 43QNED70A6A.AEU,1246596,39999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,,43QVF684,,VOX Smart televizor LED 43QVF684,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/vox-smart-televizor-led-43qvf684-1260628,24999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Hisense,50E89Q,,Hisense Smart televizor 50E89Q,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/hisense-smart-tv-50e89q-1261638,49977.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Lg,50QNED70A6A,,LG Smart televizor 50QNED70A6A.AEU,1238248,46999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Tcl,55C6K,,TCL Smart televizor 55C6K,1260577,55.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Hisense,55E7Q,,Hisense Smart televizor 55E7Q PRO,1231610,55.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Philips,55PUS8200,12,Philips Smart televizor 55PUS8200/12,1260434,44999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Philips,55PUS8510,12,Philips Smart televizor 55PUS8510/12,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/philips-smart-televizor-55pus8510-12-1260973,48999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Hisense,55Q7S,,Hisense Smart televizor 55Q7S,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/hisense-smart-televizor-55q7s-1264082,46999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,,55QVU684,,VOX Smart televizor UHD 55QVU684,1259619,35999.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Lg,55UA73003LA,,LG Smart televizor 55UA73003LA.AEUQ,1259759,43499.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Hisense,65Q7S,,Hisense Smart televizor 65Q7S PRO,https://www.tehnomanija.rs/tv-foto-audio-i-video/televizori/smart-tv/hisense-smart-televizor-65q7s-pro-1266068,65.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Lg,OLED55C51LA,,LG Smart televizor OLED55C51LA.AEU,1227414,55.0,,RSD,1,2026-09-25T11:00:15.825592+00:00
+tehnomanija_rs,Tehnomanija,Samsung,UE50U8072FUXXH,,Samsung Smart televizor UE50U8072FUXXH,1225274,39977.0,,RSD,1,2026-09-25T11:00:15.825592+00:00

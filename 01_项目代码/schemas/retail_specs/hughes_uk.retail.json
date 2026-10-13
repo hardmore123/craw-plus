@@ -1,0 +1,271 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "hughes_uk",
+  "name": "Hughes UK",
+  "country": "United Kingdom",
+  "channel": "Hughes UK",
+  "region": "uk",
+  "base_url": "https://www.hughes.co.uk",
+  "currency": "GBP",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "基于 retail/cases.jsonl 抓取经验沉淀生成（极薄适配器 + RetailSpec 驱动字段抽取）",
+  "status": "candidate",
+  "anchor": "h1",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "_design": {
+    "平台": "Hughes UK 电商零售站(Symfony 服务端渲染)，型号已在 DB（171 产品），价格在 .product-price div £，评价走 Feefo。",
+    "分类页": "https://www.hughes.co.uk/tv-and-entertainment/televisions/all-televisions/ （无 /c/ 前缀），分页 ?p=N（非 page=），每页 24。",
+    "PDP": "product-sku=\"<BRAND>-<MODEL>\"（如 LG-OLED55B56LA），即 Feefo product_sku 聚合 key。",
+    "评价": "Feefo 公开 JSON API：merchant_identifier=hughes, origin=www.hughes.co.uk。product_sku=DB product.sku（BRANCH-MODEL 格式）。",
+    "评价串尺寸": "Feefo 按系列聚合：同系列不同尺寸共享评价（TCL V6DUK 43/50/55/65/75 均 total=466）。"
+  },
+  "search": {
+    "container": "a[href*='/product/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_attr": "title"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-brand]",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[product-sku]"
+      ],
+      "attr": "product-sku",
+      "regex": "([A-Z]+)-(.+)",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[product-sku]"
+      ],
+      "attr": "product-sku",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        ".product-price",
+        "[class*='product-price']:not([class*='list'])"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='currency']",
+        ".product-price"
+      ],
+      "transform": "currency",
+      "default": "GBP"
+    },
+    "list_price": {
+      "selectors": [
+        ".product-price .with-list-price .was-price",
+        "[class*='original-price']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid='add-to-cart']",
+        ".in-stock"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[class*='feefo'] .rating",
+        "[data-testid='rating']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "[class*='feefo'] .count",
+        "[data-testid='review-count']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "_note": "★Hughes UK 评价走 Feefo 公开 JSON API。product_sku=DB product.sku（BRANCH-MODEL 格式，如 LG-OLED55B56LA），直接用无需转换。merchant_identifier=hughes。",
+    "source": "feefo",
+    "feefo": {
+      "merchant_identifier": "hughes",
+      "origin": "www.hughes.co.uk",
+      "locale": "en_GB",
+      "since_period": "ALL",
+      "summary_api": "https://api.feefo.com/api/10/reviews/summary/product?product_sku={product_sku}&origin=www.hughes.co.uk&merchant_identifier=hughes&since_period=ALL",
+      "reviews_api": "https://api.feefo.com/api/10/reviews/product?product_sku={product_sku}&origin=www.hughes.co.uk&merchant_identifier=hughes&since_period=ALL&page_size=100&page={page}",
+      "product_sku_from": "DB product.sku（BRANCH-MODEL 格式，直接用）",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 2000
+    },
+    "container": "[class*='feefo'], [data-feefo]",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='feefo-rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='feefo-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='feefo-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='feefo-author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='feefo-date']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='feefo-photo'], img[class*='review-image'], .feefo-review-image img, img[itemprop='image']",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='feefo'], [class*='feefo-video'] video, [class*='review-video'] video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "remote",
+        "cable",
+        "adapter"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 2000,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "feefo_exhausted_or_page_all_known"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "scroll_passes": 3,
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.9
+  }
+}

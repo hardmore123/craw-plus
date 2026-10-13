@@ -1,0 +1,312 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "comandato_ec",
+  "name": "Comandato",
+  "country": "Ecuador",
+  "channel": "Comandato",
+  "region": "ec",
+  "base_url": "https://www.comandato.com",
+  "currency": "USD",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "VTEX 14站批量生成 (cases.jsonl 实测): 价格走 VTEX Catalog API, 网评走 none",
+  "status": "candidate",
+  "anchor": "h1",
+  "search": {
+    "_note": "VTEX 站价格目录走 Catalog API 直采 (见 playbook/vtex_catalog_api.md), 搜索页 JS 渲染仅作 PDP 兜底。container 选 a[href*='/p'] 因 VTEX PDP 路径以 /p 结尾。",
+    "container": "a[href*='/p'], a[href*='/pdp/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true,
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60,
+      "keyword_template": "{brand} televisor"
+    },
+    "api": {
+      "type": "vtex_catalog",
+      "_note": "detect_search_api.py 2026-10-08 实测接口可用；搜索候选走 VTEX Catalog API，详情页仍按 product/price 段抽取"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']",
+        "[data-testid*='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "kv": {
+        "container": "table tr, .product-specification tr, [class*='specification'] tr",
+        "key_contains": "modelo",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "clean_text",
+      "jsonld": "mpn"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']",
+        "[data-sku]"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "jsonld": "sku"
+    }
+  },
+  "price": {
+    "_note": "VTEX 站价格在 JSON-LD Product.offers (priceCurrency/price/availability)。Catalog API 的 items[0].sellers[0].commertialOffer.Price 是价格目录直采路径。",
+    "price": {
+      "selectors": [
+        "[class*='price'][class*='selling']",
+        "[class*='selling-price']",
+        ".precio-producto"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency",
+      "default": "USD"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "s",
+        "del",
+        "[class*='old-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])"
+      ],
+      "attr": "content",
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='average-rating']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "reviews": {
+    "_note": "全站无评价基础设施: VTEX (account=comandato); reviews-and-ratings app 未装——双路径实测确认: (A) 直连 inline query totalReviewsByProductId/averageRatingByProductId/reviewsByProductId 全返 400 GraphQL validation failed (字段在 schema 不存在=app 未装); (B) persistedQuery 3.x hash 返 PERSISTED_QUERY_NOT_FOUND; (C) REST /reviews-and-ratings/api/reviews 404. 全站 34/34 产品 totalReviewsByProductId 均 validation_failed (站点级属性, 非个别产品). 浏览器渲染 PDP: JSON-LD Product.aggregateRating=None; 评价区 DOM 0 (review/opinion/rese/rating/calific 全 0); 无第三方挂件 (BV/Yotpo/Trustpilot 等 0). 不写 review 不写 summary, 留空不造假 (缺价>错价原则).",
+    "source": "none",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "_no_reviews": {
+      "note": "VTEX (account=comandato); reviews-and-ratings app 未装 (直连 totalReviewsByProductId/reviewsByProductId 全 400 GraphQL validation failed; persistedQuery 3.x hash PERSISTED_QUERY_NOT_FOUND; REST /reviews-and-ratings/api/reviews 404); 无第三方挂件; JSON-LD Product.aggregateRating=None; PDP 评价区 DOM 0; 全站 34/34 产品无评价"
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "rack",
+        "stand",
+        "mount",
+        "bracket",
+        "control remoto",
+        "cable",
+        "adaptador",
+        "accesorio",
+        "funda",
+        "base",
+        "soporte para tv",
+        "barra de sonido",
+        "soundbar",
+        "proyector",
+        "parlante",
+        "bocina"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "_vtex_note": "价格目录走 Catalog API 纯 HTTP (见 discovery段); PDP 评价区懒加载需浏览器渲染确认 app 是否安装。",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  },
+  "discovery": {
+    "_note": "VTEX Catalog API 直采价格目录 (playbook/vtex_catalog_api.md): 纯 HTTP JSON, 无需浏览器, 比搜索页快10倍。",
+    "catalog_api": {
+      "url_template": "{base}/api/catalog_system/pub/products/search?ft=televisor&_from={from}&_to={to}",
+      "pagination": "_from/_to 闭区间, 单页最多50; 空数组=到底; resources header 末段=真实总数",
+      "page_size": 50,
+      "response_size_note": "单页可达 6.8MB (exito_co), 必须 resp.read() 全量读取不限大小 (200KB截断丢产品)",
+      "price_path": "items[0].sellers[0].commertialOffer.Price / ListPrice / Available",
+      "currency_path": "items[0].sellers[0].commertialOffer.PriceCurrency (或站点固定货币)",
+      "field_map": {
+        "sku": "productId",
+        "title": "productName",
+        "brand": "brand",
+        "url": "link",
+        "price": "items[0].sellers[0].commertialOffer.Price",
+        "list_price": "items[0].sellers[0].commertialOffer.ListPrice",
+        "in_stock": "items[0].sellers[0].commertialOffer.AvailableQuantity > 0"
+      },
+      "model_regex": "\\b(\\d{1,4}[A-Z][A-Z0-9]{1,10})\\b",
+      "size_regex": "\\b(\\d{2})\\s*[\" pulgadas inch]+",
+      "serial": true,
+      "interval_sec": 0.3,
+      "_to_hard_limit_note": "exito_co 实测 _to 硬上限 2549 (page 50), page 51+ 返 400 Bad Request; 总数>2550 需排序分片 (OrderByPriceAsc)"
+    }
+  }
+}

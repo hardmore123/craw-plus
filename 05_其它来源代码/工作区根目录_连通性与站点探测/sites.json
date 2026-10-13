@@ -1,0 +1,20 @@
+[
+  { "line": "北美线-加拿大", "name": "Amazon",        "url": "https://www.amazon.ca/" },
+  { "line": "北美线-加拿大", "name": "BestBuy",       "url": "https://www.bestbuy.ca/en-ca" },
+  { "line": "北美线-加拿大", "name": "Walmart",       "url": "https://www.walmart.ca/en" },
+  { "line": "北美线-加拿大", "name": "Costco",        "url": "https://www.costco.ca/" },
+  { "line": "北美线-加拿大", "name": "Brick",         "url": "https://www.thebrick.com/" },
+  { "line": "北美线-加拿大", "name": "Leon's",        "url": "https://www.leons.ca/" },
+  { "line": "北美线-加拿大", "name": "Visions",       "url": "https://www.visions.ca/" },
+  { "line": "北美线-加拿大", "name": "Canadian Tire", "url": "https://www.canadiantire.ca/en.html" },
+  { "line": "北美线-美国",   "name": "Best Buy",      "url": "https://www.bestbuy.com" },
+  { "line": "北美线-美国",   "name": "Walmart",       "url": "https://www.walmart.com" },
+  { "line": "北美线-美国",   "name": "Costco",        "url": "https://www.costco.com" },
+  { "line": "北美线-美国",   "name": "Amazon",        "url": "https://www.amazon.com" },
+  { "line": "北美线-墨西哥", "name": "Amazon",        "url": "https://www.amazon.com.mx/" },
+  { "line": "北美线-墨西哥", "name": "Liverpool",     "url": "https://www.liverpool.com.mx/tienda/home" },
+  { "line": "北美线-墨西哥", "name": "Sams",          "url": "https://www.sams.com.mx/" },
+  { "line": "北美线-墨西哥", "name": "Palacio",       "url": "https://www.elpalaciodehierro.com/buscar?q=tv" },
+  { "line": "北美线-墨西哥", "name": "Walmart",       "url": "https://www.walmart.com.mx/search?q=TV" },
+  { "line": "北美线-墨西哥", "name": "Coppel",        "url": "https://www.coppel.com/sd/TV" }
+]

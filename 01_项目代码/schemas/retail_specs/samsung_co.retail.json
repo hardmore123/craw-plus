@@ -1,0 +1,249 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "samsung_co",
+  "name": "Samsung（哥伦比亚）",
+  "country": "Colombia",
+  "channel": "Samsung（哥伦比亚）",
+  "region": "co",
+  "base_url": "https://www.samsung.com",
+  "currency": "COP",
+  "capabilities": [
+    "spec"
+  ],
+  "generated_by": "复用 samsung_ca finder 接口经验（siteCode=co），SPEC-only 标记：仅采集官网规格，无价格/评价能力。",
+  "status": "candidate",
+  "anchor": "h1",
+  "_design": {
+    "平台": "Samsung 哥伦比亚官网（AEM），型号已在 DB spec_series（80 系列），finder 接口发现全量型号，规格页 [class*='spec'] [class*='item'] DOM。",
+    "finder": "searchapi.samsung.com/v6/front/b2c/product/finder/global?type=04010000&siteCode=co&start=1&num=500，返回 family×model（modelCode+pdpUrl）。",
+    "capability": "SPEC-only：仅采集哥伦比亚官网规格，capabilities=['spec']，无 price/reviews 段（官网不卖货/无站内评价）。",
+    "型号": "型号 code 直接来自 finder modelCode（权威）；URL 末段兜底。"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "search": {
+    "container": "a[href*='/co/tvs/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "input[name='resourceModelCode']"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "input[name='resourceModelCode']"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    }
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "model",
+    "stop_when": "series_exhausted"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "human_like": true,
+    "stealth_js": true,
+    "settle_ms": 5000,
+    "scroll_passes": 1,
+    "interval_sec": 7.0,
+    "nav_timeout_ms": 30000,
+    "max_retries": 3,
+    "retail_page_wait": "h1",
+    "_safety_note": "安全机制：max_retries≤3 重试上限，nav_timeout_ms≤30000 单次导航超时（毫秒），防卡死/无限重试。"
+  },
+  "expected": {
+    "series_count": 80,
+    "model_count": 215
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        "meta[itemprop='price']",
+        "[class*='price']:not([class*='old'])",
+        ".price:not(.old-price)",
+        ".product-price"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "COP"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [class*='review-item'], [data-testid*='review'], [data-hook='review'], [class*='review-card']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id",
+        "self_attr_alt": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']",
+          "[data-hook*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "[data-hook*='reviewTitle']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "[data-hook*='reviewText']",
+          "[data-hook*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']",
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time",
+          "[class*='review-date']",
+          "[data-hook*='review-date']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "limit": 5
+      }
+    }
+  }
+}

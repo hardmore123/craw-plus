@@ -1,0 +1,269 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "samsung_uk",
+  "name": "Samsung UK",
+  "country": "United Kingdom",
+  "channel": "Samsung UK",
+  "region": "uk",
+  "base_url": "https://www.samsung.com",
+  "currency": "GBP",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "基于 retail/cases.jsonl 抓取经验沉淀生成（极薄适配器 + RetailSpec 驱动字段抽取）",
+  "status": "candidate",
+  "anchor": "h1",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "_design": {
+    "平台": "Samsung UK 品牌官网(AEM SSR)，型号已在 DB（38 产品），价格走 commerceapi/PDP CSS，评价走 BazaarVoice data API。",
+    "PDP": "URL 形如 /uk/tvs/qled-tv/q5f-32-inch-qled-full-hd-smart-tv-qe32q5f，纯 HTTP 可达但需浏览器过 WAF。",
+    "型号": "DB product.sku 已是站内型号描述（如 65QLEDQ8F4KVisionAISmartTV2025），权威型号在 PDP resourceModelCode 隐藏 input。",
+    "评价": "BazaarVoice data API: GET api.bazaarvoice.com/data/reviews.json?passkey=<pk>&apiversion=5.4&Filter=ProductId:<modelcode>；productId=resourceModelCode（如 QE42S90HAEXXU）。",
+    "评价串尺寸": "BV 按系列聚合：同系列不同尺寸共享评价，按 UNIQUE(product_id,review_key) 各自入库。"
+  },
+  "search": {
+    "container": "a[href*='/uk/tvs/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 40,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-model-code]"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-model-code]"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price']:not([class*='original'])",
+        "[data-testid='price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[data-testid='currency']"
+      ],
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency",
+      "default": "GBP"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='original-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid='add-to-cart']"
+      ],
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid='rating'] .avg",
+        ".bv-rating"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[data-testid='review-count']",
+        ".bv-count"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.ratingCount"
+    }
+  },
+  "reviews": {
+    "_note": "★Samsung UK 评价走 BazaarVoice data API（passkey），非 BFD。productId=resourceModelCode（PDP 隐藏 input），非 DB sku。BV 按系列聚合评价跨尺寸。",
+    "source": "bazaarvoice_data",
+    "bv": {
+      "passkey": "cazuJbcLA9BlO8ZXazwY1OkDv7SjLJTLbZ6KWjQS3TolI",
+      "apiversion": "5.4",
+      "api_url": "https://api.bazaarvoice.com/data/reviews.json",
+      "filter": "Filter=ProductId:{product_id}",
+      "product_id_from": "PDP 隐藏 input resourceModelCode（如 QE42S90HAEXXU）",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "container": "[class*='bv-content'], [data-bv-show='inline_rating']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='bv-rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='bv-content-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='bv-content-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='bv-author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='bv-date']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "url_template",
+    "url_template": "https://www.samsung.com/uk/tvs/{sku}",
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "remote"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "bv_api",
+      "max_reviews": 1000,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "bv_exhausted_or_page_all_known"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.8
+  }
+}

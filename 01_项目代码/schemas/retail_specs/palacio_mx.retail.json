@@ -1,0 +1,256 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "palacio_mx",
+  "name": "Palacio",
+  "country": "Mexico",
+  "channel": "Palacio",
+  "region": "mx",
+  "base_url": "https://www.elpalaciodehierro.com",
+  "currency": "MXN",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "反抽象: sites/palacio_mx/adapter.py + schema.json | 2026-09-25 实测入库: /buscar?q=搜索200OK+PDP抓价成功(3产品3价格MXN); 搜索返回时尚+TV混合, /<brand>-pantalla-...-<id>.html PDP格式",
+  "status": "approved",
+  "anchor": "h1",
+  "search": {
+    "container": "a[href$='.html']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[itemprop='name']",
+        "h3",
+        "h2"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "palacio_model"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "meta[itemprop='lowPrice']"
+      ],
+      "attr": "content",
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency_mx",
+      "default": "MXN"
+    },
+    "list_price": {
+      "selectors": [
+        "meta[itemprop='highPrice']"
+      ],
+      "attr": "content",
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "meta[itemprop='availability']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        ".b-product_price-sales",
+        ".b-product_price-old"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [],
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "meta[itemprop='reviewCount']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [data-testid*='review'], .pr-review, article[class*='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[data-testid*='rating']",
+          ".pr-rating-stars",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[data-testid*='review-title']",
+          ".pr-rd-review-headline",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[data-testid*='review-text']",
+          ".pr-rd-description-text",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[data-testid*='author']",
+          ".pr-rd-author-nickname",
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[data-testid*='date']",
+          ".pr-rd-review-date",
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-testid*='helpful']",
+          ".pr-helpful-count"
+        ],
+        "transform": "int"
+      },
+      "review_url": {
+        "selectors": []
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "[itemprop='review'] img, [data-testid*='review'] img, .pr-review img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "icon"
+        ],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "[itemprop='review'] video source, [data-testid*='review'] video source, .pr-review video source",
+        "attr": "src",
+        "limit": 10
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "control remoto",
+        "funda",
+        "cable",
+        "adaptador",
+        "accesorio"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 5.0,
+    "retail_page_wait": "h1",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

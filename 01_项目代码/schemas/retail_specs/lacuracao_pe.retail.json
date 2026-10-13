@@ -1,0 +1,270 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "lacuracao_pe",
+  "name": "La Curacao",
+  "country": "Peru",
+  "channel": "La Curacao",
+  "region": "pe",
+  "base_url": "https://www.lacuracao.pe",
+  "currency": "PEN",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "latam_probe/2026-09-25",
+  "status": "approved",
+  "anchor": "h1, script[type='application/ld+json']",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "search": {
+    "container": "a.product-item-link, a[href*='.html']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[class*='product-name'], .product-item-link, h2, h3"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "max_candidates": 60,
+      "min_candidates": 5,
+      "retries": 3,
+      "max_search_failures": 2
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "control remoto",
+        "remote",
+        "funda",
+        "cable",
+        "adapter",
+        "accesorio",
+        "accessory",
+        "bracket",
+        "wall mount"
+      ],
+      "url_contains_any": [
+        "/accesorios/",
+        "/accessories/"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 50,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price']",
+        "[data-price]",
+        ".price",
+        ".product-price"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ],
+      "transform": "clean_text",
+      "jsonld": "offers.priceCurrency",
+      "default": "PEN"
+    },
+    "in_stock": {
+      "selectors": [
+        "button[class*='cart']",
+        "button[class*='add']",
+        "[data-testid='add-to-cart']"
+      ],
+      "transform": "bool_present",
+      "jsonld": "offers.availability"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[class*='model']",
+        "[data-model]"
+      ],
+      "transform": "clean_text",
+      "jsonld": "model"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1, script[type='application/ld+json']",
+    "nav_timeout": 30000,
+    "max_retries": 3
+  },
+  "expected": {
+    "match_rate_min": 0.0,
+    "price_fill_rate_min": 0.0
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [class*='review-item'], [data-testid*='review'], [data-hook='review'], [class*='review-card']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id",
+        "self_attr_alt": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']",
+          "[data-hook*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "[data-hook*='reviewTitle']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "[data-hook*='reviewText']",
+          "[data-hook*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']",
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time",
+          "[class*='review-date']",
+          "[data-hook*='review-date']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "limit": 5
+      }
+    }
+  }
+}

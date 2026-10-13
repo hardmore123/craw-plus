@@ -1,0 +1,19 @@
+﻿param_code,param_name,category,匹配到的规格项数,值提取正则,样例规格项
+PEAK_BRIGHTNESS,峰值亮度,画质,50,"(\d[\d,]*)\s*nits",DISPLAY｜System brightness – typical | PICTURE (PROCESSING)｜Auto Brightness Control | soundBarVideoFeatures｜Peak Luminance
+DIMMING_ZONES,分区控光,画质,29,(\d+)\s*(?:zones|zones|区),DISPLAY｜Mini-LED/Local Dimming Type | DYNAMIC BACKLIGHT CONTROL | Dynamic Backlight Control
+REFRESH_RATE,刷新率,画质,85,(\d+)\s*Hz,Native Refresh Rate | newtvcategPictureProcessing｜Motion enhancer(Native Hz) | Refresh Rate
+CHIP,画质芯片,画质,57,,Picture Processor | Display｜Processor | pim-grp-trE5XrW9｜Operating System
+SYSTEM,智能系统,智能,409,,TV Stand Width(W x D) Position 1 | Inputs and Outputs｜Composite Video Input(s) | STAND WIDTH(NARROW POSITION)
+GAMING,游戏特性,游戏,146,,Game Feature｜Game bar | Modo de juego automático(ALLM) | Auto Game Mode(ALLM)
+COLOR_GAMUT,色域,画质,50,(\d+)\s*%,Quantum Dot Color | QLED | soundBarVideoFeatures｜TRILUMINOS
+HDMI,HDMI 2.1,连接,291,(\d+)\s*(?:x|×)?\s*HDMI,HDMI 3 | eARC/ARC | Versión HDMI
+SCREEN_SIZE,屏幕尺寸,设计,87,"(\d+\.?\d*)\s*(?:inch|\""|吋|型)","最小テレビ台天板サイズ(cm) | Dimensions and weight｜Screen Size(cm, measured diagonally) | 動画・表示サイズ切換え"
+RESOLUTION,分辨率,画质,498,,Resolution | Versión HDMI | Retour audio via HDMI(ARC)
+HDR,HDR格式,画质,148,,HDR Optimisé par IA | AI HDR Remastering | HDR-Formate
+CONTRAST,对比度,画质,58,"(\d[\d,]*)\s*(?::|/|to)\s*1",高コントラスト | OTTIMIZZAZIONE DEL CONTRASTO | Dynamic contrast
+WIFI,Wi-Fi,连接,58,,ネットワーク機能｜Wi-Fi Direct 模式 | 入力・出力｜内置 Wi-Fi | lightFieldConnectivity｜Wi-Fi Standard
+BLUETOOTH,蓝牙,连接,76,,Bluetooth Surround Ready | Bluetooth Audio-Unterstützung | Bluetooth｜内置无线 LAN
+DOLBY_ATMOS,杜比全景声,画质,29,,Dolby audio | Dolby Atoms対応 | Unterstützung des Dolby Audioformats
+POWER_CONSUMPTION,功耗,设计,155,(\d+)\s*kWh,Power Consumption(in Operation) | Power Consumption (Max) | Power Consumption(On Mode) for Energy Star
+WEIGHT,重量,设计,286,(\d+\.?\d*)\s*kg,Dimensions / Weight｜TV Weight with stand(lbs) | Produktgewicht mit Stand(kg) | TV with Stand(Outside for Soundbar)(Weight)
+DIMENSIONS,尺寸,设计,500,,スタンドボックス寸法(奥行き) | Regulation and Standard Compliance｜VESA® Hole Pitch(W x H) | Dimensions｜Wall mount compatible

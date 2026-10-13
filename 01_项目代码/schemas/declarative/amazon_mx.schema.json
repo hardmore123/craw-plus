@@ -1,0 +1,185 @@
+{
+  "_comment": "Amazon 墨西哥站抽取规则。与 amazon_ca 一致，仅 url_template 换 .com.mx、货币走 currency_mx（裸 $=MXN）。选择器按顺序尝试，第一个非空即采用。DOM 变了只改本文件。",
+  "anchor": "#productTitle",
+
+  "search": {
+    "container": "a[href*='/dp/']",
+    "sku": { "self_attr": "href" },
+    "title": { "selectors": ["h2 span", "h2", "[data-cy='title-recipe'] span", "[aria-label]"], "transform": "clean_text" },
+    "url": { "self_attr": "href" }
+  },
+
+  "product": {
+    "title": {
+      "selectors": ["#productTitle", "#title span"],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": ["#bylineInfo", "a#bylineInfo", "#brand",
+                    "#detailBullets_feature_div li:has-text('Marca')"],
+      "transform": "brand"
+    },
+    "model": {
+      "kv": {
+        "container": "#detailBullets_feature_div li, #productDetails_techSpec_section_1 tr, #productDetails_detailBullets_sections1 tr",
+        "key_contains": "número de modelo",
+        "value": "td"
+      },
+      "transform": "clean_text"
+    },
+    "category": {
+      "selectors": ["#wayfinding-breadcrumbs_feature_div ul li:last-child a",
+                    "#nav-subnav a.nav-b"],
+      "transform": "clean_text"
+    },
+    "size": {
+      "_note": "尺寸：优先变体选择项，其次规格表里的 Tamaño de la pantalla",
+      "kv": {
+        "container": "#productDetails_techSpec_section_1 tr, #detailBullets_feature_div li",
+        "key_contains": "tamaño de la pantalla",
+        "value": "td"
+      },
+      "selectors": ["#inline-twister-expanded-dimension-text-size_name",
+                    "#variation_size_name .selection"],
+      "transform": "size_inch"
+    }
+  },
+
+  "price": {
+    "price": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen",
+        "#priceblock_ourprice",
+        "#priceblock_dealprice",
+        "[data-a-color='price'] span.a-offscreen"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen",
+        "#priceblock_ourprice"
+      ],
+      "transform": "currency_mx"
+    },
+    "list_price": {
+      "selectors": [
+        "span.a-price.a-text-price span.a-offscreen",
+        "#listPrice",
+        "#priceblock_listprice"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": ["#availability span", "#availability", "#add-to-cart-button"],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen"
+      ],
+      "transform": "clean_text"
+    }
+  },
+
+  "specs": [
+    {
+      "type": "table",
+      "container": "#productDetails_techSpec_section_1 tr, #productDetails_techSpec_section_2 tr, #productDetails_detailBullets_sections1 tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    },
+    {
+      "type": "kvlist",
+      "container": "#detailBullets_feature_div li",
+      "limit": 120,
+      "skip_keys": ["opiniones de los clientes", "clasificación en los más vendidos", "producto en amazon desde"]
+    }
+  ],
+
+  "summary": {
+    "avg_rating": {
+      "selectors": ["#acrPopover", "span[data-hook='rating-out-of-text']",
+                    "#averageCustomerReviews .a-icon-alt"],
+      "attr": "title",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": ["#acrCustomerReviewText", "[data-hook='total-review-count']"],
+      "transform": "int"
+    }
+  },
+
+  "reviews": {
+    "container": "[data-hook='review'], div[id][data-hook='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": { "self_attr": "id" },
+      "rating": {
+        "selectors": ["[data-hook='review-star-rating'] .a-icon-alt",
+                      "[data-hook='cmps-review-star-rating'] .a-icon-alt",
+                      "i[data-hook='review-star-rating']"],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": ["[data-hook='reviewTitle']",
+                      "[data-hook='review-title'] span:not([class])",
+                      "[data-hook='review-title'] span",
+                      "[data-hook='review-title']"],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": ["[data-hook='reviewText'] span",
+                      "[data-hook='reviewText']",
+                      "[data-hook='reviewTextContainer'] span",
+                      "[data-hook='review-body'] span",
+                      "[data-hook='review-body']"],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [".a-profile-name"],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": ["[data-hook='review-date']"],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": ["[data-hook='avp-badge']"],
+        "transform": "bool_present"
+      },
+      "helpful_count": {
+        "selectors": ["[data-hook='helpful-vote-statement']"],
+        "transform": "int"
+      },
+      "review_url": {
+        "selectors": ["a:has(h5[data-hook='reviewTitle'])",
+                      "a[data-hook='review-title']",
+                      "h5[data-hook='reviewTitle'] a",
+                      "a.a-link-normal.review-title-content"],
+        "attr": "href"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[data-hook='review-image-tile'], .review-image-tile img, [data-hook='review-image-tile-section'] img",
+        "attr": "src",
+        "include": ["media-amazon.com/images/I/"],
+        "exclude": ["avatars-global", "grey-pixel"],
+        "hires": ["\\._[A-Z]{2}[0-9]+_", "._SL1600_"],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "video[data-hook='review-video'] source, [data-hook='review-video'] video, video.review-video source",
+        "attr": "src",
+        "exclude": [],
+        "limit": 10
+      }
+    }
+  }
+}

@@ -1,0 +1,4612 @@
+{
+  "version": "2.1",
+  "generated_at": "2026-09-25",
+  "total_sites": 74,
+  "source": {
+    "db": "data/overseas.db (table: site)",
+    "specs": "schemas/retail_specs/*.retail.json",
+    "adapters": "overseas/sites/*/adapter.py (SiteRegistry)"
+  },
+  "platforms": {
+    "ABC": 1,
+    "Alkosto": 1,
+    "Almacenes Japon": 1,
+    "Alternate": 1,
+    "Amazon": 8,
+    "Artefacta": 1,
+    "Best Buy": 2,
+    "Canadian Tire": 1,
+    "Carsa": 1,
+    "Cdiscount": 1,
+    "Comandato": 1,
+    "Coral": 1,
+    "Costco": 2,
+    "Credivargas": 1,
+    "Cresa": 1,
+    "Cresa More": 1,
+    "Dismac": 1,
+    "Elektra": 1,
+    "Estilos": 1,
+    "Evision": 1,
+    "Exito": 1,
+    "Expert DE": 1,
+    "Falabella": 1,
+    "Ferrisariato": 1,
+    "Hiraoka": 1,
+    "Hites": 1,
+    "Hughes UK": 1,
+    "Jaher": 1,
+    "Jumbo": 1,
+    "Komplett": 1,
+    "L-Ganga": 2,
+    "LG 官网": 1,
+    "Leon's": 1,
+    "Lider": 1,
+    "Marcimex": 1,
+    "Marks Electrical": 1,
+    "Max": 1,
+    "MediaMarkt": 2,
+    "Mercado Libre": 1,
+    "Metro": 1,
+    "Multicenter": 1,
+    "Multicenter+": 1,
+    "Oechsle": 1,
+    "Olimpica": 1,
+    "Orvehogar": 1,
+    "Panafoto": 1,
+    "Paris": 1,
+    "Plaza Vea": 1,
+    "Raenco": 1,
+    "Ripley": 1,
+    "Samsung UK": 1,
+    "Saturn": 1,
+    "Sony UK": 1,
+    "Sony 官网": 1,
+    "Sukasa": 1,
+    "TCL UK": 1,
+    "Tecnofacil": 1,
+    "The Brick": 1,
+    "Todohogar": 1,
+    "Unicomer": 1,
+    "Walmart": 1,
+    "eBay France": 1,
+    "kakaku.com": 1
+  },
+  "sites": [
+    {
+      "code": "abc_cl",
+      "name": "ABC",
+      "country": "Chile",
+      "base_url": "https://www.abc.cl",
+      "currency": "CLP",
+      "platform": "ABC",
+      "region": "cl",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.abc.cl/buscar?q={q}",
+        "container": "a.product-item-link, .product-tile",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price .sales .value",
+          ".price-sales"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "CLP",
+        "list_price_selectors": [
+          ".product-price .strike .value",
+          ".price-list"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".availability-msg"
+        ]
+      },
+      "reviews": {
+        "source": "powerreviews_api",
+        "method": "next_page_url",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 50,
+        "max_reviews": 500
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 50,
+        "max_retries": 3,
+        "review_max_reviews": 500,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "alkosto_co",
+      "name": "Alkosto",
+      "country": "Colombia",
+      "base_url": "https://www.alkosto.com",
+      "currency": "COP",
+      "platform": "Alkosto",
+      "region": "co",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.alkosto.com/search?q={q}",
+        "container": "li.product-item, .product-item-link",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "COP",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-price-amount]:nth(1)"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "reviews_io_api",
+        "method": "reviews_io_api",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "japon_ec",
+      "name": "Almacenes Japon",
+      "country": "Ecuador",
+      "base_url": "https://www.almacenesjapon.com",
+      "currency": "USD",
+      "platform": "Almacenes Japon",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.almacenesjapon.com/search?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "alternate_de",
+      "name": "Alternate",
+      "country": "Germany",
+      "base_url": "https://www.alternate.de",
+      "currency": "EUR",
+      "platform": "Alternate",
+      "region": "DE",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.alternate.de/Alle-Fernseher/{q}",
+        "container": "a[href*='/product'], a[href*='/produkt'], a[href*='/p/'], a[class*='product']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} fernseher",
+        "fallback_per_model": false,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "EUR",
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "pdp_embedded",
+        "selector": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "amazon_ca",
+      "name": "Amazon Canada",
+      "country": "Canada",
+      "base_url": "https://www.amazon.ca",
+      "currency": "CAD",
+      "platform": "Amazon",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.ca/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.ca/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.ca/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "CAD",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_de",
+      "name": "Amazon Germany",
+      "country": "Germany",
+      "base_url": "https://www.amazon.de",
+      "currency": "EUR",
+      "platform": "Amazon",
+      "region": "de",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.de/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.de/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.de/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "EUR",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_es",
+      "name": "Amazon Spain",
+      "country": "Spain",
+      "base_url": "https://www.amazon.es",
+      "currency": "EUR",
+      "platform": "Amazon",
+      "region": "es",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.es/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.es/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.es/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "EUR",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_fr",
+      "name": "Amazon France",
+      "country": "France",
+      "base_url": "https://www.amazon.fr",
+      "currency": "EUR",
+      "platform": "Amazon",
+      "region": "fr",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.fr/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.fr/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.fr/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "EUR",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_it",
+      "name": "Amazon Italy",
+      "country": "Italy",
+      "base_url": "https://www.amazon.it",
+      "currency": "EUR",
+      "platform": "Amazon",
+      "region": "it",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.it/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.it/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.it/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "EUR",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_mx",
+      "name": "Amazon México",
+      "country": "Mexico",
+      "base_url": "https://www.amazon.com.mx",
+      "currency": "MXN",
+      "platform": "Amazon",
+      "region": "mx",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.com.mx/s?k={q}",
+        "container": "a[href*='/dp/']",
+        "sku_attr": "href",
+        "product_url_template": "https://www.amazon.com.mx/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "MXN",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_uk",
+      "name": "Amazon UK",
+      "country": "United Kingdom",
+      "base_url": "https://www.amazon.co.uk",
+      "currency": "GBP",
+      "platform": "Amazon",
+      "region": "uk",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.co.uk/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.co.uk/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.co.uk/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "GBP",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "amazon_us",
+      "name": "Amazon US",
+      "country": "USA",
+      "base_url": "https://www.amazon.com",
+      "currency": "USD",
+      "platform": "Amazon",
+      "region": "us",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.amazon.com/s?k={q}",
+        "container": "div[data-asin]:not([data-asin=''])",
+        "sku_attr": "data-asin",
+        "product_url_template": "https://www.amazon.com/dp/{sku}",
+        "pdp_url_template": "https://www.amazon.com/dp/{sku}",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "fallback_per_model": true
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice",
+          "#priceblock_dealprice",
+          "[data-a-color='price'] span.a-offscreen"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "#corePrice_feature_div span.a-price span.a-offscreen",
+          "span.a-price span.a-offscreen",
+          "#priceblock_ourprice"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "span.a-price.a-text-price span.a-offscreen",
+          "#listPrice",
+          "#priceblock_listprice"
+        ],
+        "in_stock_selectors": [
+          "#availability span",
+          "#availability",
+          "#add-to-cart-button"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "filter_sweep",
+        "selector": "[data-hook='review'], div[id][data-hook='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 12,
+        "max_reviews": 50,
+        "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 8.0
+      },
+      "retail_page_wait": "#productTitle, #dp, .a-price"
+    },
+    {
+      "code": "artefacta_ec",
+      "name": "Artefacta",
+      "country": "Ecuador",
+      "base_url": "https://www.artefacta.com",
+      "currency": "USD",
+      "platform": "Artefacta",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.artefacta.com/catalogsearch/result/?q={q}",
+        "container": "a.product-item-link, .product-item",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-price-amount]",
+          ".price"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "[data-price-amount]:nth(1)",
+          ".old-price"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "unknown_blocked",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "bestbuy_ca",
+      "name": "Best Buy Canada",
+      "country": "Canada",
+      "base_url": "https://www.bestbuy.ca",
+      "currency": "CAD",
+      "platform": "Best Buy",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.bestbuy.ca/en-ca/search?search={q}",
+        "container": "a[href*='/product/']",
+        "sku_attr": "",
+        "product_url_template": "https://www.bestbuy.ca/en-ca/product/{sku}",
+        "pdp_url_template": "https://www.bestbuy.ca/en-ca/product/{sku}",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-automation='product-price']",
+          ".productPricingContainer .price",
+          "[itemprop='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency": "CAD",
+        "list_price_selectors": [
+          "[data-automation='regular-price']",
+          ".was-price"
+        ],
+        "in_stock_selectors": [
+          "[data-automation='add-to-cart']",
+          "button.addToCartButton"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "none",
+        "selector": "[data-automation='review'], .review-item, [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 10,
+        "max_reviews": 50,
+        "bv": {
+          "client": "bestbuy-ca",
+          "display_code": "18193",
+          "site": "main_site",
+          "locale": "en_CA",
+          "origin": "https://www.bestbuy.ca",
+          "content_locale": "en_CA,en_US,fr_CA",
+          "page_size": 100,
+          "max_pages": 10,
+          "max_reviews": 100
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 10,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 9.0
+      },
+      "retail_page_wait": "script[type='application/ld+json'], .productPricingContainer, h1"
+    },
+    {
+      "code": "bestbuy_us",
+      "name": "Best Buy US",
+      "country": "USA",
+      "base_url": "https://www.bestbuy.com",
+      "currency": "USD",
+      "platform": "Best Buy",
+      "region": "us",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": false,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.bestbuy.com/site/searchpage.jsp?st={q}&intl=nosplash",
+        "container": "ol.sku-item-list > li.sku-item, li.sku-item, div.shop-sku-list-item",
+        "sku_attr": "data-sku-id",
+        "product_url_template": "https://www.bestbuy.com/site/{sku}.p?skuId={sku}",
+        "pdp_url_template": "https://www.bestbuy.com/site/{sku}.p?skuId={sku}",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "div.priceView-hero-price span[aria-hidden='true']",
+          ".priceView-customer-price span[aria-hidden='true']",
+          "[data-testid='customer-price']"
+        ],
+        "jsonld": "offers.price",
+        "currency": "USD",
+        "list_price_selectors": [
+          "div.priceView-regular-price",
+          "[data-testid='regular-price']"
+        ],
+        "in_stock_selectors": [
+          "button.add-to-cart-button",
+          "[data-button-state='ADD_TO_CART']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "li.review-item, div.review-item-content, [data-testid='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 10,
+        "max_reviews": 50
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 10,
+        "max_retries": 3,
+        "review_max_reviews": 50,
+        "suggested_interval_sec": 10.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "canadiantire_ca",
+      "name": "Canadian Tire",
+      "country": "Canada",
+      "base_url": "https://www.canadiantire.ca",
+      "currency": "CAD",
+      "platform": "Canadian Tire",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.canadiantire.ca/en/search-results.html?q={q}",
+        "container": "a[href*='/pdp/']",
+        "sku_attr": "href",
+        "product_url_template": "https://www.canadiantire.ca/en/pdp/{sku}p.html"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']",
+          "[itemprop='price']"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "CAD",
+        "in_stock_selectors": [
+          "[data-testid*='availability']",
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "query_param",
+        "method": "query_param",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 10,
+        "max_reviews": 100
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 10,
+        "max_retries": 3,
+        "review_max_reviews": 100,
+        "suggested_interval_sec": 9.0
+      },
+      "retail_page_wait": "script[type='application/ld+json'], h1"
+    },
+    {
+      "code": "carsa_pe",
+      "name": "Carsa",
+      "country": "Peru",
+      "base_url": "https://www.carsa.pe",
+      "currency": "PEN",
+      "platform": "Carsa",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.carsa.pe/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "cdiscount_fr",
+      "name": "Cdiscount",
+      "country": "France",
+      "base_url": "https://www.cdiscount.com",
+      "currency": "EUR",
+      "platform": "Cdiscount",
+      "region": "FR",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.cdiscount.com/search/10/{q}.html",
+        "container": "a[href*='/f-']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "EUR",
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "jsonld",
+        "method": "none",
+        "selector": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "comandato_ec",
+      "name": "Comandato",
+      "country": "Ecuador",
+      "base_url": "https://www.comandato.com",
+      "currency": "USD",
+      "platform": "Comandato",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.comandato.com/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "coral_ec",
+      "name": "Coral",
+      "country": "Ecuador",
+      "base_url": "https://coralhipermercados.com",
+      "currency": "USD",
+      "platform": "Coral",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://coralhipermercados.com/buscar?q={q}",
+        "container": "li.product-item, .product-item-link",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-price-amount]:nth(1)"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": ".product-reviews-summary, .review-item, [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "costco_ca",
+      "name": "Costco Canada",
+      "country": "Canada",
+      "base_url": "https://www.costco.ca",
+      "currency": "CAD",
+      "platform": "Costco",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.costco.ca/s?keyword={q}",
+        "container": "a[href*='.product.']",
+        "sku_attr": "href",
+        "product_url_template": "https://www.costco.ca/.product.{sku}.html",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "span[automation-id='productPriceOutput']",
+          "[data-testid*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "CAD",
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "input[value='Add to Cart']"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "client": "Costco-EN_CA",
+          "display_code": "20040_1_0",
+          "site": "native_review_form",
+          "locale": "en_CA",
+          "origin": "https://www.costco.ca",
+          "content_locale": "en_CA,en_US,fr_CA",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 10.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']",
+      "detail_http": true
+    },
+    {
+      "code": "costco_us",
+      "name": "Costco US",
+      "country": "USA",
+      "base_url": "https://www.costco.com",
+      "currency": "USD",
+      "platform": "Costco",
+      "region": "us",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.costco.com/s?keyword={q}",
+        "container": "a[href*='.product.']",
+        "sku_attr": "href",
+        "product_url_template": "https://www.costco.com/.product.{sku}.html",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "div.price span.value",
+          "span[automation-id='productPriceOutput']"
+        ],
+        "jsonld": "offers.price",
+        "currency": "USD",
+        "list_price_selectors": [
+          "div.your-price .value"
+        ],
+        "in_stock_selectors": [
+          "input[value='Add to Cart']",
+          "button.add-to-cart-btn"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "ol.bv-content-list li.bv-content-item, div[itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 3,
+        "max_reviews": 100,
+        "bv": {
+          "client": "Costco",
+          "display_code": "2070_2_0",
+          "site": "native_review_form",
+          "locale": "en_US",
+          "origin": "https://www.costco.com",
+          "content_locale": "en_US",
+          "page_size": 100,
+          "max_pages": 3,
+          "max_reviews": 100
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 3,
+        "max_retries": 3,
+        "review_max_reviews": 100,
+        "suggested_interval_sec": 10.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']",
+      "detail_http": true
+    },
+    {
+      "code": "credivargas_pe",
+      "name": "Credivargas",
+      "country": "Peru",
+      "base_url": "https://www.credivargas.pe",
+      "currency": "PEN",
+      "platform": "Credivargas",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.credivargas.pe/search?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "cresa_ec",
+      "name": "Cresa",
+      "country": "Ecuador",
+      "base_url": "https://www.cresa.com",
+      "currency": "USD",
+      "platform": "Cresa",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.cresa.com/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "cresa_ec_more",
+      "name": "Cresa More",
+      "country": "Ecuador",
+      "base_url": "https://www.crecos.com",
+      "currency": "USD",
+      "platform": "Cresa More",
+      "region": "ec",
+      "requires_browser": false,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.crecos.com/api/catalog_system/pub/products/search?ft={q}",
+        "container": "body",
+        "sku_attr": "productId",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "jsonld",
+        "selectors": [],
+        "jsonld": "items[0].sellers[0].commertialOffer.Price",
+        "currency": "USD"
+      },
+      "reviews": {
+        "source": "vtex_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "body",
+      "detail_http": true
+    },
+    {
+      "code": "dismac_bo",
+      "name": "Dismac",
+      "country": "Bolivia",
+      "base_url": "https://www.dismac.com.bo",
+      "currency": "BOB",
+      "platform": "Dismac",
+      "region": "bo",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.dismac.com.bo/buscar?q={q}",
+        "container": "div.product-item-pdc, .product-item-link",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "span.current-price",
+          ".price"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "BOB",
+        "list_price_selectors": [
+          "span.before-price",
+          ".old-price"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "mageplaza_ajaxsort_http",
+        "method": "none",
+        "selector": ".mp-review-item, .review-item",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "elektra_gt",
+      "name": "Elektra",
+      "country": "Guatemala",
+      "base_url": "https://www.elektra.com.gt",
+      "currency": "GTQ",
+      "platform": "Elektra",
+      "region": "gt",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.elektra.com.gt/buscar?q={q}",
+        "container": "a[href*='/p']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price']",
+          "[data-testid*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency": "GTQ",
+        "in_stock_selectors": [
+          "[class*='buy-button']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "yotpo",
+        "method": "none",
+        "selector": ".yotpo-review, [class*='yotpo']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "estilos_pe",
+      "name": "Estilos",
+      "country": "Peru",
+      "base_url": "https://www.estilos.com.pe",
+      "currency": "PEN",
+      "platform": "Estilos",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.estilos.com.pe/busqueda?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "evision_pa",
+      "name": "Evision",
+      "country": "Panama",
+      "base_url": "https://www.evisionstore.com",
+      "currency": "USD",
+      "platform": "Evision",
+      "region": "pa",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.evisionstore.com/category-brand/all/televisores",
+        "container": "a[href*='/products/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "span[data-bb-value='product-price']",
+          "[class*='product-price']"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "[data-bb-value='product-price']",
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "span[data-bb-value='product-original-price']",
+          "[class*='original-price']"
+        ]
+      },
+      "reviews": {
+        "source": "jsonld",
+        "method": "none",
+        "selector": ".review-item, [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "exito_co",
+      "name": "Exito",
+      "country": "Colombia",
+      "base_url": "https://www.exito.com",
+      "currency": "COP",
+      "platform": "Exito",
+      "region": "co",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.exito.com/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "COP",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_rw",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "expert_de",
+      "name": "Expert DE",
+      "country": "Germany",
+      "base_url": "https://www.expert.de",
+      "currency": "EUR",
+      "platform": "Expert DE",
+      "region": "de",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.expert.de/shop/search?query={q}",
+        "container": "a[href*='/shop/']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} fernseher",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".exp_price",
+          "[class*='exp_price']"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "[class*='exp_price']"
+        ],
+        "currency": "EUR",
+        "list_price_selectors": [
+          ".exp_price .formerPrice",
+          "[class*='formerPrice']"
+        ],
+        "in_stock_selectors": [
+          "[data-testid='add-to-cart']",
+          ".in-stock"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_blocked",
+        "method": "none",
+        "selector": "[data-bv-show='inline_rating'], [class*='bv-content']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 0,
+        "max_reviews": 0
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "review_max_reviews": 0,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "falabella_cl",
+      "name": "Falabella",
+      "country": "Chile",
+      "base_url": "https://www.falabella.com",
+      "currency": "CLP",
+      "platform": "Falabella",
+      "region": "cl",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.falabella.com/search?q={q}",
+        "container": "script[type='application/json']",
+        "sku_attr": "",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid='price']",
+          ".prices-0"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "CLP",
+        "list_price_selectors": [
+          "[data-testid='list-price']",
+          ".prices-1"
+        ],
+        "in_stock_selectors": [
+          "[data-testid='stock']",
+          ".stock-status"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "client": "Falabella",
+          "display_code": "1931",
+          "site": "main_site",
+          "locale": "es_CL",
+          "origin": "https://www.falabella.com",
+          "content_locale": "es_CL",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "ferrisariato_ec",
+      "name": "Ferrisariato",
+      "country": "Ecuador",
+      "base_url": "https://www.ferrisariato.com",
+      "currency": "USD",
+      "platform": "Ferrisariato",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.ferrisariato.com/buscar?q={q}",
+        "container": "a.product-item-link, .product-card",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price",
+          "[data-price]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-list-price]"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "hiraoka_pe",
+      "name": "Hiraoka",
+      "country": "Peru",
+      "base_url": "https://hiraoka.com.pe",
+      "currency": "PEN",
+      "platform": "Hiraoka",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://hiraoka.com.pe/catalogsearch/result/?q={q}",
+        "container": "li.product-item, .product-item-link",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-price-amount]:nth(1)"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "hites_cl",
+      "name": "Hites",
+      "country": "Chile",
+      "base_url": "https://www.hites.com",
+      "currency": "CLP",
+      "platform": "Hites",
+      "region": "cl",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.hites.com/buscar?q={q}",
+        "container": "a.product-item-link, .product-tile",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price .sales .value",
+          ".price-sales"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "CLP",
+        "list_price_selectors": [
+          ".product-price .strike .value",
+          ".price-list"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".availability-msg"
+        ]
+      },
+      "reviews": {
+        "source": "verificado_ai_api",
+        "method": "verificado_ai_api",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "max_pages": 50,
+        "max_reviews": 500
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 50,
+        "max_retries": 3,
+        "review_max_reviews": 500,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "hughes_uk",
+      "name": "Hughes UK",
+      "country": "United Kingdom",
+      "base_url": "https://www.hughes.co.uk",
+      "currency": "GBP",
+      "platform": "Hughes UK",
+      "region": "uk",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.hughes.co.uk/search?query={q}",
+        "container": "a[href*='/product/']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price",
+          "[class*='product-price']:not([class*='list'])"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "[class*='currency']",
+          ".product-price"
+        ],
+        "currency": "GBP",
+        "list_price_selectors": [
+          ".product-price .with-list-price .was-price",
+          "[class*='original-price']"
+        ],
+        "in_stock_selectors": [
+          "[data-testid='add-to-cart']",
+          ".in-stock"
+        ]
+      },
+      "reviews": {
+        "source": "feefo",
+        "method": "none",
+        "selector": "[class*='feefo'], [data-feefo]",
+        "max_per_page": 40,
+        "key_attr": "data-review-id",
+        "max_pages": 20,
+        "max_reviews": 2000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 2000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "jaher_ec",
+      "name": "Jaher",
+      "country": "Ecuador",
+      "base_url": "https://www.jaher.com.ec",
+      "currency": "USD",
+      "platform": "Jaher",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.jaher.com.ec/buscar?q={q}",
+        "container": "a[href*='/producto'], .product-item-link, .product-card",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[data-price-amount]",
+          ".product-price"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-price-amount]:nth(1)",
+          ".price-list"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "unknown",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "jumbo_co",
+      "name": "Jumbo",
+      "country": "Colombia",
+      "base_url": "https://www.jumbocolombia.com",
+      "currency": "COP",
+      "platform": "Jumbo",
+      "region": "co",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.jumbocolombia.com/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "COP",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "komplett_no",
+      "name": "Komplett Norway",
+      "country": "Norway",
+      "base_url": "https://www.komplett.no",
+      "currency": "NOK",
+      "platform": "Komplett",
+      "region": "no",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.komplett.no/search?q={q}",
+        "container": "a[href*='/product'], a[href*='/produkt'], a[class*='product']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "NOK",
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[itemprop='review'], [class*='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "laganga_ec",
+      "name": "L-Ganga",
+      "country": "Ecuador",
+      "base_url": "https://laganga.com",
+      "currency": "USD",
+      "platform": "L-Ganga",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://laganga.com/buscar?q={q}",
+        "container": "li.product-item, .product-item-link",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-price-amount]:nth(1)"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "laganga_ec2",
+      "name": "L-Ganga",
+      "country": "Ecuador",
+      "base_url": "https://laganga.com",
+      "currency": "USD",
+      "platform": "L-Ganga",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://laganga.com/catalogsearch/result/?q={q}",
+        "container": "li.product-item a.product-item-link",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-price-amount]",
+          ".price-final .price",
+          ".price-box .normal-price .price"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "[data-price-amount]"
+        ],
+        "currency": "USD"
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": ".review-item, [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "lg_us",
+      "name": "LG（美国）",
+      "country": "USA",
+      "base_url": "https://www.lg.com",
+      "currency": "USD",
+      "platform": "LG 官网",
+      "region": "us",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": false,
+      "supports_spec": true,
+      "search": {
+        "url_template": "",
+        "container": "a[href*='/us/tvs/lg-'], a[href*='/us/lifestyle-products/lg-']",
+        "sku_attr": "href",
+        "max_candidates": 30,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "适配器未实现 product_url/item_url（SPEC 类站点）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[data-price]",
+          ".product-price"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-list-price]"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock-status"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "client": "lg",
+          "display_code": "7676",
+          "site": "main_site",
+          "locale": "en_US",
+          "origin": "https://www.lg.com",
+          "content_locale": "en_US,en_CA,en_GB,en_AU",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 4.0
+      },
+      "retail_page_wait": "body"
+    },
+    {
+      "code": "leons_ca",
+      "name": "Leon's",
+      "country": "Canada",
+      "base_url": "https://www.leons.ca",
+      "currency": "CAD",
+      "platform": "Leon's",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.leons.ca/search?q={q}",
+        "container": "a[href*='/products/']",
+        "sku_attr": "href",
+        "product_url_template": "https://www.leons.ca/products/{sku}"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='product-price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[class*='price']"
+        ],
+        "currency": "CAD",
+        "list_price_selectors": [
+          "[class*='compare']",
+          "[class*='was-price']",
+          "s",
+          "del"
+        ],
+        "in_stock_selectors": [
+          "[class*='add-to-cart']:not([disabled])",
+          "button:has-text('Add to Cart')"
+        ]
+      },
+      "reviews": {
+        "source": "lflgroup_api",
+        "method": "lfl_api",
+        "selector": "[class*='review']",
+        "max_per_page": 100,
+        "key_attr": "id",
+        "max_pages": 30,
+        "max_reviews": 2000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 30,
+        "max_retries": 3,
+        "review_max_reviews": 2000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "script[type='application/ld+json'], h1"
+    },
+    {
+      "code": "lider_cl",
+      "name": "Lider",
+      "country": "Chile",
+      "base_url": "https://www.lider.cl",
+      "currency": "CLP",
+      "platform": "Lider",
+      "region": "cl",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.lider.cl/buscar?q={q}",
+        "container": "script#__NEXT_DATA__",
+        "sku_attr": "",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid='price']",
+          ".price"
+        ],
+        "jsonld": "price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "CLP",
+        "list_price_selectors": [
+          "[data-testid='list-price']"
+        ],
+        "in_stock_selectors": [
+          "[data-testid='stock']"
+        ]
+      },
+      "reviews": {
+        "source": "next_data_inline",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 10
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "marcimex_ec",
+      "name": "Marcimex",
+      "country": "Ecuador",
+      "base_url": "https://www.marcimex.com",
+      "currency": "USD",
+      "platform": "Marcimex",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.marcimex.com/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "markselectrical_uk",
+      "name": "Marks Electrical",
+      "country": "United Kingdom",
+      "base_url": "https://www.markselectrical.co.uk",
+      "currency": "GBP",
+      "platform": "Marks Electrical",
+      "region": "uk",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.markselectrical.co.uk/catalogsearch/result/?q={q}",
+        "container": "a[href*='.html']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price",
+          "[class*='product-price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "GBP"
+      },
+      "reviews": {
+        "source": "feefo_api",
+        "method": "none",
+        "selector": ".feefo-review, [class*='review-item']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "max_gt",
+      "name": "Max",
+      "country": "Guatemala",
+      "base_url": "https://www.max.com.gt",
+      "currency": "GTQ",
+      "platform": "Max",
+      "region": "gt",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.max.com.gt/search?q={q}",
+        "container": "a[href*='/p']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price']",
+          "[data-testid*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency": "GTQ",
+        "list_price_selectors": [
+          "[class*='regular-price']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "mediamarkt_de",
+      "name": "MediaMarkt",
+      "country": "Germany",
+      "base_url": "https://www.mediamarkt.de",
+      "currency": "EUR",
+      "platform": "MediaMarkt",
+      "region": "DE",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.mediamarkt.de/de/search.html?query={q}",
+        "container": "a[href*='/product'], a[href*='/produkt'], a[href*='/p/'], a[class*='product']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} fernseher",
+        "fallback_per_model": false,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "EUR",
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_private",
+        "method": "click_more",
+        "selector": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "mediamarkt_es",
+      "name": "MediaMarkt",
+      "country": "Spain",
+      "base_url": "https://www.mediamarkt.es",
+      "currency": "EUR",
+      "platform": "MediaMarkt",
+      "region": "es",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.mediamarkt.es/es/search.html?query={q}",
+        "container": "a[href*='/es/product/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price']",
+          "[data-test='product-price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "EUR"
+      },
+      "reviews": {
+        "source": "bazaarvoice_private",
+        "method": "none",
+        "selector": "[class*='review'], [data-test='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "mercadolibre_pe",
+      "name": "Mercado Libre",
+      "country": "Peru",
+      "base_url": "https://www.mercadolibre.com.pe",
+      "currency": "PEN",
+      "platform": "Mercado Libre",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.mercadolibre.com.pe/listado/{q}",
+        "container": "a.ui-search-link, .ui-search-item",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} {model} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".ui-pdp-price .andes-money-amount__fraction",
+          ".price-tag-fraction"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          ".andes-money-amount__currency-symbol"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          ".ui-pdp-price--old .andes-money-amount__fraction"
+        ],
+        "in_stock_selectors": [
+          ".ui-pdp-buybox__quantity",
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "ml_reviews_api",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "metro_pe",
+      "name": "Metro",
+      "country": "Peru",
+      "base_url": "https://www.metro.pe",
+      "currency": "PEN",
+      "platform": "Metro",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.metro.pe/busca?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "multicenter_bo",
+      "name": "Multicenter",
+      "country": "Bolivia",
+      "base_url": "https://www.multicenter.com",
+      "currency": "BOB",
+      "platform": "Multicenter",
+      "region": "bo",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.multicenter.com/buscar?q={q}",
+        "container": "a[href*='/p'], .vtex-product-summary",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".vtex-product-price"
+        ],
+        "jsonld": "items[0].sellers[0].commertialOffer.Price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "BOB",
+        "list_price_selectors": [
+          ".vtex-product-list-price"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "alkostoplus_bo",
+      "name": "Multicenter+",
+      "country": "Bolivia",
+      "base_url": "https://alkostoplus.com",
+      "currency": "BOB",
+      "platform": "Multicenter+",
+      "region": "bo",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://alkostoplus.com/tienda?s={q}",
+        "container": "a[href*='/tienda/producto/'], .product-card",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price",
+          "[data-testid='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "BOB",
+        "list_price_selectors": [
+          ".product-price--original",
+          "[data-testid='list-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "[data-testid='stock']"
+        ]
+      },
+      "reviews": {
+        "source": "aggregate_only",
+        "method": "none",
+        "selector": "[class*='opinion'], [class*='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1",
+      "detail_http": true
+    },
+    {
+      "code": "oechsle_pe",
+      "name": "Oechsle",
+      "country": "Peru",
+      "base_url": "https://www.oechsle.pe",
+      "currency": "PEN",
+      "platform": "Oechsle",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.oechsle.pe/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "client": "intercorp",
+          "display_code": "27005_1_0",
+          "site": "oechsle",
+          "locale": "es_PE",
+          "origin": "https://www.oechsle.pe",
+          "content_locale": "es_PE",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "olimpica_co",
+      "name": "Olimpica",
+      "country": "Colombia",
+      "base_url": "https://www.olimpica.com.co",
+      "currency": "COP",
+      "platform": "Olimpica",
+      "region": "co",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.olimpica.com.co/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "COP",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "orvehogar_ec",
+      "name": "Orvehogar",
+      "country": "Ecuador",
+      "base_url": "https://www.orvehogar.com",
+      "currency": "USD",
+      "platform": "Orvehogar",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.orvehogar.com/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "vtex_reviews_graphql",
+        "method": "none",
+        "selector": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "panafoto_pa",
+      "name": "Panafoto",
+      "country": "Panama",
+      "base_url": "https://www.panafoto.com",
+      "currency": "USD",
+      "platform": "Panafoto",
+      "region": "pa",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.panafoto.com/catalogsearch/result/?q={q}",
+        "container": "li.product-item a.product-item-link",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price-final .price",
+          ".price-box .price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "USD"
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": ".review-item, [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "paris_cl",
+      "name": "Paris",
+      "country": "Chile",
+      "base_url": "https://www.paris.cl",
+      "currency": "CLP",
+      "platform": "Paris",
+      "region": "cl",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.paris.cl/buscar?q={q}",
+        "container": "a.product-item-link, .product-tile",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price .sales .value",
+          ".price-sales",
+          "[data-price]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "CLP",
+        "list_price_selectors": [
+          ".product-price .strike .value",
+          ".price-list",
+          "[data-list-price]"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".availability-msg"
+        ]
+      },
+      "reviews": {
+        "source": "jsonld",
+        "method": "none",
+        "selector": "[itemprop='review'], script[type='application/ld+json']",
+        "max_per_page": 40
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "plazavea_pe",
+      "name": "Plaza Vea",
+      "country": "Peru",
+      "base_url": "https://www.plazavea.com.pe",
+      "currency": "PEN",
+      "platform": "Plaza Vea",
+      "region": "pe",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.plazavea.com.pe/buscar?q={q}",
+        "container": "a[href*='/p'], a[href*='/pdp/']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price'][class*='selling']",
+          "[class*='selling-price']",
+          ".precio-producto"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "PEN",
+        "list_price_selectors": [
+          "[class*='list-price']",
+          "s",
+          "del",
+          "[class*='old-price']"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "button[class*='add-to-cart']:not([disabled])"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "raenco_pa",
+      "name": "Raenco",
+      "country": "Panama",
+      "base_url": "https://www.raenco.com",
+      "currency": "USD",
+      "platform": "Raenco",
+      "region": "pa",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.raenco.com/catalogsearch/result/?q={q}",
+        "container": "li.product-item a.product-item-link",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price-final .price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "USD"
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "#product-review-container .review-item, .product-reviews-summary",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "ripley_cl",
+      "name": "Ripley",
+      "country": "Chile",
+      "base_url": "https://simple.ripley.cl",
+      "currency": "CLP",
+      "platform": "Ripley",
+      "region": "cl",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://simple.ripley.cl/search?q={q}",
+        "container": "a[href*='/producto/'], .product-card",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price",
+          "[data-price]",
+          ".ripley-price"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "CLP",
+        "list_price_selectors": [
+          ".product-price--old",
+          ".old-price",
+          "[data-list-price]"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "unknown_blocked",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "samsung_uk",
+      "name": "Samsung UK",
+      "country": "United Kingdom",
+      "base_url": "https://www.samsung.com",
+      "currency": "GBP",
+      "platform": "Samsung UK",
+      "region": "uk",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.samsung.com/uk/tvs/?q={q}",
+        "container": "a[href*='/uk/tvs/']",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price']:not([class*='original'])",
+          "[data-testid='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[data-testid='currency']"
+        ],
+        "currency": "GBP",
+        "list_price_selectors": [
+          "[class*='original-price']"
+        ],
+        "in_stock_selectors": [
+          "[data-testid='add-to-cart']"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_data",
+        "method": "bv_api",
+        "selector": "[class*='bv-content'], [data-bv-show='inline_rating']",
+        "max_per_page": 40,
+        "key_attr": "data-review-id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "passkey": "cazuJbcLA9BlO8ZXazwY1OkDv7SjLJTLbZ6KWjQS3TolI",
+          "apiversion": "5.4",
+          "api_url": "https://api.bazaarvoice.com/data/reviews.json",
+          "filter": "Filter=ProductId:{product_id}",
+          "product_id_from": "PDP 隐藏 input resourceModelCode（如 QE42S90HAEXXU）",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "saturn_de",
+      "name": "Saturn",
+      "country": "Germany",
+      "base_url": "https://www.saturn.de",
+      "currency": "EUR",
+      "platform": "Saturn",
+      "region": "DE",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.saturn.de/de/search.html?query={q}",
+        "container": "a[href*='/product'], a[href*='/produkt'], a[href*='/p/'], a[class*='product']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} fernseher",
+        "fallback_per_model": false,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "EUR",
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "dom",
+        "method": "click_more",
+        "selector": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "sony_uk",
+      "name": "Sony UK",
+      "country": "United Kingdom",
+      "base_url": "https://www.sony.co.uk",
+      "currency": "GBP",
+      "platform": "Sony UK",
+      "region": "uk",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.sony.co.uk/search?query={q}",
+        "container": "a[href*='/bravia/products/']",
+        "sku_attr": "href",
+        "max_candidates": 30,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='Price']:not([class*='original'])",
+          "[data-testid='product-price']"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          "[data-testid='currency']"
+        ],
+        "currency": "GBP",
+        "list_price_selectors": [
+          "[class*='originalPrice']",
+          "[class*='formerPrice']"
+        ],
+        "in_stock_selectors": [
+          "[data-testid='add-to-cart']",
+          "[class*='stock']"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "[class*='bv-content'], [data-bv-show='inline_rating']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "client": "sony-global",
+          "display_code": "12872_22_0",
+          "site": "seu",
+          "locale": "en_GB",
+          "origin": "https://www.sony.co.uk",
+          "content_locale": "en_GB",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "sony_ca",
+      "name": "Sony（加拿大）",
+      "country": "Canada",
+      "base_url": "https://www.sony.ca",
+      "currency": "CAD",
+      "platform": "Sony 官网",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": false,
+      "supports_spec": true,
+      "search": {
+        "url_template": "",
+        "container": "a[href*='/all-tvs/p/'], a[href*='/p/']",
+        "sku_attr": "href",
+        "max_candidates": 30,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "适配器未实现 product_url/item_url（SPEC 类站点）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "p.product-pricing__amount--sale",
+          ".product-price"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']",
+          "meta[itemprop='priceCurrency']"
+        ],
+        "currency": "CAD",
+        "list_price_selectors": [
+          "p.product-pricing__amount-original-price"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          "body"
+        ]
+      },
+      "reviews": {
+        "source": "bazaarvoice_bfd",
+        "method": "bv_api",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000,
+        "bv": {
+          "client": "sony-global",
+          "display_code": "12872_22_0",
+          "site": "seu",
+          "locale": "en_CA",
+          "origin": "https://www.sony.ca",
+          "content_locale": "en_CA,en_US,fr_CA",
+          "page_size": 100,
+          "max_pages": 20,
+          "max_reviews": 1000
+        }
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 7.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "sukasa_ec",
+      "name": "Sukasa",
+      "country": "Ecuador",
+      "base_url": "https://www.sukasa.com",
+      "currency": "USD",
+      "platform": "Sukasa",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.sukasa.com/buscar?q={q}",
+        "container": "a[href*='/productos/'], .product-card",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price",
+          "[data-price]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-list-price]"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "tcl_uk",
+      "name": "TCL UK",
+      "country": "United Kingdom",
+      "base_url": "https://www.tcl.com",
+      "currency": "GBP",
+      "platform": "TCL UK",
+      "region": "uk",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.tcl.com/uk/en/search?q={q}",
+        "container": "a[href*='/uk/en/tvs/']",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "jsonld",
+        "selectors": [],
+        "jsonld": "",
+        "currency": "GBP"
+      },
+      "reviews": {
+        "source": "feefo",
+        "method": "none",
+        "selector": "[class*='feefo'], [data-feefo]",
+        "max_per_page": 40,
+        "key_attr": "data-review-id",
+        "max_pages": 20,
+        "max_reviews": 2000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 2000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "tecnofacil_gt",
+      "name": "Tecnofacil",
+      "country": "Guatemala",
+      "base_url": "https://www.tecnofacil.com.gt",
+      "currency": "GTQ",
+      "platform": "Tecnofacil",
+      "region": "gt",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.tecnofacil.com.gt/search?q={q}",
+        "container": "a[href*='/p']",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price']",
+          "[data-testid*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency": "GTQ",
+        "list_price_selectors": [
+          "[class*='regular-price']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "thebrick_ca",
+      "name": "The Brick",
+      "country": "Canada",
+      "base_url": "https://www.thebrick.com",
+      "currency": "CAD",
+      "platform": "The Brick",
+      "region": "ca",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.thebrick.com/search?q={q}",
+        "container": "a[href*='/products/']",
+        "sku_attr": "href",
+        "product_url_template": "https://www.thebrick.com/products/{sku}"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[class*='price']"
+        ],
+        "currency": "CAD",
+        "list_price_selectors": [
+          "[class*='compare-at']",
+          "[class*='was-price']",
+          "s",
+          "del"
+        ],
+        "in_stock_selectors": [
+          "[class*='add-to-cart']:not([disabled])",
+          "button[type='submit']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review']",
+        "max_per_page": 50,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "script[type='application/ld+json'], h1"
+    },
+    {
+      "code": "todohogar_ec",
+      "name": "Todohogar",
+      "country": "Ecuador",
+      "base_url": "https://www.todohogar.com",
+      "currency": "USD",
+      "platform": "Todohogar",
+      "region": "ec",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.todohogar.com/buscar?q={q}",
+        "container": "a[href*='/productos/'], .product-card",
+        "sku_attr": "href",
+        "max_candidates": 40,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": true,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".product-price",
+          "[data-price]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "USD",
+        "list_price_selectors": [
+          ".old-price",
+          "[data-list-price]"
+        ],
+        "in_stock_selectors": [
+          "[itemprop='availability']",
+          ".stock"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[class*='review'], [itemprop='review']",
+        "max_per_page": 0,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "unicomer_gt",
+      "name": "Unicomer",
+      "country": "Guatemala",
+      "base_url": "https://www.lacuracaonline.com",
+      "currency": "GTQ",
+      "platform": "Unicomer",
+      "region": "gt",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.lacuracaonline.com/catalogsearch/result/?q={q}",
+        "container": "li.product-item a.product-item-link",
+        "sku_attr": "href",
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".price-final .price",
+          "[data-price-amount]"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "GTQ"
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": ".product-reviews-summary, #product-review-container .review-item",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1"
+    },
+    {
+      "code": "walmart_us",
+      "name": "Walmart US",
+      "country": "USA",
+      "base_url": "https://www.walmart.com",
+      "currency": "USD",
+      "platform": "Walmart",
+      "region": "us",
+      "requires_browser": true,
+      "protection": "L3",
+      "capabilities": [
+        "price",
+        "reviews"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.walmart.com/search?q={q}",
+        "container": "div[data-item-id], div[data-testid='list-view'] > div",
+        "sku_attr": "data-item-id",
+        "product_url_template": "https://www.walmart.com/ip/{sku}",
+        "pdp_url_template": "https://www.walmart.com/ip/{sku}"
+      },
+      "price": {
+        "method": "jsonld",
+        "selectors": [],
+        "jsonld": "offers.price",
+        "currency": "USD",
+        "list_price_selectors": [
+          "span.strike-through",
+          ".was-price"
+        ],
+        "in_stock_selectors": [
+          "button[data-automation-id='atc']",
+          "[data-testid='add-to-cart']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "div[data-testid='reviews-section'] li, div.review-card, [itemprop='review']",
+        "max_per_page": 40,
+        "key_attr": "id"
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 0,
+        "max_retries": 3,
+        "suggested_interval_sec": 10.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "ebay_fr",
+      "name": "eBay France",
+      "country": "France",
+      "base_url": "https://www.ebay.fr",
+      "currency": "EUR",
+      "platform": "eBay France",
+      "region": "FR",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": true,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://www.ebay.fr/sch/i.html?_nkw={q}",
+        "container": "a.s-item__link, a[href*='/itm/']",
+        "sku_attr": "href",
+        "max_candidates": 60,
+        "keyword_template": "{brand} tv",
+        "fallback_per_model": false,
+        "_product_note": "sku 即完整 URL，product_url 不拼接（spec search.url_template 同此）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          "[data-testid*='price']",
+          "[class*='price']"
+        ],
+        "jsonld": "offers.price",
+        "currency_selectors": [
+          "[itemprop='priceCurrency']"
+        ],
+        "currency": "EUR",
+        "in_stock_selectors": [
+          "[itemprop='availability']"
+        ]
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "none",
+        "selector": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+        "max_per_page": 40,
+        "key_attr": "id",
+        "max_pages": 20,
+        "max_reviews": 1000
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 20,
+        "max_retries": 3,
+        "review_max_reviews": 1000,
+        "suggested_interval_sec": 6.0
+      },
+      "retail_page_wait": "h1, script[type='application/ld+json']"
+    },
+    {
+      "code": "kakaku_jp",
+      "name": "価格.com（日本）",
+      "country": "Japan",
+      "base_url": "https://kakaku.com",
+      "currency": "JPY",
+      "platform": "kakaku.com",
+      "region": "jp",
+      "requires_browser": true,
+      "protection": "L2",
+      "capabilities": [
+        "price"
+      ],
+      "supports_retail": false,
+      "supports_spec": false,
+      "search": {
+        "url_template": "https://search.kakaku.com/{q}/",
+        "container": ".p-product_name a, a[href*='/item/']",
+        "sku_attr": "href",
+        "product_url_template": "https://kakaku.com/item/{sku}/",
+        "search_pages": 1,
+        "max_candidates": 60,
+        "_product_note": "适配器方法名为 item_url（非 product_url）"
+      },
+      "price": {
+        "method": "css",
+        "selectors": [
+          ".p-lowestPrice"
+        ],
+        "jsonld": "",
+        "currency_selectors": [
+          ".p-lowestPrice"
+        ],
+        "currency": "JPY"
+      },
+      "reviews": {
+        "source": "pdp_embedded",
+        "method": "pdp_embedded",
+        "selector": "",
+        "max_per_page": 0,
+        "max_pages": 12,
+        "max_reviews": 100
+      },
+      "pagination": {
+        "search_max_pages": 1,
+        "review_max_pages": 12,
+        "max_retries": 3,
+        "review_max_reviews": 100,
+        "suggested_interval_sec": 7.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+[Unit]
+Description=overseas 后端 API（标准库 HTTP 服务，供前端查询 SPEC/价格/评论）
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hisense
+WorkingDirectory=/home/hisense/pro/overseas
+Environment="HOME=/home/hisense"
+Environment="PYTHONUNBUFFERED=1"
+Environment="PYTHONIOENCODING=utf-8"
+EnvironmentFile=-/home/hisense/pro/overseas/overseas.env
+# 只监听本地回环：对外暴露必须由 Nginx/Caddy 反向代理并在代理层做认证与限流。
+# 若前端与本服务同机不同端口联调，可加 --cors "http://127.0.0.1:5173"。
+ExecStart=/home/hisense/pro/overseas/venv/bin/python -m overseas.api.server \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --db /home/hisense/pro/overseas/data/overseas.db
+Restart=on-failure
+RestartSec=5
+# 采集任务由本服务派生子进程执行，进程组一起回收，避免残留浏览器进程。
+KillMode=control-group
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

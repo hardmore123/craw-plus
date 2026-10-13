@@ -1,0 +1,85 @@
+﻿类型,品牌/站点,品牌名/站点名,系列数/产品数,规格行数,抓取周次,首周,末周
+SPEC品牌官网,samsung_ca,Samsung（加拿大）,66,23517,3,2026-W38,2026-W40
+SPEC品牌官网,lg_us,LG（美国）,99,22653,3,2026-W38,2026-W40
+SPEC品牌官网,regza_jp,REGZA（日本）,39,13941,3,2026-W37,2026-W40
+SPEC品牌官网,samsung_us,Samsung（美国）,66,11968,3,2026-W38,2026-W40
+SPEC品牌官网,samsung_cl,Samsung（智利）,52,9291,2,2026-W39,2026-W40
+SPEC品牌官网,samsung_co,Samsung（哥伦比亚）,51,8224,2,2026-W39,2026-W40
+SPEC品牌官网,tcl_jp,TCL（日本）,45,7919,3,2026-W37,2026-W40
+SPEC品牌官网,samsung_pe,Samsung PE,65,7780,1,2026-W39,2026-W39
+SPEC品牌官网,lg_mx,LG（墨西哥）,51,6480,2,2026-W38,2026-W39
+SPEC品牌官网,sony_us,Sony（美国）,33,5737,2,2026-W38,2026-W39
+SPEC品牌官网,samsung_mx,Samsung（墨西哥）,22,4878,2,2026-W39,2026-W40
+SPEC品牌官网,tcl_it,TCL（意大利）,57,4173,1,2026-W40,2026-W40
+SPEC品牌官网,hisense_ca,Hisense（加拿大）,33,3900,2,2026-W38,2026-W40
+SPEC品牌官网,samsung_uk,Samsung UK,32,3677,1,2026-W39,2026-W39
+SPEC品牌官网,sony_ca,Sony（加拿大）,16,3511,2,2026-W38,2026-W39
+SPEC品牌官网,tcl_ca,TCL（加拿大）,16,3510,3,2026-W38,2026-W40
+SPEC品牌官网,lg_ca,LG（加拿大）,32,3207,2,2026-W38,2026-W39
+SPEC品牌官网,sony_fr,Sony（法国）,20,2693,1,2026-W40,2026-W40
+SPEC品牌官网,sony_de,Sony（德国）,19,2560,1,2026-W40,2026-W40
+SPEC品牌官网,tcl_mx,TCL（墨西哥）,30,2468,2,2026-W39,2026-W40
+SPEC品牌官网,hisense_jp,Hisense（日本）,13,2154,3,2026-W37,2026-W40
+SPEC品牌官网,sony_jp,Sony BRAVIA（日本）,9,2090,3,2026-W37,2026-W40
+SPEC品牌官网,sony_uk,Sony UK,14,1904,1,2026-W39,2026-W39
+SPEC品牌官网,tcl_us,TCL（美国）,11,1628,3,2026-W38,2026-W40
+SPEC品牌官网,hisense_us,Hisense（美国）,35,1608,2,2026-W38,2026-W40
+SPEC品牌官网,sony_it,Sony（意大利）,11,1500,1,2026-W40,2026-W40
+SPEC品牌官网,samsung_de,Samsung（德国）,10,1450,1,2026-W40,2026-W40
+SPEC品牌官网,sharp_jp,夏普 AQUOS（日本）,13,1443,3,2026-W37,2026-W40
+SPEC品牌官网,philips_ca,Philips（加拿大）,11,1423,3,2026-W38,2026-W40
+SPEC品牌官网,panasonic_jp,松下 VIERA（日本）,13,1394,3,2026-W37,2026-W40
+SPEC品牌官网,samsung_it,Samsung（意大利）,11,1389,1,2026-W40,2026-W40
+SPEC品牌官网,samsung_ec,Samsung EC,11,1379,1,2026-W39,2026-W39
+SPEC品牌官网,samsung_fr,Samsung（法国）,9,1173,1,2026-W40,2026-W40
+SPEC品牌官网,tcl_de,TCL（德国）,15,937,1,2026-W40,2026-W40
+SPEC品牌官网,samsung_bo,Samsung（玻利维亚）,7,769,1,2026-W39,2026-W39
+SPEC品牌官网,tcl_fr,TCL（法国）,15,708,1,2026-W40,2026-W40
+SPEC品牌官网,tcl_cl,TCL（智利）,13,247,1,2026-W39,2026-W39
+SPEC品牌官网,hisense_mx,Hisense（墨西哥）,23,228,3,2026-W38,2026-W40
+SPEC品牌官网,tcl_bo,TCL（玻利维亚）,3,144,1,2026-W39,2026-W39
+零售产品规格,kakaku_jp,価格.com（日本）,727,29605,,,
+零售产品规格,thebrick_ca,The Brick,207,21862,,,
+零售产品规格,amazon_ca,Amazon Canada,205,19130,,,
+零售产品规格,leons_ca,Leon's,148,14034,,,
+零售产品规格,amazon_us,Amazon US,410,13694,,,
+零售产品规格,samsung_uk,Samsung UK,67,6326,,,
+零售产品规格,plazavea_pe,Plaza Vea,1869,4523,,,
+零售产品规格,max_gt,Max,60,3907,,,
+零售产品规格,tecnofacil_gt,Tecnofacil,62,3673,,,
+零售产品规格,hughes_uk,Hughes UK,171,3035,,,
+零售产品规格,exito_co,Exito,2065,2354,,,
+零售产品规格,lider_cl,Lider,102,2019,,,
+零售产品规格,tcl_uk,TCL UK,128,1763,,,
+零售产品规格,alkostoplus_bo,Multicenter+,152,1294,,,
+零售产品规格,abc_cl,ABC,42,770,,,
+零售产品规格,hites_cl,Hites,34,680,,,
+零售产品规格,oechsle_pe,Oechsle,147,653,,,
+零售产品规格,costco_us,Costco US,48,581,,,
+零售产品规格,todohogar_ec,Todohogar,45,574,,,
+零售产品规格,lg_us,LG（美国）,13,543,,,
+零售产品规格,orvehogar_ec,Orvehogar,154,501,,,
+零售产品规格,falabella_cl,Falabella,46,471,,,
+零售产品规格,paris_cl,Paris,55,440,,,
+零售产品规格,cresa_ec,Cresa,155,428,,,
+零售产品规格,japon_ec,Almacenes Japon,160,428,,,
+零售产品规格,olimpica_co,Olimpica,190,423,,,
+零售产品规格,evision_pa,Evision,40,404,,,
+零售产品规格,liverpool_mx,Liverpool,15,367,,,
+零售产品规格,artefacta_ec,Artefacta,41,285,,,
+零售产品规格,carsa_pe,Carsa,112,266,,,
+零售产品规格,bestbuy_ca,Best Buy Canada,8,227,,,
+零售产品规格,marcimex_ec,Marcimex,78,219,,,
+零售产品规格,panafoto_pa,Panafoto,41,169,,,
+零售产品规格,estilos_pe,Estilos,66,157,,,
+零售产品规格,elektra_gt,Elektra,59,156,,,
+零售产品规格,amazon_es,Amazon Spain,42,153,,,
+零售产品规格,sony_uk,Sony UK,7,148,,,
+零售产品规格,unicomer_gt,Unicomer,37,146,,,
+零售产品规格,laganga_ec2,L-Ganga,21,145,,,
+零售产品规格,comandato_ec,Comandato,47,144,,,
+零售产品规格,jumbo_co,Jumbo,65,131,,,
+零售产品规格,sukasa_ec,Sukasa,50,126,,,
+零售产品规格,amazon_mx,Amazon México,72,75,,,
+零售产品规格,metro_pe,Metro,44,74,,,
+零售产品规格,amazon_it,Amazon Italy,43,11,,,

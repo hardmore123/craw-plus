@@ -1,0 +1,31 @@
+[Unit]
+# 采集是批处理任务，不是常驻服务：用 oneshot + timer 定时跑，
+# 避免长驻进程占着浏览器和内存（参考 cert_verify 的 systemd 经验）。
+Description=Overseas e-commerce price/review monitor (oneshot)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=hisense
+WorkingDirectory=/home/hisense/pro/overseas
+
+# systemd 下 HOME 默认为空，Playwright 会因写不了缓存目录而失败
+Environment="HOME=/home/hisense"
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=-/home/hisense/pro/overseas/overseas.env
+
+# 按「已入库 SKU」做价格快照，而不是每次按型号重新搜索：
+# SKU 是站内唯一标识，不会误匹配到配件（实测搜 OLED77G6WUA 首条是 $192.99 的支架），
+# 而且省掉搜索页请求。商品发现用 S1（search）人工/低频执行即可。
+ExecStart=/home/hisense/pro/overseas/venv/bin/python -m overseas.cli \
+    monitor --site amazon_ca --from-db --limit 200
+
+# 单次任务超时保护：抓取慢也不允许无限挂着
+TimeoutStartSec=3600
+
+# 采集失败不影响下一次定时执行
+SuccessExitStatus=0 1
+
+[Install]
+WantedBy=multi-user.target

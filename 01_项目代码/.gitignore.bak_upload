@@ -1,0 +1,52 @@
+# 采集数据与运行产物（不提交）
+data/
+.browser/
+venv/
+
+# ★ 登录态（Playwright 持久化 profile 与 storage_state，内含 cookie，属敏感凭据）
+# data/ 已整体忽略，此处再显式声明，避免将来有人放开 data/ 时误提交。
+# 这两个目录由运行时自动创建，交付包中不包含。
+data/session/
+data/browser_profile/
+*.state.json
+
+# 真实环境配置（含代理地址等）
+overseas.env
+.env
+
+# 型号清单可能含业务信息
+models.txt
+
+# Python
+__pycache__/
+*.py[cod]
+
+# 临时/诊断脚本
+_*.py
+# 但包标识文件是源码，必须保留（_*.py 会误伤下划线开头的 __init__/__main__）
+!__init__.py
+!__main__.py
+
+# ---- 只上传代码与文档，排除结果产物与交付包 ----
+# 交付包 zip（体积大，非源码）
+交付包/
+*.zip
+*.zip.sha256
+
+# 生成的结果表格（SPEC / 网评 / 价格 / 系列状态 / 型号汇总等）
+*.xlsx
+*.csv
+SPEC_系列状态_*.json
+SPEC_型号汇总_*.json
+*.db
+*.db-*
+
+# IDE / 工具目录
+# .kiro 下只放行 skills/（skill 是团队共享的项目资产，必须入库；
+# 其余 specs/settings 等本地状态不提交）。
+# 注意：这里必须写 .kiro/* 而非 .kiro/——写目录形式时 git 不会下降进目录，
+# 后面的 !.kiro/skills/ negation 会失效。
+.kiro/*
+!.kiro/skills/
+semantic-review/
+.vscode/

@@ -1,0 +1,133 @@
+{
+  "search": {
+    "container": "[data-testid='search-results-products'] a, .product-card a",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        "meta[itemprop='price']",
+        "[class*='price']:not([class*='old'])",
+        ".price:not(.old-price)",
+        ".product-price"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "default": "PEN"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "max_reviews": 50
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "#productTitle",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "[data-brand]",
+        "[class*='brand']",
+        "[itemprop='manufacturer']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[itemprop='mpn']",
+        "[data-testid*='model']",
+        "[data-model]"
+      ],
+      "attr": "content",
+      "jsonld": "mpn",
+      "regex": "\\b([A-Z0-9][A-Z0-9._-]{3,25})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|in|pulgada|Zoll|pollici|pouces|インチ|型)",
+      "transform": "size_inch"
+    },
+    "category": {
+      "selectors": [
+        "[itemprop='category']",
+        ".breadcrumb li:last-child",
+        ".breadcrumbs li:last-child"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  }
+}

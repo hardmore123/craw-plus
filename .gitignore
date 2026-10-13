@@ -1,0 +1,13 @@
+﻿# 交付包全量上传（含数据/代码/文档），不忽略 data/db/csv/xlsx
+# 只忽略以下运行时产物与临时文件：
+__pycache__/
+*.py[cod]
+.git_disabled_for_upload/
+*.bak
+*.log
+# 登录态/凭据（交付包本就不含，双保险）
+data/session/
+data/browser_profile/
+*.state.json
+overseas.env
+.env

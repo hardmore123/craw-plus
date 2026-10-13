@@ -1,0 +1,210 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "falabella_co",
+  "name": "Falabella CO",
+  "country": "Colombia",
+  "channel": "Falabella",
+  "region": "co",
+  "base_url": "https://www.falabella.com.co",
+  "currency": "COP",
+  "anchor": "h1, script[type='application/ld+json']",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "_isomorphic": {
+    "brand": "falabella",
+    "reuse": "falabella_cl（同平台不同国家分站，L2）"
+  },
+  "capabilities": [],
+  "generated_by": "_gen_retail10.py 2026-09-26",
+  "status": "blocked",
+  "_blocked": {
+    "http_status": -1,
+    "block_reason": "http_-1：非 200",
+    "note": "需住宅IP或代理切换；可达后补全 search/price/match 段"
+  },
+  "search": {
+    "container": "script[type='application/json']",
+    "sku": {
+      "jsonld": "productId"
+    },
+    "title": {
+      "jsonld": "displayName",
+      "transform": "clean_text"
+    },
+    "url": {
+      "jsonld": "url",
+      "transform": "clean_text"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[data-testid='product-title']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "jsonld": "brand",
+      "selectors": [
+        "[data-testid='brand-name']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9._\\-]{1,39})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "jsonld": "sku",
+      "selectors": [
+        "[data-testid='product-id']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid='price']",
+        ".prices-0"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "COP"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[data-testid='list-price']",
+        ".prices-1"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[data-testid='stock']",
+        ".stock-status"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        ".bv_avgRating_component_container"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        ".bv_numReviews_text"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "source": "bazaarvoice_bfd",
+    "bv": {
+      "client": "Falabella",
+      "display_code": "1931",
+      "site": "main_site",
+      "locale": "es_CO",
+      "origin": "https://www.falabella.com.co",
+      "content_locale": "es_CO",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  }
+}

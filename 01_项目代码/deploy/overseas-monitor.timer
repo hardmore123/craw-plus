@@ -1,0 +1,13 @@
+[Unit]
+Description=定时执行海外电商价格/评价监控
+
+[Timer]
+# 每天 03:20 跑一次（避开白天，降低被风控概率）
+OnCalendar=*-*-* 03:20:00
+# 错过时间（如服务器重启）补跑一次
+Persistent=true
+# 加随机延迟，避免每天同一秒发起请求形成规律特征
+RandomizedDelaySec=1800
+
+[Install]
+WantedBy=timers.target

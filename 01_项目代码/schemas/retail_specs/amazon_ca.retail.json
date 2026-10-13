@@ -1,0 +1,448 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "amazon_ca",
+  "name": "Amazon",
+  "country": "Canada",
+  "channel": "Amazon",
+  "region": "ca",
+  "base_url": "https://www.amazon.ca",
+  "currency": "CAD",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "反抽象: sites/amazon_ca/adapter.py + schema.json",
+  "status": "candidate",
+  "anchor": "#productTitle",
+  "search": {
+    "container": "div[data-asin]:not([data-asin=''])",
+    "sku": {
+      "self_attr": "data-asin"
+    },
+    "title": {
+      "selectors": [
+        "h2 span:not([class])",
+        "a[class*='s-line-clamp']",
+        "span.a-size-medium",
+        "h2 span",
+        "[data-cy='title-recipe'] span"
+      ],
+      "transform": "clean_text"
+    },
+    "url_template": "https://www.amazon.ca/dp/{sku}",
+    "batch": {
+      "prefer_pool": true,
+      "search_pages": 1,
+      "max_candidates": 60,
+      "threshold": 20,
+      "fallback_per_model": true,
+      "retries": 1,
+      "_note": "P1: 池优先（省逐型号搜索）+ 池内未命中回退逐型号搜索（保覆盖率）。若要极致提速可设 fallback_per_model=false，但会丢覆盖率。",
+      "_measurement_2026_09_20": {
+        "US 1页": "池 17 候选，命中 12/179 = 6.7%",
+        "US 8页": "池 140 候选，命中 34/179 = 19.0%",
+        "CA 8页": "池 304 候选，命中 31/140 = 22.1%",
+        "结论": "Amazon 品牌搜索受相关性排序限制，扩页收益极低（8页也只覆盖~20%型号）。逐型号精确搜索不可省 —— 它是覆盖率的主要来源。故 search_pages=1（复用首屏免去一次重复搜索），其余型号走回退逐型号搜索。"
+      }
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "#productTitle",
+        "#title span"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "#bylineInfo",
+        "a#bylineInfo",
+        "#brand",
+        "#detailBullets_feature_div li:has-text('Brand')"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "kv": {
+        "container": "#detailBullets_feature_div li, #productDetails_techSpec_section_1 tr, #productDetails_detailBullets_sections1 tr",
+        "key_contains": "model number",
+        "value": "td"
+      },
+      "transform": "clean_text"
+    },
+    "category": {
+      "selectors": [
+        "#wayfinding-breadcrumbs_feature_div ul li:last-child a",
+        "#nav-subnav a.nav-b"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "_note": "尺寸：优先变体选择项，其次规格表里的 Screen Size",
+      "kv": {
+        "container": "#productDetails_techSpec_section_1 tr, #detailBullets_feature_div li",
+        "key_contains": "screen size",
+        "value": "td"
+      },
+      "selectors": [
+        "#inline-twister-expanded-dimension-text-size_name",
+        "#variation_size_name .selection"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen",
+        "#priceblock_ourprice",
+        "#priceblock_dealprice",
+        "[data-a-color='price'] span.a-offscreen"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen",
+        "#priceblock_ourprice"
+      ],
+      "transform": "currency",
+      "default": "CAD"
+    },
+    "list_price": {
+      "selectors": [
+        "span.a-price.a-text-price span.a-offscreen",
+        "#listPrice",
+        "#priceblock_listprice"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "#availability span",
+        "#availability",
+        "#add-to-cart-button"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "#productDetails_techSpec_section_1 tr, #productDetails_techSpec_section_2 tr, #productDetails_detailBullets_sections1 tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    },
+    {
+      "type": "kvlist",
+      "container": "#detailBullets_feature_div li",
+      "limit": 120,
+      "skip_keys": [
+        "customer reviews",
+        "best sellers rank",
+        "date first available"
+      ]
+    }
+  ],
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "#acrPopover",
+        "span[data-hook='rating-out-of-text']",
+        "#averageCustomerReviews .a-icon-alt"
+      ],
+      "attr": "title",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "#acrCustomerReviewText",
+        "[data-hook='total-review-count']"
+      ],
+      "transform": "int"
+    }
+  },
+  "_summary_extra_2026_09_20": {
+    "Customers say 摘要": {
+      "状态": "实测可稳定抽取，选择器已写入 adapter（非本 spec 驱动）",
+      "选择器": "[data-testid='overall-summary']",
+      "实测文本": "Customers are satisfied with this television, describing it as a great product and expressing happiness with their purch…",
+      "落点": "ReviewSummary.summary_text（模型字段已加；DB 表 review_summary 尚未加列，属后续迁移项）",
+      "注意": "该区块用 React 哈希类名（如 __P0nNOOvptgdu），只能用 data-testid 定位，切勿用类名"
+    },
+    "评分分布直方图": {
+      "状态": "★未能抽取 —— 不写入选择器（未验证的配置有害）",
+      "已有元素": "#histogramTable 存在(count=1)，但 #histogramTable tr / .a-histogram-row / [data-hook='histogram-row'] 均为 0",
+      "原因": "直方图行在 hover #acrPopover 后才渲染（懒加载弹层），静态 HTML 与 Dom 包装层都拿不到",
+      "现有替代": "均分与总数已可抽（#acrPopover title='4.1 out of 5 stars' + #acrCustomerReviewText）",
+      "若要补": "需在 fetcher 层支持 hover 后再抽，或在 adapter 里用 page 句柄触发；属独立改动"
+    }
+  },
+  "reviews": {
+    "_verified_2026_09_20": {
+      "实测结论": "商品页 in-page 评价可稳定抽取，每型号约 4~13 条（=平台首屏上限）",
+      "样本": "Hisense CA 5 型号：43E6SF/50QD8SF/55U78QG/65UR9SG/32A4NV",
+      "字段完好率": "星级/标题/正文/评论时间/评论链接/商品ID 均 100%，去重 0 重复",
+      "关键坑": "标题与正文必须用驼峰 data-hook='reviewTitle' / 'reviewText'；旧模板的 review-title / review-body 在当前 DOM 上恒为空，会让抽取静默返回 0 条",
+      "翻页限制": "见下方 paginate.reviews 的 _blocked 说明——独立评价页恒被鉴权拦截，首屏即上限"
+    },
+    "container": "[data-hook='review'], div[id][data-hook='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "_note": "实测：Amazon review 块 id 即稳定 review id（如 R1O6U1D7DZNMG5），可直接做增量去重键",
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[data-hook='review-star-rating'] .a-icon-alt",
+          "[data-hook='cmps-review-star-rating'] .a-icon-alt",
+          "i[data-hook='review-star-rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "_note": "2026-09 实测：新模板用驼峰 reviewTitle，旧模板用 review-title，两者都留",
+        "selectors": [
+          "[data-hook='reviewTitle']",
+          "[data-hook='review-title'] span:not([class])",
+          "[data-hook='review-title'] span",
+          "[data-hook='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[data-hook='reviewText'] span",
+          "[data-hook='reviewText']",
+          "[data-hook='reviewTextContainer'] span",
+          "[data-hook='review-body'] span",
+          "[data-hook='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[data-hook='review-date']"
+        ],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": [
+          "[data-hook='avp-badge']"
+        ],
+        "transform": "bool_present"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-hook='helpful-vote-statement']"
+        ],
+        "transform": "int"
+      },
+      "review_url": {
+        "_note": "新模板 reviewTitle 是 <a><h5 data-hook=reviewTitle>，链接在外层 a；老模板 a[data-hook=review-title]",
+        "selectors": [
+          "a:has(h5[data-hook='reviewTitle'])",
+          "a[data-hook='review-title']",
+          "h5[data-hook='reviewTitle'] a",
+          "a.a-link-normal.review-title-content"
+        ],
+        "attr": "href"
+      }
+    },
+    "media": {
+      "_note": "图片实测选择器 img[data-hook='review-image-tile']，真实图 URL 含 /images/I/，头像 avatars-global 要排除；缩略图 _SY88_ 换 _SL1600_ 拿高清",
+      "images": {
+        "selector": "img[data-hook='review-image-tile'], .review-image-tile img, [data-hook='review-image-tile-section'] img",
+        "attr": "src",
+        "include": [
+          "media-amazon.com/images/I/"
+        ],
+        "exclude": [
+          "avatars-global",
+          "grey-pixel"
+        ],
+        "hires": [
+          "\\._[A-Z]{2}[0-9]+_",
+          "._SL1600_"
+        ],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "video[data-hook='review-video'] source, [data-hook='review-video'] video, video.review-video source",
+        "attr": "src",
+        "exclude": [],
+        "limit": 10
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "case",
+        "cover",
+        "wall mount",
+        "stand",
+        "screen",
+        "bracket",
+        "protector",
+        "cable",
+        "adapter",
+        "remote",
+        "control",
+        " controller",
+        "mount",
+        "screw",
+        "charger",
+        "antenna",
+        "cleaner",
+        "replacement",
+        "compatible",
+        "for hisense",
+        "fit for",
+        "soporte",
+        "base para"
+      ],
+      "url_contains_any": [],
+      "_expanded_2026_09_20": "实测：逐型号回退路径原先未做 reject 校验，导致 Remote Control / Wall Mount Bracket / Screws 等配件作为电视入库；已补 reject + 扩充词表（remote/control/mount/bracket/screw/replacement 等）。"
+    },
+    "on_no_match": "skip"
+  },
+  "_login_2026_09_20": {
+    "登录方式": "python -m overseas.cli login --site amazon_ca --profile --url https://www.amazon.ca/",
+    "为何必须用 --profile": "临时 context 的自动化指纹拿不到登录凭证；持久化真实用户目录（launch_persistent_context + msedge 通道）才能登录成功",
+    "凭证 cookie 命名": {
+      "重要": "Amazon.ca 的鉴权 cookie 带国别后缀：at-acbca / sess-at-acbca / x-acbca / sso-state-acbca",
+      "踩坑": "只检查 at-main / sess-at-main / x-main 会误判为未登录（本次连错 3 次）。判断登录应优先看页眉是否出现 Sign Out，而不是固定 cookie 名",
+      "at-main 的坑": "该 cookie 仅在勾选 Keep me signed in 时下发，不能作为唯一判据"
+    },
+    "绝对不要做的两件事": {
+      "1": "不要在等待登录时 reload 页面——会刷掉用户正在填写的表单（用户明确投诉'5秒就刷新页面'）",
+      "2": "不要新开标签页做校验——新标签抢前台，用户正在登录的页面会消失，表现为'闪退'"
+    },
+    "登录校验的正确做法": "轮询读 context cookie（无副作用）+ 只在页面已离开 /ap/signin 且静置数秒后，只读当前 DOM 查 Sign Out。全程不导航、不刷新、不新开页",
+    "权威判据": "访问 /gp/css/order-history 不跳 /ap/signin ⇒ 真登录（商品页/首页匿名也能打开，不能用作判据）"
+  },
+  "paginate": {
+    "reviews": {
+      "_verified_2026_09_20": {
+        "结论": "★登录后实测可突破首屏：用 sortBy/filterByStar 组合扫，43E6SF 从 PDP 首屏 8 条 → 35 条唯一（4.4x）",
+        "为何不用 pageNumber": "pageNumber 对独立评价页无效——p1 与 p2 返回同一批 10 条（id 交集 10/10），且页面无分页控件",
+        "为何不用 XHR": "/hz/reviews-render/ajax/reviews/get/ 恒 403，即使已登录（实测 p1 即 403）",
+        "前置条件": "必须已登录。未登录时 /product-reviews/ 会 302 到 /ap/signin（登录墙）",
+        "登录凭证": "Amazon.ca 用国别后缀 at-acbca/sess-at-acbca/x-acbca，不是 at-main（曾误判未登录的原因）",
+        "有效组合实测": "sortBy=recent 有效（新增 7/10）；sortBy=helpful、filterByStar=positive/critical/five_star… 等各返回不同屏；无效形态：加 ref、加 #customerReviews、opt=1、filterByStar=all_stars",
+        "去重": "按 review 块 id（稳定 review id）取并集，交叉重复由 seen_keys 去重",
+        "上限调整": "max_reviews 100→50（用户指定：单型号单站最多 50 条）"
+      },
+      "type": "filter_sweep",
+      "url_template": "{base}/product-reviews/{sku}/?reviewerType=all_reviews&sortBy={sortBy}&filterByStar={filterByStar}&pageNumber=1",
+      "combos": [
+        {
+          "sortBy": "recent",
+          "filterByStar": ""
+        },
+        {
+          "sortBy": "helpful",
+          "filterByStar": ""
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "positive"
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "critical"
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "five_star"
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "four_star"
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "three_star"
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "two_star"
+        },
+        {
+          "sortBy": "recent",
+          "filterByStar": "one_star"
+        },
+        {
+          "sortBy": "helpful",
+          "filterByStar": "positive"
+        },
+        {
+          "sortBy": "helpful",
+          "filterByStar": "critical"
+        }
+      ],
+      "no_new_combos_cap": 4,
+      "max_reviews": 50,
+      "max_pages": 12
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "interval_sec": 8.0,
+    "retail_page_wait": "#productTitle, #dp, .a-price",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

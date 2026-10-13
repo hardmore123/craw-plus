@@ -1,0 +1,175 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "hisense_ca",
+  "name": "Hisense（加拿大）",
+  "country": "Canada",
+  "channel": "Hisense 官网",
+  "region": "ca",
+  "base_url": "https://www.hisense-canada.com",
+  "currency": "CAD",
+  "capabilities": [
+    "spec"
+  ],
+  "generated_by": "SPEC-only 占位 retail spec（复用 hisense_ca 适配器已入库 spec_series/spec_row），标记 capabilities=['spec']、reviews.source='none'、status='candidate'，无价格/评价能力。",
+  "status": "candidate",
+  "anchor": "h1",
+  "_design": {
+    "平台": "Hisense 加拿大官网（Shopify-like），入口 View All 页，data-product swatch 提供全部尺寸型号 ProductNo，规格页 section.ui-specifications dl/dt/dd DOM。finder=N（无 finder 接口，靠 swatch JSON）。",
+    "capability": "SPEC-only：仅采集品牌官网规格，capabilities=['spec']，无 price/reviews 段（官网不卖货/无站内评价或评价走第三方）。",
+    "型号": "型号 code 来自适配器 series_entries/finder（权威），URL 末段兜底。"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "search": {
+    "container": "a[href*='/home-entertainment/view-all/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-sku]",
+        "[itemprop='model']"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-sku]",
+        "[itemprop='sku']"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    }
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "model",
+    "stop_when": "series_exhausted"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "human_like": false,
+    "stealth_js": false,
+    "settle_ms": 5000,
+    "scroll_passes": 1,
+    "interval_sec": 5.0,
+    "nav_timeout_ms": 30000,
+    "max_retries": 3,
+    "retail_page_wait": "section.ui-specifications, .specifications-table, table",
+    "_safety_note": "安全机制：max_retries≤3 重试上限，nav_timeout_ms≤30000 单次导航超时（毫秒），paginate.reviews.max_pages≤20 翻页安全阀，search.batch.max_candidates≤60 候选上限，防卡死/无限重试/无限翻页。"
+  },
+  "reviews": {
+    "source": "none"
+  },
+  "expected": {
+    "series_count": 33,
+    "model_count": 140
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        "meta[itemprop='price']",
+        "[class*='price']:not([class*='old'])",
+        ".price:not(.old-price)",
+        ".product-price"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "CAD"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  }
+}

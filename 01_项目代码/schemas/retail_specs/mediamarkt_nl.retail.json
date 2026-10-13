@@ -1,0 +1,193 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "mediamarkt_nl",
+  "name": "MediaMarkt Netherlands",
+  "country": "Netherlands",
+  "channel": "MediaMarkt",
+  "region": "nl",
+  "base_url": "https://www.mediamarkt.nl",
+  "currency": "EUR",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "generated_by": "benelux_nordic_probe/2026-09-25 | 2026-10-11 MMS 集团共享规则(mediamarkt_de 实测): search.html?query + mms-product-card + jsonld 变体选中 + mms_graphql 评价 | 2026-10-11 MMS 集团共享规则(mediamarkt_de 实测): search.html?query + mms-product-card + jsonld 变体选中 + mms_graphql 评价",
+  "status": "blocked",
+  "anchor": "h1, script[type='application/ld+json']",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "_isomorphic": {
+    "brand": "mediamarkt",
+    "reuse": "mediamarkt_de（MediaMarkt 各国同构：L2，spec_driven_detail）"
+  },
+  "_blocked": {
+    "http_status": 200,
+    "block_reason": "403/429/CF挑战",
+    "note": "需住宅IP或代理切换"
+  },
+  "search": {
+    "container": "a[data-test='mms-router-link-product-list-item-link']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[data-test='product-title']"
+      ],
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "scroll_passes": 3,
+    "search_url_template": "{base}/nl/search.html?query={q}",
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2,
+      "min_candidates": 3,
+      "retries": 3
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld_first": true,
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-test='mms-price']",
+        "[data-test='branded-price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "EUR"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[data-test='mms-strike-price-type-rrp']"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "on_no_match": "skip",
+    "verify": {
+      "require_model_in": [
+        "title",
+        "url"
+      ],
+      "min_core_len": 3
+    }
+  },
+  "paginate": {
+    "reviews": {
+      "max_pages": 20
+    }
+  },
+  "fetch": {
+    "max_retries": 3,
+    "nav_timeout_ms": 30000,
+    "protection": "L2",
+    "requires_browser": true,
+    "detail_http": false,
+    "retail_page_wait": "h1, script[type='application/ld+json']"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "#productTitle",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "[data-brand]",
+        "[class*='brand']",
+        "[itemprop='manufacturer']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[itemprop='mpn']",
+        "[data-testid*='model']",
+        "[data-model]"
+      ],
+      "attr": "content",
+      "jsonld": "mpn",
+      "regex": "\\b([A-Z0-9][A-Z0-9._-]{3,25})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|in|pulgada|Zoll|pollici|pouces|インチ|型)",
+      "transform": "size_inch"
+    },
+    "category": {
+      "selectors": [
+        "[itemprop='category']",
+        ".breadcrumb li:last-child",
+        ".breadcrumbs li:last-child"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": [
+        "aggregateRating.reviewCount",
+        "aggregateRating.ratingCount"
+      ],
+      "selectors": [
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "source": "mms_graphql",
+    "_note": "MMS 集团 PWA：评价底层 BazaarVoice，站方自家 GraphQL(GetProductReviews) 包了一层。第1页随 SSR 内联 __PRELOADED_STATE__.apolloState(GraphqlReview 实体)，第2页起点评价区分页按钮才发请求。自己拼 URL 重放会被 WAF 拦(429/403)，故 overseas/mms_reviews.py 不重放、只在真实页面点分页截获站方响应。评价按商品族聚合(reviewProductId 可能是同系列别尺寸)，串尺寸条数记入 meta.cross_product，来源商品号写进 review_url 锚点 #mms-src-product=",
+    "limit": 60
+  }
+}

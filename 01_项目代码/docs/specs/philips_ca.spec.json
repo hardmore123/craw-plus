@@ -1,0 +1,62 @@
+{
+  "spec_version": "1.0",
+  "code": "philips_ca",
+  "brand_name": "Philips（加拿大）",
+  "region": "ca",
+  "country": "Canada",
+  "channel": "Philips 官网",
+  "base_url": "https://www.philips.ca",
+  "entry_url": "https://www.philips.ca/c-m-so/tv/latest",
+  "fallback_entry_urls": ["https://www.philips.ca/c-m-so/televisions"],
+  "generated_by": "manual-abstraction-from:overseas/sites/philips_ca/adapter.py",
+  "status": "approved",
+
+  "fetch": {
+    "protection": "L2_MEDIUM",
+    "requires_browser": true,
+    "interval_sec": 5.0,
+    "entry_wait": "a[href*='/c-p/']",
+    "entry_extra_wait_ms": 5000,
+    "page_wait": "h1, h2",
+    "scroll_until_stable": true,
+    "scroll_growth_selector": "a[href*='/c-p/']",
+    "scroll_max_passes": 80
+  },
+
+  "discover": {
+    "mode": "dom_anchor",
+    "link_selector": "a[href*='/c-p/']",
+    "model_url_regex": "/c-p/([A-Za-z0-9]+)_[A-Za-z0-9]+/",
+    "series_rule": "strip_leading_size",
+    "non_tv_filter": true,
+    "paginate": {
+      "type": "js_snippet",
+      "snippet_ref": "philips_paginate"
+    }
+  },
+
+  "spec": {
+    "extract_order": ["embedded_json_philips", "generic_spec_js"],
+    "embedded_json": {
+      "root_marker": "specification",
+      "chapters_field": "csChapter",
+      "chapter_name_field": "csChapterName",
+      "chapter_code_field": "csChapterCode",
+      "items_field": "csItem",
+      "item_name_field": "csItemName",
+      "values_field": "csValue",
+      "value_name_field": "csValueName",
+      "value_join": " / "
+    }
+  },
+
+  "identity": {
+    "series_key": "series_name",
+    "model_normalize": "upper_alnum"
+  },
+
+  "expected": {
+    "series_count": 11,
+    "model_count": 25
+  }
+}

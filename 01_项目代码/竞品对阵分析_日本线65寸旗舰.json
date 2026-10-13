@@ -1,0 +1,333 @@
+{
+  "comparison_name": "65寸旗舰对阵（日本线 2026Q3）",
+  "size_inch": 65,
+  "price_band": "旗舰",
+  "snapshot_date": "2026-09-09",
+  "currency": "JPY",
+  "description": "基于日本线 kakaku 价格监控（2026-09-09）+ 各品牌日本官网 SPEC 提取的 65 寸旗舰对阵。Hisense 65U8R 为我方型号，对阵 TCL/Sony/REGZA/Sharp/Panasonic 同档旗舰。",
+
+  "models": [
+    {
+      "brand": "Hisense",
+      "model": "65U8R",
+      "role": "our",
+      "price_jpy": 149800,
+      "price_tier": "高性价比旗舰",
+      "source_url": "https://kakaku.com/item/K0001687325/"
+    },
+    {
+      "brand": "TCL",
+      "model": "65C855",
+      "role": "competitor",
+      "price_jpy": 220448,
+      "price_tier": "中高端旗舰",
+      "source_url": "https://kakaku.com/item/K0001620704/"
+    },
+    {
+      "brand": "Sony",
+      "model": "K-65XR70",
+      "role": "competitor",
+      "price_jpy": 318863,
+      "price_tier": "高端旗舰",
+      "source_url": "https://kakaku.com/item/K0001787489/"
+    },
+    {
+      "brand": "REGZA",
+      "model": "65Z970R",
+      "role": "competitor",
+      "price_jpy": 274206,
+      "price_tier": "高端旗舰",
+      "source_url": "https://kakaku.com/item/K0001684572/"
+    },
+    {
+      "brand": "Sharp",
+      "model": "4T-C65HN2",
+      "role": "competitor",
+      "price_jpy": 275000,
+      "price_tier": "高端旗舰",
+      "source_url": "https://kakaku.com/item/K0001799883/"
+    },
+    {
+      "brand": "Panasonic",
+      "model": "TV-65W97C",
+      "role": "competitor",
+      "price_jpy": 356400,
+      "price_tier": "顶级旗舰",
+      "source_url": "https://kakaku.com/item/K0001785267/"
+    }
+  ],
+
+  "spec_matrix": {
+    "PEAK_BRIGHTNESS": {
+      "param_code": "PEAK_BRIGHTNESS",
+      "param_name": "峰值亮度",
+      "param_name_ja": "ピーク輝度",
+      "category": "画质",
+      "unit": "nits",
+      "is_numeric": 1,
+      "higher_is_better": 1,
+      "note": "日本线SPEC无直接nits数值，按背光类型+画质引擎推断档位；需北美线product_spec补全数值",
+      "values": {
+        "Hisense": { "raw": "Mini-LED PRO", "display": "Mini-LED PRO（高輝度）", "numeric": null, "tier": "高" },
+        "TCL":     { "raw": "直下式LED", "display": "直下式LED", "numeric": null, "tier": "中" },
+        "Sony":    { "raw": "XR コントラスト ブースター 204 / XR バックライト マスタードライブ", "display": "XR背光大师驱动+对比度增强204", "numeric": null, "tier": "高" },
+        "REGZA":   { "raw": "4K液晶パネル（Mini LEDバックライト）", "display": "Mini LED背光", "numeric": null, "tier": "高" },
+        "Sharp":   { "raw": null, "display": "—（待维护）", "numeric": null, "tier": null },
+        "Panasonic":{ "raw": "VA×Mini LED", "display": "VA×Mini LED", "numeric": null, "tier": "高" }
+      }
+    },
+    "DIMMING_ZONES": {
+      "param_code": "DIMMING_ZONES",
+      "param_name": "分区控光",
+      "param_name_ja": "ローカルディミング",
+      "category": "画质",
+      "unit": "zones",
+      "is_numeric": 1,
+      "higher_is_better": 1,
+      "note": "日本线仅TCL有局部调光标注●，其余按Mini-LED背光推断；zones数值需product_spec补全",
+      "values": {
+        "Hisense": { "raw": "Mini-LED PRO", "display": "Mini-LED PRO", "numeric": null, "tier": "高" },
+        "TCL":     { "raw": "●", "display": "局部调光●", "numeric": null, "tier": "有" },
+        "Sony":    { "raw": "XR バックライト マスタードライブ", "display": "XR背光大师驱动", "numeric": null, "tier": "高" },
+        "REGZA":   { "raw": "Mini LEDバックライト", "display": "Mini LED背光", "numeric": null, "tier": "高" },
+        "Sharp":   { "raw": null, "display": "—（待维护）", "numeric": null, "tier": null },
+        "Panasonic":{ "raw": "VA×Mini LED", "display": "VA×Mini LED", "numeric": null, "tier": "高" }
+      }
+    },
+    "REFRESH_RATE": {
+      "param_code": "REFRESH_RATE",
+      "param_name": "刷新率",
+      "param_name_ja": "リフレッシュレート/倍速",
+      "category": "画质",
+      "unit": "Hz",
+      "is_numeric": 1,
+      "higher_is_better": 1,
+      "note": "海信/TCL/REGZA 支持144Hz游戏模式；Sony/Sharp/Panasonic 倍速面板",
+      "values": {
+        "Hisense": { "raw": "120Hz倍速（ゲームモード時144Hz VRRに対応）", "display": "144Hz（游戏模式）", "numeric": 144, "tier": "高" },
+        "TCL":     { "raw": "DLG 240Hz", "display": "DLG 240Hz", "numeric": 240, "tier": "最高" },
+        "Sony":    { "raw": "倍速駆動パネル/XR モーション クラリティー", "display": "倍速面板+XR运动清晰", "numeric": 120, "tier": "中" },
+        "REGZA":   { "raw": "120Hz倍速（ゲームモード 144Hz VRR対応）", "display": "144Hz（游戏模式）", "numeric": 144, "tier": "高" },
+        "Sharp":   { "raw": null, "display": "—（待维护）", "numeric": null, "tier": null },
+        "Panasonic":{ "raw": null, "display": "—（待维护）", "numeric": null, "tier": null }
+      }
+    },
+    "CHIP": {
+      "param_code": "CHIP",
+      "param_name": "画质芯片",
+      "param_name_ja": "画質エンジン/プロセッサー",
+      "category": "画质",
+      "unit": null,
+      "is_numeric": 0,
+      "higher_is_better": null,
+      "note": "归一化映射组4：信芯AI画质芯片族 ↔ AI Picture(Samsung)/XR(Sony)/AIPQ(TCL)/レグザエンジン(REGZA)",
+      "values": {
+        "Hisense": { "raw": "HI-VIEW AIエンジン PRO", "display": "HI-VIEW AI引擎 PRO" },
+        "TCL":     { "raw": "AIPQ Engine Max III", "display": "AIPQ Engine Max III" },
+        "Sony":    { "raw": "プロセッサー「XR」", "display": "XR处理器" },
+        "REGZA":   { "raw": "レグザエンジンZRα", "display": "REGZA引擎 ZRα" },
+        "Sharp":   { "raw": null, "display": "—（待维护）" },
+        "Panasonic":{ "raw": null, "display": "—（待维护）" }
+      }
+    },
+    "SYSTEM": {
+      "param_code": "SYSTEM",
+      "param_name": "智能系统",
+      "param_name_ja": "システム/OS",
+      "category": "智能",
+      "unit": null,
+      "is_numeric": 0,
+      "higher_is_better": null,
+      "note": "归一化映射组5：VIDAA ↔ Tizen/webOS/Google TV/Android TV/My Home Screen。海信VIDAA生态弱于Google TV系",
+      "values": {
+        "Hisense": { "raw": "VIDAA", "display": "VIDAA", "weakness_flag": true },
+        "TCL":     { "raw": "Android TV Google TV", "display": "Google TV（Android TV）" },
+        "Sony":    { "raw": "Google TV", "display": "Google TV" },
+        "REGZA":   { "raw": "ざんまいスマートアクセス（Android TV）", "display": "Google TV（Android TV）" },
+        "Sharp":   { "raw": "AQUOS ファミリンク", "display": "AQUOS家庭链接" },
+        "Panasonic":{ "raw": "My Home Screen", "display": "My Home Screen" }
+      }
+    },
+    "GAMING": {
+      "param_code": "GAMING",
+      "param_name": "游戏特性",
+      "param_name_ja": "ゲーム機能",
+      "category": "游戏",
+      "unit": null,
+      "is_numeric": 0,
+      "higher_is_better": 1,
+      "note": "归一化映射组9：游戏模式族。海信144Hz游戏PRO+FreeSync Premium 领先",
+      "values": {
+        "Hisense": { "raw": "144Hz ゲームモードPRO / VRR、ALLM、AMD FreeSync Premium™", "display": "144Hz游戏PRO+FreeSync Premium", "advantage_flag": true },
+        "TCL":     { "raw": "Game Master/VRR/ALLM/DLG 240Hz", "display": "Game Master+DLG 240Hz", "advantage_flag": true },
+        "Sony":    { "raw": "ゲームメニュー ●", "display": "游戏菜单" },
+        "REGZA":   { "raw": "瞬速ゲームモード / VRR / ALLM / AMD FreeSync Premium", "display": "瞬速游戏+FreeSync Premium", "advantage_flag": true },
+        "Sharp":   { "raw": null, "display": "—（待维护）" },
+        "Panasonic":{ "raw": null, "display": "—（待维护）" }
+      }
+    },
+    "COLOR_GAMUT": {
+      "param_code": "COLOR_GAMUT",
+      "param_name": "色域",
+      "param_name_ja": "広色域/量子ドット",
+      "category": "画质",
+      "unit": "%",
+      "is_numeric": 1,
+      "higher_is_better": 1,
+      "note": "归一化映射组3：量子点族。QLED/量子ドット/Quantum Dot同族。DCI-P3百分比需product_spec补全",
+      "values": {
+        "Hisense": { "raw": "広色域量子ドット", "display": "广色域量子点（QLED）", "tier": "高" },
+        "TCL":     { "raw": "量子ドット（QLED）有り", "display": "量子点QLED", "tier": "高" },
+        "Sony":    { "raw": "量子ドット搭載", "display": "量子点（XR Triluminos）", "tier": "高" },
+        "REGZA":   { "raw": "3次元カラーリマスターPRO", "display": "3D色彩重制PRO", "tier": "中" },
+        "Sharp":   { "raw": null, "display": "—（待维护）", "tier": null },
+        "Panasonic":{ "raw": null, "display": "—（待维护）", "tier": null }
+      }
+    },
+    "HDMI": {
+      "param_code": "HDMI",
+      "param_name": "HDMI 2.1",
+      "param_name_ja": "HDMI 2.1仕様",
+      "category": "连接",
+      "unit": "口",
+      "is_numeric": 0,
+      "higher_is_better": 1,
+      "note": "归一化映射组7：HDMI族。海信2口HDMI2.1，Sony4口，TCL2口2.1",
+      "values": {
+        "Hisense": { "raw": "HDMI 2.1×2 / HDMI 2.0×2 + eARC/ARC", "display": "HDMI2.1×2 + eARC", "numeric": 2 },
+        "TCL":     { "raw": "3個(2個Ver2.1)", "display": "HDMI2.1×2 + HDMI2.0×1", "numeric": 2 },
+        "Sony":    { "raw": "4系統 / 4K120fps eARC VRR ALLM SBTM", "display": "HDMI2.1×4 + 4K120 eARC", "numeric": 4, "advantage_flag": true },
+        "REGZA":   { "raw": "4K144p/4K120p VRR eARC ALLM", "display": "4K144 + eARC + VRR", "numeric": null },
+        "Sharp":   { "raw": "4入力/入力3,4のみ4K120Hz対応 VRR/ALLM", "display": "HDMI2.1×2（4K120）", "numeric": 2 },
+        "Panasonic":{ "raw": null, "display": "—（待维护）", "numeric": null }
+      }
+    },
+    "HDR": {
+      "param_code": "HDR",
+      "param_name": "HDR格式",
+      "param_name_ja": "HDR対応",
+      "category": "画质",
+      "unit": null,
+      "is_numeric": 0,
+      "higher_is_better": 1,
+      "note": "归一化映射组8：HDR族。HDR10+/Dolby Vision/HLG同族对比。海信支持最全（6种）",
+      "values": {
+        "Hisense": { "raw": "HDR10/HLG/HDR10+/HDR10+Adaptive/Dolby Vision/Dolby Vision IQ", "display": "HDR10/HLG/HDR10+/DV/DV IQ（6种）", "advantage_flag": true },
+        "TCL":     { "raw": "HDR10+/HLG/DolbyVision IQ/DolbyVision Gaming", "display": "HDR10+/HLG/DV IQ/DV Gaming（4种）" },
+        "Sony":    { "raw": "HDR10/HLG/Dolby Vision", "display": "HDR10/HLG/DV（3种）" },
+        "REGZA":   { "raw": "●", "display": "支持HDR（格式待维护）", "tier": "待维护" },
+        "Sharp":   { "raw": "HDR10/Dolby Vision IQ/HLG", "display": "HDR10/DV IQ/HLG（3种）" },
+        "Panasonic":{ "raw": null, "display": "—（待维护）", "tier": "待维护" }
+      }
+    },
+    "RESOLUTION": {
+      "param_code": "RESOLUTION",
+      "param_name": "分辨率",
+      "param_name_ja": "画素数",
+      "category": "画质",
+      "unit": null,
+      "is_numeric": 0,
+      "higher_is_better": 1,
+      "note": "全部4K，无差异",
+      "values": {
+        "Hisense": { "display": "3840×2160（4K）" },
+        "TCL":     { "display": "3840×2160（4K UHD）" },
+        "Sony":    { "display": "3840×2160（4K）" },
+        "REGZA":   { "display": "3840×2160（4K）" },
+        "Sharp":   { "display": "3840×2160（4K）" },
+        "Panasonic":{ "display": "3840×2160（4K）" }
+      }
+    },
+    "SOUND": {
+      "param_code": "SOUND",
+      "param_name": "音响功率",
+      "param_name_ja": "スピーカー最大出力",
+      "category": "音质",
+      "unit": "W",
+      "is_numeric": 1,
+      "higher_is_better": 1,
+      "note": "REGZA 150W遥遥领先，Panasonic 70W，海信/TCL 60W",
+      "values": {
+        "Hisense": { "raw": "60W", "display": "60W", "numeric": 60 },
+        "TCL":     { "raw": "60W(10W+10W+10W+10W+20W) ONKYO", "display": "60W（ONKYO+低音炮）", "numeric": 60 },
+        "Sony":    { "raw": "40W(10+10+10+10)", "display": "40W（声学多音频）", "numeric": 40 },
+        "REGZA":   { "raw": "150W合計", "display": "150W（多单元+低音炮）", "numeric": 150, "advantage_flag": true },
+        "Sharp":   { "raw": "65W", "display": "65W", "numeric": 65 },
+        "Panasonic":{ "raw": "70W", "display": "70W", "numeric": 70 }
+      }
+    },
+    "DOLBY_ATMOS": {
+      "param_code": "DOLBY_ATMOS",
+      "param_name": "杜比全景声",
+      "param_name_ja": "Dolby Atmos",
+      "category": "音质",
+      "unit": null,
+      "is_numeric": 0,
+      "higher_is_better": 1,
+      "note": "",
+      "values": {
+        "Hisense": { "raw": "eilex音響処理", "display": "eilex音响处理（Atmos待维护）" },
+        "TCL":     { "raw": "Dolby ATMOS、DTS-X", "display": "Dolby Atmos+DTS-X" },
+        "Sony":    { "raw": "●", "display": "支持Dolby Atmos" },
+        "REGZA":   { "raw": "●（5.1.2ch対応）", "display": "Dolby Atmos 5.1.2ch" },
+        "Sharp":   { "raw": null, "display": "—（待维护）" },
+        "Panasonic":{ "raw": null, "display": "—（待维护）" }
+      }
+    },
+    "POWER": {
+      "param_code": "POWER_CONSUMPTION",
+      "param_name": "额定功耗",
+      "param_name_ja": "定格消費電力",
+      "category": "设计",
+      "unit": "W",
+      "is_numeric": 1,
+      "higher_is_better": 0,
+      "note": "功耗越低越好；海信247W最低，TCL 380W最高",
+      "values": {
+        "Hisense": { "raw": "247W", "display": "247W", "numeric": 247, "advantage_flag": true },
+        "TCL":     { "raw": "380W", "display": "380W", "numeric": 380 },
+        "Sony":    { "raw": "286W", "display": "286W", "numeric": 286 },
+        "REGZA":   { "raw": null, "display": "—（待维护）", "numeric": null },
+        "Sharp":   { "raw": "144kWh/年", "display": "144kWh/年", "numeric": null },
+        "Panasonic":{ "raw": "285W", "display": "285W", "numeric": 285 }
+      }
+    }
+  },
+
+  "radar_dims": {
+    "画质": { "weight_params": ["PEAK_BRIGHTNESS","DIMMING_ZONES","REFRESH_RATE","COLOR_GAMUT","HDR","CHIP"], "description": "亮度+控光+刷新+色域+HDR+芯片综合" },
+    "音质": { "weight_params": ["SOUND","DOLBY_ATMOS"], "description": "音响功率+杜比全景声" },
+    "智能": { "weight_params": ["SYSTEM"], "description": "智能系统生态" },
+    "游戏": { "weight_params": ["GAMING","REFRESH_RATE","HDMI"], "description": "游戏特性+刷新率+HDMI2.1" },
+    "连接": { "weight_params": ["HDMI"], "description": "HDMI2.1接口数" },
+    "设计": { "weight_params": ["POWER"], "description": "能效/功耗" }
+  },
+
+  "ai_conclusion": {
+    "advantage_points": [
+      { "point": "价格领先：65U8R 最低价 ¥149,800，比同档竞品均价 ¥289,623 低 48%", "evidence": "kakaku价格 2026-09-09", "confidence": 0.98 },
+      { "point": "HDR格式最全：支持6种HDR（HDR10/HLG/HDR10+/HDR10+Adaptive/DV/DV IQ），优于Sony/Sharp的3种", "evidence": "spec_row HDR対応行", "confidence": 0.95 },
+      { "point": "游戏能力第一梯队：144Hz游戏PRO+AMD FreeSync Premium，与TCL DLG 240Hz、REGZA瞬速游戏同档", "evidence": "spec_row ゲームモード+HDMI2.1仕様", "confidence": 0.92 },
+      { "point": "能效领先：额定功耗247W为全场最低，优于TCL 380W、Sony 286W", "evidence": "spec_row 定格消費電力", "confidence": 0.90 }
+    ],
+    "disadvantage_points": [
+      { "point": "智能系统生态弱：VIDAA生态/应用覆盖弱于Google TV（TCL/Sony/REGZA均采用）", "evidence": "归一化映射组5 智能系统族", "confidence": 0.88 },
+      { "point": "HDMI2.1接口数偏少：仅2口HDMI2.1，少于Sony的4口", "evidence": "spec_row HDMI行", "confidence": 0.85 },
+      { "point": "音响功率中规中矩：60W低于REGZA 150W、Panasonic 70W、Sharp 65W", "evidence": "spec_row スピーカー最大出力", "confidence": 0.80 },
+      { "point": "画质芯片品牌认知弱：HI-VIEW AI引擎 PRO在日市场认知度低于Sony XR/REGZA ZRα", "evidence": "spec_row エンジン", "confidence": 0.70 }
+    ],
+    "opportunity_points": [
+      { "point": "价格带卡位机会：¥14-16万价格带无竞品直接对抗，可主打'旗舰画质+平民价格'", "evidence": "价格分布空隙", "confidence": 0.90 },
+      { "point": "游戏电视细分：144Hz+FreeSync Premium可对标REGZA瞬速游戏，抢PS5/PC玩家", "evidence": "游戏特性对标", "confidence": 0.85 },
+      { "point": "VIDAA本地化机会：针对日本市场强化本地视频App/语音，弥补生态劣势", "evidence": "智能系统族归一化", "confidence": 0.75 },
+      { "point": "Mini-LED PRO背光差异化：以Mini-LED高亮度+低功耗组合打'能效旗舰'标签", "evidence": "背光+功耗组合", "confidence": 0.82 }
+    ]
+  },
+
+  "normalization_gaps": [
+    { "param": "PEAK_BRIGHTNESS", "issue": "日本线SPEC无nits数值，仅有背光类型", "candidate": "需补北美线product_spec的Brightness数值行" },
+    { "param": "DIMMING_ZONES", "issue": "仅TCL有●标注，其余无zones数值", "candidate": "需补product_spec的Dimming Zones数值" },
+    { "param": "SYSTEM(SHARP)", "issue": "Sharp未明确OS，仅标注AQUOSファミリンク", "candidate": "待维护：确认Sharp日本线OS" },
+    { "param": "GAMING(SHARP/Panasonic)", "issue": "游戏特性数据缺失", "candidate": "待维护：补Sharp/Panasonic游戏模式" }
+  ]
+}

@@ -1,0 +1,470 @@
+[
+  {
+    "line": "北美线-加拿大",
+    "name": "Amazon",
+    "url": "https://www.amazon.ca/",
+    "ok": true,
+    "status": 202,
+    "statusText": "Accepted",
+    "elapsedMs": 1297,
+    "finalUrl": "https://www.amazon.ca/",
+    "redirected": false,
+    "bytes": 2007,
+    "title": "",
+    "headers": {
+      "server": "CloudFront",
+      "content-type": "text/html; charset=UTF-8",
+      "content-length": "2007",
+      "x-amzn-waf-action": "challenge"
+    },
+    "chain": [
+      {
+        "url": "https://www.amazon.ca/",
+        "status": 202
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "BestBuy",
+    "url": "https://www.bestbuy.ca/en-ca",
+    "ok": true,
+    "status": 403,
+    "statusText": "Forbidden",
+    "elapsedMs": 1408,
+    "finalUrl": "https://www.bestbuy.ca/en-ca",
+    "redirected": false,
+    "bytes": 377,
+    "title": "Access Denied",
+    "headers": {
+      "content-type": "text/html",
+      "content-length": "377"
+    },
+    "chain": [
+      {
+        "url": "https://www.bestbuy.ca/en-ca",
+        "status": 403
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": true
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Walmart",
+    "url": "https://www.walmart.ca/en",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 3354,
+    "finalUrl": "https://www.walmart.ca/en",
+    "redirected": false,
+    "bytes": 304062,
+    "title": "Online Shopping Canada: Everyday Low Prices at Walmart.ca!",
+    "headers": {
+      "content-type": "text/html; charset=utf-8"
+    },
+    "chain": [
+      {
+        "url": "https://www.walmart.ca/en",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Costco",
+    "url": "https://www.costco.ca/",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 4274,
+    "finalUrl": "https://www.costco.ca/",
+    "redirected": false,
+    "bytes": 409594,
+    "title": "Welcome to Costco Wholesale",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "2874891"
+    },
+    "chain": [
+      {
+        "url": "https://www.costco.ca/",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Brick",
+    "url": "https://www.thebrick.com/",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 4979,
+    "finalUrl": "https://www.thebrick.com/",
+    "redirected": false,
+    "bytes": 420604,
+    "title": "Furniture Store, Mattresses & Appliances - The Brick",
+    "headers": {
+      "server": "cloudflare",
+      "content-type": "text/html; charset=utf-8"
+    },
+    "chain": [
+      {
+        "url": "https://www.thebrick.com/",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Leon's",
+    "url": "https://www.leons.ca/",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 4095,
+    "finalUrl": "https://www.leons.ca/",
+    "redirected": false,
+    "bytes": 420329,
+    "title": "Leon&#39;s - Canada&#39;s Leading Furniture Store",
+    "headers": {
+      "server": "cloudflare",
+      "content-type": "text/html; charset=utf-8"
+    },
+    "chain": [
+      {
+        "url": "https://www.leons.ca/",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Visions",
+    "url": "https://www.visions.ca/",
+    "ok": true,
+    "status": 403,
+    "statusText": "Forbidden",
+    "elapsedMs": 1246,
+    "finalUrl": "https://www.visions.ca/",
+    "redirected": false,
+    "bytes": 5754,
+    "title": "Just a moment...",
+    "headers": {
+      "server": "cloudflare",
+      "content-type": "text/html; charset=UTF-8",
+      "content-length": "5754",
+      "cf-mitigated": "challenge"
+    },
+    "chain": [
+      {
+        "url": "https://www.visions.ca/",
+        "status": 403
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": true
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Canadian Tire",
+    "url": "https://www.canadiantire.ca/en.html",
+    "ok": true,
+    "status": 403,
+    "statusText": "Forbidden",
+    "elapsedMs": 1180,
+    "finalUrl": "https://www.canadiantire.ca/en.html",
+    "redirected": false,
+    "bytes": 384,
+    "title": "Access Denied",
+    "headers": {
+      "server": "AkamaiGHost",
+      "content-type": "text/html",
+      "content-length": "384"
+    },
+    "chain": [
+      {
+        "url": "https://www.canadiantire.ca/en.html",
+        "status": 403
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": true
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Best Buy",
+    "url": "https://www.bestbuy.com",
+    "ok": false,
+    "status": 0,
+    "statusText": "",
+    "elapsedMs": 0,
+    "finalUrl": "",
+    "redirected": false,
+    "bytes": 0,
+    "title": "",
+    "headers": {},
+    "chain": [],
+    "attempts": 2,
+    "error": "请求超时 > 40000ms",
+    "blocked": false
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Walmart",
+    "url": "https://www.walmart.com",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 2890,
+    "finalUrl": "https://www.walmart.com",
+    "redirected": false,
+    "bytes": 398891,
+    "title": "Walmart | Save Money. Live better.",
+    "headers": {
+      "content-type": "text/html; charset=utf-8"
+    },
+    "chain": [
+      {
+        "url": "https://www.walmart.com",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Costco",
+    "url": "https://www.costco.com",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 5189,
+    "finalUrl": "https://www.costco.com",
+    "redirected": false,
+    "bytes": 417321,
+    "title": "Welcome to Costco Wholesale",
+    "headers": {
+      "server": "istio-envoy",
+      "content-type": "text/html; charset=utf-8"
+    },
+    "chain": [
+      {
+        "url": "https://www.costco.com",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Amazon",
+    "url": "https://www.amazon.com",
+    "ok": true,
+    "status": 202,
+    "statusText": "Accepted",
+    "elapsedMs": 1993,
+    "finalUrl": "https://www.amazon.com",
+    "redirected": false,
+    "bytes": 2007,
+    "title": "",
+    "headers": {
+      "server": "CloudFront",
+      "content-type": "text/html; charset=UTF-8",
+      "content-length": "2007",
+      "x-amzn-waf-action": "challenge"
+    },
+    "chain": [
+      {
+        "url": "https://www.amazon.com",
+        "status": 202
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Amazon",
+    "url": "https://www.amazon.com.mx/",
+    "ok": true,
+    "status": 202,
+    "statusText": "Accepted",
+    "elapsedMs": 1530,
+    "finalUrl": "https://www.amazon.com.mx/",
+    "redirected": false,
+    "bytes": 2007,
+    "title": "",
+    "headers": {
+      "server": "CloudFront",
+      "content-type": "text/html; charset=UTF-8",
+      "content-length": "2007",
+      "x-amzn-waf-action": "challenge"
+    },
+    "chain": [
+      {
+        "url": "https://www.amazon.com.mx/",
+        "status": 202
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Liverpool",
+    "url": "https://www.liverpool.com.mx/tienda/home",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 5141,
+    "finalUrl": "https://www.liverpool.com.mx/tienda/home",
+    "redirected": false,
+    "bytes": 418179,
+    "title": "Liverpool | Fashion Fest | Hasta 15% de descuento",
+    "headers": {
+      "content-type": "text/html; charset=utf-8"
+    },
+    "chain": [
+      {
+        "url": "https://www.liverpool.com.mx/tienda/home",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": false
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Sams",
+    "url": "https://www.sams.com.mx/",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 3557,
+    "finalUrl": "https://www.sams.com.mx/blocked?url=Lw==&uuid=379ff13c-b326-11f1-a8e1-53e13382022c&vid=&g=b",
+    "redirected": true,
+    "bytes": 11426,
+    "title": "Verify Your Identity",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "11430"
+    },
+    "chain": [
+      {
+        "url": "https://www.sams.com.mx/",
+        "status": 307
+      },
+      {
+        "url": "https://www.sams.com.mx/blocked?url=Lw==&uuid=379ff13c-b326-11f1-a8e1-53e13382022c&vid=&g=b",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": true
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Palacio",
+    "url": "https://www.elpalaciodehierro.com/buscar?q=tv",
+    "ok": true,
+    "status": 403,
+    "statusText": "Forbidden",
+    "elapsedMs": 1341,
+    "finalUrl": "https://www.elpalaciodehierro.com/buscar?q=tv",
+    "redirected": false,
+    "bytes": 5813,
+    "title": "Just a moment...",
+    "headers": {
+      "server": "cloudflare",
+      "content-type": "text/html; charset=UTF-8",
+      "content-length": "5813",
+      "cf-mitigated": "challenge"
+    },
+    "chain": [
+      {
+        "url": "https://www.elpalaciodehierro.com/buscar?q=tv",
+        "status": 403
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": true
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Walmart",
+    "url": "https://www.walmart.com.mx/search?q=TV",
+    "ok": true,
+    "status": 200,
+    "statusText": "OK",
+    "elapsedMs": 2798,
+    "finalUrl": "https://www.walmart.com.mx/blocked?url=L3NlYXJjaD9xPVRW&uuid=38607d09-b326-11f1-8b09-cba0aa54a576&vid=&g=b",
+    "redirected": true,
+    "bytes": 13595,
+    "title": "Verifica tu identidad",
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "13599"
+    },
+    "chain": [
+      {
+        "url": "https://www.walmart.com.mx/search?q=TV",
+        "status": 307
+      },
+      {
+        "url": "https://www.walmart.com.mx/blocked?url=L3NlYXJjaD9xPVRW&uuid=38607d09-b326-11f1-8b09-cba0aa54a576&vid=&g=b",
+        "status": 200
+      }
+    ],
+    "attempts": 1,
+    "error": "",
+    "blocked": true
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Coppel",
+    "url": "https://www.coppel.com/sd/TV",
+    "ok": false,
+    "status": 0,
+    "statusText": "",
+    "elapsedMs": 0,
+    "finalUrl": "",
+    "redirected": false,
+    "bytes": 0,
+    "title": "",
+    "headers": {},
+    "chain": [],
+    "attempts": 2,
+    "error": "请求超时 > 40000ms",
+    "blocked": false
+  }
+]

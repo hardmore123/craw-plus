@@ -1,0 +1,79 @@
+{
+  "_comment": "Best Buy 美国站抽取规则（草案）。需美国代理访问真实 PDP 后按实测 DOM 校准选择器；价格/评分优先走 JSON-LD schema.org Product 兜底。",
+  "anchor": "h1",
+
+  "search": {
+    "container": "li.sku-item, div.shop-sku-list-item, ol.sku-item-list li",
+    "sku": { "self_attr": "data-sku-id" },
+    "title": { "selectors": ["h4.sku-title a", ".sku-title a", "h4 a"] },
+    "url_template": "https://www.bestbuy.com/site/{sku}.p?skuId={sku}"
+  },
+
+  "product": {
+    "title": { "selectors": ["h1", "div.sku-title h1", "h1.heading-5"], "transform": "clean_text" },
+    "brand": { "selectors": ["a[data-track='Brand Name']", "div.brand a"], "transform": "brand" },
+    "model": {
+      "selectors": ["div.model span.product-data-value", "[data-testid='model-number']"],
+      "jsonld": "mpn",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": ["[data-testid='screen-size'] .product-data-value"],
+      "transform": "size_inch"
+    }
+  },
+
+  "price": {
+    "price": {
+      "selectors": ["div.priceView-hero-price span[aria-hidden='true']",
+                    ".priceView-customer-price span[aria-hidden='true']",
+                    "[data-testid='customer-price']"],
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": { "jsonld": "offers.priceCurrency", "transform": "currency" },
+    "list_price": {
+      "selectors": ["div.pricing-price__regular-price", ".priceView-regular-price"],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": ["button.add-to-cart-button", "[data-button-state='ADD_TO_CART']"],
+      "transform": "in_stock"
+    },
+    "raw_text": { "selectors": ["div.priceView-hero-price span[aria-hidden='true']"], "transform": "clean_text" }
+  },
+
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": ".specs-table .row, ul.specifications li, [data-testid='spec-row']",
+      "limit": 150
+    }
+  ],
+
+  "summary": {
+    "avg_rating": {
+      "selectors": ["[data-testid='customer-rating'] .ugc-c-review-average", ".ugc-review-average"],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [".c-reviews .c-review-count", "[data-testid='review-count']"],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+
+  "reviews": {
+    "container": "li.review-item, div.review-item-content, [data-testid='review']",
+    "limit": 40,
+    "fields": {
+      "rating": { "selectors": ["p.visually-hidden", ".c-review-average", "[data-testid='review-rating']"], "transform": "rating" },
+      "title": { "selectors": ["h4.review-title", ".review-title"], "transform": "clean_text" },
+      "body": { "selectors": ["div.ugc-review-body p", "p.pre-white-space", ".review-content"], "transform": "clean_text" },
+      "author": { "selectors": [".ugc-author", "div.user-attribute .name"], "transform": "clean_text" },
+      "review_date": { "selectors": ["time.submission-date", ".review-date"], "transform": "clean_text" },
+      "helpful_count": { "selectors": ["button.feedback-positive .count", ".helpful-count"], "transform": "int" }
+    }
+  }
+}

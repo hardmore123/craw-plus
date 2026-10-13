@@ -1,0 +1,442 @@
+[
+  {
+    "line": "北美线-加拿大",
+    "name": "Amazon",
+    "url": "https://www.amazon.ca/",
+    "ok": true,
+    "status": 202,
+    "elapsedMs": 1156,
+    "finalUrl": "https://www.amazon.ca/",
+    "alpn": "h2",
+    "bytes": 2007,
+    "title": "",
+    "chain": [
+      {
+        "url": "https://www.amazon.ca/",
+        "status": 202
+      }
+    ],
+    "code": "A",
+    "why": "AWS WAF JS 挑战页",
+    "visibleLen": 0,
+    "snippet": "",
+    "error": "",
+    "server": "CloudFront"
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "BestBuy",
+    "url": "https://www.bestbuy.ca/en-ca",
+    "ok": true,
+    "status": 403,
+    "elapsedMs": 1308,
+    "finalUrl": "https://www.bestbuy.ca/en-ca",
+    "alpn": "h2",
+    "bytes": 526,
+    "title": "Access Denied",
+    "chain": [
+      {
+        "url": "https://www.bestbuy.ca/en-ca",
+        "status": 403
+      }
+    ],
+    "code": "D",
+    "why": "403 拒绝访问",
+    "visibleLen": 297,
+    "snippet": "Access Denied Access Denied You don't have permission to access \"http&#58;&#47;&#47;www&#46;bestbuy&#46;ca&#47;en&#45;ca\" on this server. Reference&#32;&#35;18&#46;d41c2117&#46;1789712606&#46;12f842df https&#58;&#47;&#47",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Walmart",
+    "url": "https://www.walmart.ca/en",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 3440,
+    "finalUrl": "https://www.walmart.ca/en",
+    "alpn": "h2",
+    "bytes": 304067,
+    "title": "Online Shopping Canada: Everyday Low Prices at Walmart.ca!",
+    "chain": [
+      {
+        "url": "https://www.walmart.ca/en",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问(SPA 页面,正文由 JS 渲染)",
+    "visibleLen": 3854,
+    "snippet": "Online Shopping Canada: Everyday Low Prices at Walmart.ca! Skip to Main Content How do you want your items? Cancel Language English English Français Reorder My Items Reorder Lists Registries Sign In Account Sign in or cr",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Costco",
+    "url": "https://www.costco.ca/",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 33895,
+    "finalUrl": "https://www.costco.ca/",
+    "alpn": "h2",
+    "bytes": 622556,
+    "title": "Welcome to Costco Wholesale",
+    "chain": [
+      {
+        "url": "https://www.costco.ca/",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 12634,
+    "snippet": "Welcome to Costco Wholesale Skip to Main Content Uber 2 x$50 gift cards — Shop now. Treasure Hunt Offers Ending Sunday What&#x27;s New Online Deals Warehouse Savings Get Email Offers Customer Service CA EN Treasure Hunt ",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Brick",
+    "url": "https://www.thebrick.com/",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 10678,
+    "finalUrl": "https://www.thebrick.com/",
+    "alpn": "h2",
+    "bytes": 613952,
+    "title": "Furniture Store, Mattresses & Appliances - The Brick",
+    "chain": [
+      {
+        "url": "https://www.thebrick.com/",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 38339,
+    "snippet": "Furniture Store, Mattresses & Appliances - The Brick Skip to Main Content Living Room Mattresses Bedroom Dining Room Appliances Electronics Office Home Decor Small Spaces Outdoor Sale Last Chance Flyer Inspiration Gift R",
+    "error": "",
+    "server": "cloudflare"
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Leon's",
+    "url": "https://www.leons.ca/",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 4739,
+    "finalUrl": "https://www.leons.ca/",
+    "alpn": "h2",
+    "bytes": 552482,
+    "title": "Leon&#39;s - Canada&#39;s Leading Furniture Store",
+    "chain": [
+      {
+        "url": "https://www.leons.ca/",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 6047,
+    "snippet": "Leon&#39;s - Canada&#39;s Leading Furniture Store Skip to Main Content Warning Unsupported Browser Warning Leons.ca may not function properly on Internet Explorer. To get the best experience on our site, please update to",
+    "error": "",
+    "server": "cloudflare"
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Visions",
+    "url": "https://www.visions.ca/",
+    "ok": true,
+    "status": 403,
+    "elapsedMs": 2141,
+    "finalUrl": "https://www.visions.ca/",
+    "alpn": "h2",
+    "bytes": 5925,
+    "title": "Just a moment...",
+    "chain": [
+      {
+        "url": "https://www.visions.ca/",
+        "status": 403
+      }
+    ],
+    "code": "C",
+    "why": "Cloudflare 人机验证页",
+    "visibleLen": 16,
+    "snippet": "Just a moment...",
+    "error": "",
+    "server": "cloudflare"
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Canadian Tire",
+    "url": "https://www.canadiantire.ca/en.html",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 3622,
+    "finalUrl": "https://www.canadiantire.ca/en.html",
+    "alpn": "h2",
+    "bytes": 454694,
+    "title": "Shop Canada’s Top Department Store Online &amp; at 500+ Locations | Canadian Tire",
+    "chain": [
+      {
+        "url": "https://www.canadiantire.ca/en.html",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 128298,
+    "snippet": "Shop Canada’s Top Department Store Online & at 500+ Locations | Canadian Tire Skip to main content Skip to navigation &lt;b>YOU&#39;RE BROWSING IN VIEW-ONLY MODE DUE TO SCHEDULED MAINTENANCE.&lt;/b>&lt;/p>\\r\\n&lt;p>Onlin",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Best Buy",
+    "url": "https://www.bestbuy.com",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 5015,
+    "finalUrl": "https://www.bestbuy.com",
+    "alpn": "h2",
+    "bytes": 430691,
+    "title": "Best Buy | Official Online Store | Shop Now &amp; Save",
+    "chain": [
+      {
+        "url": "https://www.bestbuy.com",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问(SPA 页面,正文由 JS 渲染)",
+    "visibleLen": 748,
+    "snippet": "Best Buy | Official Online Store | Shop Now & Save $(csi.user.businessName) Main Content . . . . . . . . . . . . . . . . . . . Skip to content Go to Product Search Go to Footer . . Top quality. Even better prices. We ins",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Walmart",
+    "url": "https://www.walmart.com",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 4293,
+    "finalUrl": "https://www.walmart.com",
+    "alpn": "h2",
+    "bytes": 363405,
+    "title": "Walmart | Save Money. Live better.",
+    "chain": [
+      {
+        "url": "https://www.walmart.com",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 1491,
+    "snippet": "Walmart | Save Money. Live better. Skip to Main Content Pickup or delivery? Cancel Reorder My Items Reorder Lists Registries Sign In Account Sign in or create account Purchase History Walmart+ Subscriptions Language | En",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Costco",
+    "url": "https://www.costco.com",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 17180,
+    "finalUrl": "https://www.costco.com",
+    "alpn": "h2",
+    "bytes": 622568,
+    "title": "Welcome to Costco Wholesale",
+    "chain": [
+      {
+        "url": "https://www.costco.com",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 22616,
+    "snippet": "Welcome to Costco Wholesale Skip to Main Content Uber - Two $50 eGift Cards - $79.99 While Supplies Last Online-Only Treasure Hunt What&#x27;s New Member Favorites Recommendations for You Get Email Offers Customer Servic",
+    "error": "",
+    "server": "istio-envoy"
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Amazon",
+    "url": "https://www.amazon.com",
+    "ok": true,
+    "status": 202,
+    "elapsedMs": 1212,
+    "finalUrl": "https://www.amazon.com",
+    "alpn": "h2",
+    "bytes": 2007,
+    "title": "",
+    "chain": [
+      {
+        "url": "https://www.amazon.com",
+        "status": 202
+      }
+    ],
+    "code": "A",
+    "why": "AWS WAF JS 挑战页",
+    "visibleLen": 0,
+    "snippet": "",
+    "error": "",
+    "server": "CloudFront"
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Amazon",
+    "url": "https://www.amazon.com.mx/",
+    "ok": true,
+    "status": 202,
+    "elapsedMs": 1262,
+    "finalUrl": "https://www.amazon.com.mx/",
+    "alpn": "h2",
+    "bytes": 2007,
+    "title": "",
+    "chain": [
+      {
+        "url": "https://www.amazon.com.mx/",
+        "status": 202
+      }
+    ],
+    "code": "A",
+    "why": "AWS WAF JS 挑战页",
+    "visibleLen": 0,
+    "snippet": "",
+    "error": "",
+    "server": "CloudFront"
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Liverpool",
+    "url": "https://www.liverpool.com.mx/tienda/home",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 40569,
+    "finalUrl": "https://www.liverpool.com.mx/tienda/home",
+    "alpn": "h2",
+    "bytes": 625969,
+    "title": "Liverpool | Fashion Fest | Hasta 15% de descuento",
+    "chain": [
+      {
+        "url": "https://www.liverpool.com.mx/tienda/home",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 212759,
+    "snippet": "Liverpool | Fashion Fest | Hasta 15% de descuento Elige una tienda Elige una tienda Servicios Servicios keyboard_arrow_down Viajes y vacaciones chevron_right Tiempo aire Centro de seguros Diseño de interiores chevron_rig",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Sams",
+    "url": "https://www.sams.com.mx/",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 3172,
+    "finalUrl": "https://www.sams.com.mx/blocked?url=Lw==&uuid=7bd6c1b3-b329-11f1-ba88-040eedac65d8&vid=&g=b",
+    "alpn": "h2",
+    "bytes": 11426,
+    "title": "Verify Your Identity",
+    "chain": [
+      {
+        "url": "https://www.sams.com.mx/",
+        "status": 307
+      },
+      {
+        "url": "https://www.sams.com.mx/blocked?url=Lw==&uuid=7bd6c1b3-b329-11f1-ba88-040eedac65d8&vid=&g=b",
+        "status": 200
+      }
+    ],
+    "code": "B",
+    "why": "风控/身份验证页",
+    "visibleLen": 106,
+    "snippet": "Verify Your Identity Verifica tu identidad Mantén presionado el botón para confirmar que no eres un robot.",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Palacio",
+    "url": "https://www.elpalaciodehierro.com/buscar?q=tv",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 16775,
+    "finalUrl": "https://www.elpalaciodehierro.com/buscar?q=tv",
+    "alpn": "h2",
+    "bytes": 615131,
+    "title": "Encuentra lo Mejor en tv | El Palacio de Hierro",
+    "chain": [
+      {
+        "url": "https://www.elpalaciodehierro.com/buscar?q=tv",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 16072,
+    "snippet": "Encuentra lo Mejor en tv | El Palacio de Hierro card-icon Ir al contenido principal Ir al contenido de pie de p&aacute;gina Tarjeta Palacio Servicios Palacio MI PALACIO APP Seguros Palacio Gastronomía Palacio Viajes Pala",
+    "error": "",
+    "server": "cloudflare"
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Walmart",
+    "url": "https://www.walmart.com.mx/search?q=TV",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 2552,
+    "finalUrl": "https://www.walmart.com.mx/blocked?url=L3NlYXJjaD9xPVRW&uuid=7dc6c186-b329-11f1-961b-6a8ff2df7f40&vid=&g=b",
+    "alpn": "h2",
+    "bytes": 13595,
+    "title": "Verifica tu identidad",
+    "chain": [
+      {
+        "url": "https://www.walmart.com.mx/search?q=TV",
+        "status": 307
+      },
+      {
+        "url": "https://www.walmart.com.mx/blocked?url=L3NlYXJjaD9xPVRW&uuid=7dc6c186-b329-11f1-961b-6a8ff2df7f40&vid=&g=b",
+        "status": 200
+      }
+    ],
+    "code": "B",
+    "why": "风控/身份验证页",
+    "visibleLen": 121,
+    "snippet": "Verifica tu identidad wm-logo-white Verifica tu identidad Mantén presionado el botón para confirmar que no eres un robot.",
+    "error": "",
+    "server": ""
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Coppel",
+    "url": "https://www.coppel.com/sd/TV",
+    "ok": true,
+    "status": 200,
+    "elapsedMs": 4737,
+    "finalUrl": "https://www.coppel.com/sd/TV",
+    "alpn": "h2",
+    "bytes": 408300,
+    "title": "Compra placeholder al mejor precio en Coppel.com",
+    "chain": [
+      {
+        "url": "https://www.coppel.com/sd/TV",
+        "status": 200
+      }
+    ],
+    "code": "O",
+    "why": "正常访问",
+    "visibleLen": 2027,
+    "snippet": "Compra placeholder al mejor precio en Coppel.com Saltar al contenido principal ¡Anímate a consentirte con las increíbles ofertas!🏷️ Descúbrelas MENÚ Iniciar sesión Crear cuenta Carrito Compra ahora +52 559 500 0001 Elig",
+    "error": "",
+    "server": ""
+  }
+]

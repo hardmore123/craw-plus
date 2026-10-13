@@ -1,0 +1,387 @@
+[
+  {
+    "line": "北美线-加拿大",
+    "name": "Amazon",
+    "url": "https://www.amazon.ca/",
+    "host": "www.amazon.ca",
+    "ips": [
+      "143.204.176.27(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 182,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 686,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "BestBuy",
+    "url": "https://www.bestbuy.ca/en-ca",
+    "host": "www.bestbuy.ca",
+    "ips": [
+      "23.214.168.233(v4)",
+      "23.214.168.234(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 209,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12494,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Walmart",
+    "url": "https://www.walmart.ca/en",
+    "host": "www.walmart.ca",
+    "ips": [
+      "23.215.189.63(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 309,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12279,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Costco",
+    "url": "https://www.costco.ca/",
+    "host": "www.costco.ca",
+    "ips": [
+      "199.232.163.52(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": false,
+      "ms": 12106,
+      "info": "TCP 连接超时"
+    },
+    "tcp80": {
+      "ok": true,
+      "ms": 112,
+      "info": "tcp-ok"
+    },
+    "tls": {
+      "ok": false,
+      "ms": 0,
+      "info": "TCP 未通,跳过"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Brick",
+    "url": "https://www.thebrick.com/",
+    "host": "www.thebrick.com",
+    "ips": [
+      "23.227.38.74(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 1418,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 469,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Leon's",
+    "url": "https://www.leons.ca/",
+    "host": "www.leons.ca",
+    "ips": [
+      "23.227.38.74(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 243,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 772,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Visions",
+    "url": "https://www.visions.ca/",
+    "host": "www.visions.ca",
+    "ips": [
+      "172.66.159.158(v4)",
+      "104.20.16.13(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 264,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12258,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-加拿大",
+    "name": "Canadian Tire",
+    "url": "https://www.canadiantire.ca/en.html",
+    "host": "www.canadiantire.ca",
+    "ips": [
+      "23.15.140.5(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 135,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 13406,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Best Buy",
+    "url": "https://www.bestbuy.com",
+    "host": "www.bestbuy.com",
+    "ips": [
+      "23.209.213.2(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 189,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12301,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Walmart",
+    "url": "https://www.walmart.com",
+    "host": "www.walmart.com",
+    "ips": [
+      "23.55.96.134(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 209,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12216,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Costco",
+    "url": "https://www.costco.com",
+    "host": "www.costco.com",
+    "ips": [
+      "23.199.22.7(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 265,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12330,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-美国",
+    "name": "Amazon",
+    "url": "https://www.amazon.com",
+    "host": "www.amazon.com",
+    "ips": [
+      "13.33.52.208(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 195,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 398,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256"
+    }
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Amazon",
+    "url": "https://www.amazon.com.mx/",
+    "host": "www.amazon.com.mx",
+    "ips": [
+      "13.35.216.71(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 230,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 1483,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256"
+    }
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Liverpool",
+    "url": "https://www.liverpool.com.mx/tienda/home",
+    "host": "www.liverpool.com.mx",
+    "ips": [
+      "23.58.105.5(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 250,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12243,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Sams",
+    "url": "https://www.sams.com.mx/",
+    "host": "www.sams.com.mx",
+    "ips": [
+      "23.55.98.174(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 196,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 658,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384"
+    }
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Palacio",
+    "url": "https://www.elpalaciodehierro.com/buscar?q=tv",
+    "host": "www.elpalaciodehierro.com",
+    "ips": [
+      "104.18.191.44(v4)",
+      "104.18.190.44(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 248,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": true,
+      "ms": 1128,
+      "info": "TLS-ok proto=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384"
+    }
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Walmart",
+    "url": "https://www.walmart.com.mx/search?q=TV",
+    "host": "www.walmart.com.mx",
+    "ips": [
+      "23.55.98.174(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 257,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12207,
+      "info": "TLS 握手超时"
+    }
+  },
+  {
+    "line": "北美线-墨西哥",
+    "name": "Coppel",
+    "url": "https://www.coppel.com/sd/TV",
+    "host": "www.coppel.com",
+    "ips": [
+      "23.55.98.137(v4)"
+    ],
+    "dnsErr": "",
+    "tcp": {
+      "ok": true,
+      "ms": 264,
+      "info": "tcp-ok"
+    },
+    "tcp80": null,
+    "tls": {
+      "ok": false,
+      "ms": 12255,
+      "info": "TLS 握手超时"
+    }
+  }
+]

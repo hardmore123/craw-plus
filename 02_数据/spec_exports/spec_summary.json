@@ -1,0 +1,682 @@
+{
+  "spec_brand_sites": {
+    "total_brands": 39,
+    "total_series": 1091,
+    "total_spec_rows": 175655,
+    "brands": [
+      {
+        "brand": "samsung_ca",
+        "brand_name": "Samsung（加拿大）",
+        "series_count": 66,
+        "spec_rows": 23517,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "lg_us",
+        "brand_name": "LG（美国）",
+        "series_count": 99,
+        "spec_rows": 22653,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "regza_jp",
+        "brand_name": "REGZA（日本）",
+        "series_count": 39,
+        "spec_rows": 13941,
+        "weeks_captured": 3,
+        "first_week": "2026-W37",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_us",
+        "brand_name": "Samsung（美国）",
+        "series_count": 66,
+        "spec_rows": 11968,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_cl",
+        "brand_name": "Samsung（智利）",
+        "series_count": 52,
+        "spec_rows": 9291,
+        "weeks_captured": 2,
+        "first_week": "2026-W39",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_co",
+        "brand_name": "Samsung（哥伦比亚）",
+        "series_count": 51,
+        "spec_rows": 8224,
+        "weeks_captured": 2,
+        "first_week": "2026-W39",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "tcl_jp",
+        "brand_name": "TCL（日本）",
+        "series_count": 45,
+        "spec_rows": 7919,
+        "weeks_captured": 3,
+        "first_week": "2026-W37",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_pe",
+        "brand_name": "Samsung PE",
+        "series_count": 65,
+        "spec_rows": 7780,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "lg_mx",
+        "brand_name": "LG（墨西哥）",
+        "series_count": 51,
+        "spec_rows": 6480,
+        "weeks_captured": 2,
+        "first_week": "2026-W38",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "sony_us",
+        "brand_name": "Sony（美国）",
+        "series_count": 33,
+        "spec_rows": 5737,
+        "weeks_captured": 2,
+        "first_week": "2026-W38",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "samsung_mx",
+        "brand_name": "Samsung（墨西哥）",
+        "series_count": 22,
+        "spec_rows": 4878,
+        "weeks_captured": 2,
+        "first_week": "2026-W39",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "tcl_it",
+        "brand_name": "TCL（意大利）",
+        "series_count": 57,
+        "spec_rows": 4173,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "hisense_ca",
+        "brand_name": "Hisense（加拿大）",
+        "series_count": 33,
+        "spec_rows": 3900,
+        "weeks_captured": 2,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_uk",
+        "brand_name": "Samsung UK",
+        "series_count": 32,
+        "spec_rows": 3677,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "sony_ca",
+        "brand_name": "Sony（加拿大）",
+        "series_count": 16,
+        "spec_rows": 3511,
+        "weeks_captured": 2,
+        "first_week": "2026-W38",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "tcl_ca",
+        "brand_name": "TCL（加拿大）",
+        "series_count": 16,
+        "spec_rows": 3510,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "lg_ca",
+        "brand_name": "LG（加拿大）",
+        "series_count": 32,
+        "spec_rows": 3207,
+        "weeks_captured": 2,
+        "first_week": "2026-W38",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "sony_fr",
+        "brand_name": "Sony（法国）",
+        "series_count": 20,
+        "spec_rows": 2693,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "sony_de",
+        "brand_name": "Sony（德国）",
+        "series_count": 19,
+        "spec_rows": 2560,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "tcl_mx",
+        "brand_name": "TCL（墨西哥）",
+        "series_count": 30,
+        "spec_rows": 2468,
+        "weeks_captured": 2,
+        "first_week": "2026-W39",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "hisense_jp",
+        "brand_name": "Hisense（日本）",
+        "series_count": 13,
+        "spec_rows": 2154,
+        "weeks_captured": 3,
+        "first_week": "2026-W37",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "sony_jp",
+        "brand_name": "Sony BRAVIA（日本）",
+        "series_count": 9,
+        "spec_rows": 2090,
+        "weeks_captured": 3,
+        "first_week": "2026-W37",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "sony_uk",
+        "brand_name": "Sony UK",
+        "series_count": 14,
+        "spec_rows": 1904,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "tcl_us",
+        "brand_name": "TCL（美国）",
+        "series_count": 11,
+        "spec_rows": 1628,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "hisense_us",
+        "brand_name": "Hisense（美国）",
+        "series_count": 35,
+        "spec_rows": 1608,
+        "weeks_captured": 2,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "sony_it",
+        "brand_name": "Sony（意大利）",
+        "series_count": 11,
+        "spec_rows": 1500,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_de",
+        "brand_name": "Samsung（德国）",
+        "series_count": 10,
+        "spec_rows": 1450,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "sharp_jp",
+        "brand_name": "夏普 AQUOS（日本）",
+        "series_count": 13,
+        "spec_rows": 1443,
+        "weeks_captured": 3,
+        "first_week": "2026-W37",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "philips_ca",
+        "brand_name": "Philips（加拿大）",
+        "series_count": 11,
+        "spec_rows": 1423,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "panasonic_jp",
+        "brand_name": "松下 VIERA（日本）",
+        "series_count": 13,
+        "spec_rows": 1394,
+        "weeks_captured": 3,
+        "first_week": "2026-W37",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_it",
+        "brand_name": "Samsung（意大利）",
+        "series_count": 11,
+        "spec_rows": 1389,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_ec",
+        "brand_name": "Samsung EC",
+        "series_count": 11,
+        "spec_rows": 1379,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "samsung_fr",
+        "brand_name": "Samsung（法国）",
+        "series_count": 9,
+        "spec_rows": 1173,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "tcl_de",
+        "brand_name": "TCL（德国）",
+        "series_count": 15,
+        "spec_rows": 937,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "samsung_bo",
+        "brand_name": "Samsung（玻利维亚）",
+        "series_count": 7,
+        "spec_rows": 769,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "tcl_fr",
+        "brand_name": "TCL（法国）",
+        "series_count": 15,
+        "spec_rows": 708,
+        "weeks_captured": 1,
+        "first_week": "2026-W40",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "tcl_cl",
+        "brand_name": "TCL（智利）",
+        "series_count": 13,
+        "spec_rows": 247,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      },
+      {
+        "brand": "hisense_mx",
+        "brand_name": "Hisense（墨西哥）",
+        "series_count": 23,
+        "spec_rows": 228,
+        "weeks_captured": 3,
+        "first_week": "2026-W38",
+        "last_week": "2026-W40"
+      },
+      {
+        "brand": "tcl_bo",
+        "brand_name": "TCL（玻利维亚）",
+        "series_count": 3,
+        "spec_rows": 144,
+        "weeks_captured": 1,
+        "first_week": "2026-W39",
+        "last_week": "2026-W39"
+      }
+    ]
+  },
+  "retail_product_spec": {
+    "total_sites": 45,
+    "total_spec_rows": 137114,
+    "sites": [
+      {
+        "site_code": "kakaku_jp",
+        "site_name": "価格.com（日本）",
+        "products": 727,
+        "products_with_spec": 357,
+        "spec_rows": 29605
+      },
+      {
+        "site_code": "thebrick_ca",
+        "site_name": "The Brick",
+        "products": 207,
+        "products_with_spec": 202,
+        "spec_rows": 21862
+      },
+      {
+        "site_code": "amazon_ca",
+        "site_name": "Amazon Canada",
+        "products": 205,
+        "products_with_spec": 205,
+        "spec_rows": 19130
+      },
+      {
+        "site_code": "leons_ca",
+        "site_name": "Leon's",
+        "products": 148,
+        "products_with_spec": 136,
+        "spec_rows": 14034
+      },
+      {
+        "site_code": "amazon_us",
+        "site_name": "Amazon US",
+        "products": 410,
+        "products_with_spec": 135,
+        "spec_rows": 13694
+      },
+      {
+        "site_code": "samsung_uk",
+        "site_name": "Samsung UK",
+        "products": 67,
+        "products_with_spec": 37,
+        "spec_rows": 6326
+      },
+      {
+        "site_code": "plazavea_pe",
+        "site_name": "Plaza Vea",
+        "products": 1869,
+        "products_with_spec": 67,
+        "spec_rows": 4523
+      },
+      {
+        "site_code": "max_gt",
+        "site_name": "Max",
+        "products": 60,
+        "products_with_spec": 29,
+        "spec_rows": 3907
+      },
+      {
+        "site_code": "tecnofacil_gt",
+        "site_name": "Tecnofacil",
+        "products": 62,
+        "products_with_spec": 29,
+        "spec_rows": 3673
+      },
+      {
+        "site_code": "hughes_uk",
+        "site_name": "Hughes UK",
+        "products": 171,
+        "products_with_spec": 35,
+        "spec_rows": 3035
+      },
+      {
+        "site_code": "exito_co",
+        "site_name": "Exito",
+        "products": 2065,
+        "products_with_spec": 49,
+        "spec_rows": 2354
+      },
+      {
+        "site_code": "lider_cl",
+        "site_name": "Lider",
+        "products": 102,
+        "products_with_spec": 23,
+        "spec_rows": 2019
+      },
+      {
+        "site_code": "tcl_uk",
+        "site_name": "TCL UK",
+        "products": 128,
+        "products_with_spec": 22,
+        "spec_rows": 1763
+      },
+      {
+        "site_code": "alkostoplus_bo",
+        "site_name": "Multicenter+",
+        "products": 152,
+        "products_with_spec": 12,
+        "spec_rows": 1294
+      },
+      {
+        "site_code": "abc_cl",
+        "site_name": "ABC",
+        "products": 42,
+        "products_with_spec": 8,
+        "spec_rows": 770
+      },
+      {
+        "site_code": "hites_cl",
+        "site_name": "Hites",
+        "products": 34,
+        "products_with_spec": 8,
+        "spec_rows": 680
+      },
+      {
+        "site_code": "oechsle_pe",
+        "site_name": "Oechsle",
+        "products": 147,
+        "products_with_spec": 9,
+        "spec_rows": 653
+      },
+      {
+        "site_code": "costco_us",
+        "site_name": "Costco US",
+        "products": 48,
+        "products_with_spec": 6,
+        "spec_rows": 581
+      },
+      {
+        "site_code": "todohogar_ec",
+        "site_name": "Todohogar",
+        "products": 45,
+        "products_with_spec": 5,
+        "spec_rows": 574
+      },
+      {
+        "site_code": "lg_us",
+        "site_name": "LG（美国）",
+        "products": 13,
+        "products_with_spec": 6,
+        "spec_rows": 543
+      },
+      {
+        "site_code": "orvehogar_ec",
+        "site_name": "Orvehogar",
+        "products": 154,
+        "products_with_spec": 7,
+        "spec_rows": 501
+      },
+      {
+        "site_code": "falabella_cl",
+        "site_name": "Falabella",
+        "products": 46,
+        "products_with_spec": 6,
+        "spec_rows": 471
+      },
+      {
+        "site_code": "paris_cl",
+        "site_name": "Paris",
+        "products": 55,
+        "products_with_spec": 5,
+        "spec_rows": 440
+      },
+      {
+        "site_code": "cresa_ec",
+        "site_name": "Cresa",
+        "products": 155,
+        "products_with_spec": 6,
+        "spec_rows": 428
+      },
+      {
+        "site_code": "japon_ec",
+        "site_name": "Almacenes Japon",
+        "products": 160,
+        "products_with_spec": 6,
+        "spec_rows": 428
+      },
+      {
+        "site_code": "olimpica_co",
+        "site_name": "Olimpica",
+        "products": 190,
+        "products_with_spec": 6,
+        "spec_rows": 423
+      },
+      {
+        "site_code": "evision_pa",
+        "site_name": "Evision",
+        "products": 40,
+        "products_with_spec": 6,
+        "spec_rows": 404
+      },
+      {
+        "site_code": "liverpool_mx",
+        "site_name": "Liverpool",
+        "products": 15,
+        "products_with_spec": 12,
+        "spec_rows": 367
+      },
+      {
+        "site_code": "artefacta_ec",
+        "site_name": "Artefacta",
+        "products": 41,
+        "products_with_spec": 4,
+        "spec_rows": 285
+      },
+      {
+        "site_code": "carsa_pe",
+        "site_name": "Carsa",
+        "products": 112,
+        "products_with_spec": 4,
+        "spec_rows": 266
+      },
+      {
+        "site_code": "bestbuy_ca",
+        "site_name": "Best Buy Canada",
+        "products": 8,
+        "products_with_spec": 2,
+        "spec_rows": 227
+      },
+      {
+        "site_code": "marcimex_ec",
+        "site_name": "Marcimex",
+        "products": 78,
+        "products_with_spec": 4,
+        "spec_rows": 219
+      },
+      {
+        "site_code": "panafoto_pa",
+        "site_name": "Panafoto",
+        "products": 41,
+        "products_with_spec": 2,
+        "spec_rows": 169
+      },
+      {
+        "site_code": "estilos_pe",
+        "site_name": "Estilos",
+        "products": 66,
+        "products_with_spec": 3,
+        "spec_rows": 157
+      },
+      {
+        "site_code": "elektra_gt",
+        "site_name": "Elektra",
+        "products": 59,
+        "products_with_spec": 1,
+        "spec_rows": 156
+      },
+      {
+        "site_code": "amazon_es",
+        "site_name": "Amazon Spain",
+        "products": 42,
+        "products_with_spec": 14,
+        "spec_rows": 153
+      },
+      {
+        "site_code": "sony_uk",
+        "site_name": "Sony UK",
+        "products": 7,
+        "products_with_spec": 2,
+        "spec_rows": 148
+      },
+      {
+        "site_code": "unicomer_gt",
+        "site_name": "Unicomer",
+        "products": 37,
+        "products_with_spec": 2,
+        "spec_rows": 146
+      },
+      {
+        "site_code": "laganga_ec2",
+        "site_name": "L-Ganga",
+        "products": 21,
+        "products_with_spec": 2,
+        "spec_rows": 145
+      },
+      {
+        "site_code": "comandato_ec",
+        "site_name": "Comandato",
+        "products": 47,
+        "products_with_spec": 2,
+        "spec_rows": 144
+      },
+      {
+        "site_code": "jumbo_co",
+        "site_name": "Jumbo",
+        "products": 65,
+        "products_with_spec": 3,
+        "spec_rows": 131
+      },
+      {
+        "site_code": "sukasa_ec",
+        "site_name": "Sukasa",
+        "products": 50,
+        "products_with_spec": 1,
+        "spec_rows": 126
+      },
+      {
+        "site_code": "amazon_mx",
+        "site_name": "Amazon México",
+        "products": 72,
+        "products_with_spec": 1,
+        "spec_rows": 75
+      },
+      {
+        "site_code": "metro_pe",
+        "site_name": "Metro",
+        "products": 44,
+        "products_with_spec": 1,
+        "spec_rows": 74
+      },
+      {
+        "site_code": "amazon_it",
+        "site_name": "Amazon Italy",
+        "products": 43,
+        "products_with_spec": 1,
+        "spec_rows": 11
+      }
+    ]
+  },
+  "grand_total_spec_rows": 312769
+}

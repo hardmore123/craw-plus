@@ -1,0 +1,181 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "a.s-item__link, a[href*='/itm/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "default": "EUR"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "[class*='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='mpn']",
+        "[itemprop='model']",
+        "[data-testid*='model']"
+      ],
+      "attr": "content",
+      "jsonld": "mpn",
+      "regex": "\\b([A-Z0-9][A-Z0-9._-]{3,20})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|in|pulgada|Zoll|pollici|pouces)",
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "container": "[data-feedback-id], [class*='review-item'], [itemprop='review'], [class*='ebay-review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "data-feedback-id"
+      },
+      "rating": {
+        "selectors": [
+          "[class*='star-rating']",
+          "[itemprop='ratingValue']",
+          "[data-testid*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[class*='review-body']",
+          "[itemprop='reviewBody']",
+          "[class*='review-text']",
+          "span.review-detail"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[class*='review-author']",
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[class*='review-date']",
+          "time"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  }
+}

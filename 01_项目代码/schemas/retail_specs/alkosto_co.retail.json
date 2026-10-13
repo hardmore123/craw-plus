@@ -1,0 +1,294 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "alkosto_co",
+  "name": "Alkosto",
+  "country": "Colombia",
+  "channel": "Alkosto",
+  "region": "co",
+  "base_url": "https://www.alkosto.com",
+  "currency": "COP",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "status": "candidate",
+  "anchor": "h1",
+  "generated_by": "2026-09-24 实测: Magento 站，评价走第三方 Reviews.io api.reviews.io timeline API（纯 HTTP，需 Origin/Referer + accept-encoding identity）",
+  "_design": {
+    "平台": "Magento（哥伦比亚，非 VTEX）",
+    "评价": "第三方 Reviews.io：GET api.reviews.io/timeline/data?type=product_review&store=www.alkosto.com&sort=date_desc&page=N&per_page=100&sku=<EAN>，公开无需 cookie/浏览器",
+    "required_headers": "Origin/Referer 指向 www.alkosto.com 否则 401；accept-encoding 必须 identity（stdlib 无 brotli）",
+    "sku_mapping": "DB product.sku = 13位 EAN 即 API 的 sku 参数，直接用",
+    "results_vs_review_count": "results_count < review_count 是正常的（部分评论聚合不可逐条取），review 写可见明细、summary 用 aggregations.ratings 全量分布",
+    "pagination": "per_page=100，page 递增到 timeline 为空"
+  },
+  "search": {
+    "container": "a.product__item__top__link",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 40,
+      "fallback_per_model": true
+    },
+    "search_url_template": "{base}/search?text={q}"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        ".page-title"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9._\\-]{1,39})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "meta[itemprop='price']",
+        "[itemprop='price']"
+      ],
+      "attr": "content",
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "COP"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        ".old-price",
+        "[data-price-amount]"
+      ],
+      "attr": "content",
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        ".stock"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "reviews_io_api",
+    "_note": "Reviews.io timeline API 直连：GET api.reviews.io/timeline/data?type=product_review&store=www.alkosto.com&sort=date_desc&page=N&per_page=100&sku=<EAN>&include_sentiment_analysis=true&widget=polaris；_source._id(站内唯一)为 review_key 前缀 rvi:；comments=正文，review_title 常空，author=作者，date_created=日期；aggregations.ratings.buckets 全量星级分布",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        ".rating-value"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        ".review-count"
+      ],
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "adaptador",
+        "control remoto",
+        "remote",
+        "bracket",
+        "case",
+        "cover",
+        "soundbar",
+        "barra de sonido",
+        "parlante",
+        "bocina",
+        "proyector",
+        "projector",
+        "rack",
+        "antena",
+        "cleaner",
+        "limpiador",
+        "protector",
+        "pantalla"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 1000,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  },
+  "_autofix_search": {
+    "date": "2026-10-09",
+    "tool": "scripts/autofix_search.py",
+    "evidence": {
+      "links": 25,
+      "verified_models": [
+        "55T6C:1599900.0",
+        "65NU855BPSA:2399900.0"
+      ]
+    },
+    "tried": [
+      "{base}/search?q={q} [TCL tv] 200 links=5",
+      "{base}/search?text={q} [TCL tv] 200 links=25"
+    ]
+  }
+}

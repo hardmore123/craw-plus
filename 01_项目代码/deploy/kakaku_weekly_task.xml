@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<!--
+  Windows 任务计划程序导入模板 —— 日本线 kakaku 周度价格采集
+
+  导入方式（管理员 PowerShell）：
+    Register-ScheduledTask -Xml (Get-Content "deploy\kakaku_weekly_task.xml" -Raw) `
+      -TaskName "KakakuWeeklyPrice" -User "SYSTEM" -Force
+
+  说明：每周一 09:00 执行 weekly_kakaku_price.py，抓取 6 品牌全部机型
+  当周报价入库。price_shop_snapshot 只 INSERT 不覆盖，自动形成周度时序。
+
+  请把 PROJECT_ROOT 改成本机实际路径（当前已填入项目默认路径）。
+-->
+<Task xmlns="http://schemas.microsoft.com/windows/2004/02/scheduled_task" Version="1.4">
+  <RegistrationInfo>
+    <Description>kakaku 日本线周度价格采集（价格趋势曲线数据源）</Description>
+  </RegistrationInfo>
+  <Triggers>
+    <CalendarTrigger>
+      <StartBoundary>2026-01-01T09:00:00</StartBoundary>
+      <ScheduleByWeek>
+        <WeeksInterval>1</WeeksInterval>
+        <DaysOfWeek><Monday/></DaysOfWeek>
+      </ScheduleByWeek>
+    </CalendarTrigger>
+  </Triggers>
+  <Settings>
+    <AllowStartOnDemand>true</AllowStartOnDemand>
+    <ExecutionTimeLimit>PT4H</ExecutionTimeLimit>
+    <MultipleInstances>IgnoreNew</MultipleInstances>
+  </Settings>
+  <Actions>
+    <Exec>
+      <Command>python</Command>
+      <Arguments>scripts\weekly_kakaku_price.py</Arguments>
+      <WorkingDirectory>C:\Users\likunyuan\Desktop\爬取项目\海外</WorkingDirectory>
+    </Exec>
+  </Actions>
+</Task>

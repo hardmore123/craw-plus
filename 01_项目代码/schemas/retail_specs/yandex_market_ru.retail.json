@@ -1,0 +1,250 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "yandex_market_ru",
+  "name": "Yandex Market",
+  "country": "Russia",
+  "channel": "Yandex Market",
+  "region": "ru",
+  "base_url": "https://market.yandex.ru",
+  "currency": "RUB",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "探测占位：2026-09-24T20:23:15+00:00 俄罗斯站被拦，需住宅IP。探测: HTTP 403 Forbidden（地域限制，需俄罗斯IP+Yandex账号态）。",
+  "status": "blocked",
+  "_block_note": "当前出口IP(非俄罗斯)被拦截: HTTP 403 Forbidden（地域限制，需俄罗斯IP+Yandex账号态）。需俄罗斯住宅IP才能校准选择器。",
+  "_probe_result": {
+    "final_status": 403,
+    "block_reason": "HTTP 403 Forbidden（地域限制，需俄罗斯IP+Yandex账号态）"
+  },
+  "anchor": "h1, body",
+  "search": {
+    "container": "a[href*='/product/'], a[href*='/cat/detail/'], a[href*='/catalog/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 8000,
+    "scroll_passes": 4,
+    "batch": {
+      "keyword_template": "{brand} {model}",
+      "max_candidates": 60,
+      "force": true,
+      "fallback_per_model": false,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3,
+      "resolve_models": false
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[data-sku]"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "RUB"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": "table.spec tr, dl.spec dd",
+      "limit": 100
+    }
+  ],
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.ratingCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[itemprop='ratingCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "_note": "被拦占位: reviews.source=none, 无评价抽取能力, 待住宅IP可达后校准。",
+    "container": "[itemprop='review'], [class*='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "звуковая панель",
+        "soundbar",
+        "кронштейн",
+        "projector",
+        "проектор",
+        "mount",
+        "stand",
+        "case",
+        "cover",
+        "кабель",
+        "cable"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_reviews": 50,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "interval_sec": 10.0,
+    "retail_page_wait": "h1, body",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.9
+  }
+}

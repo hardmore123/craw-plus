@@ -1,0 +1,245 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "laganga_ec2",
+  "name": "L-Ganga",
+  "country": "Ecuador",
+  "channel": "L-Ganga",
+  "region": "ec",
+  "base_url": "https://laganga.com",
+  "currency": "USD",
+  "capabilities": [
+    "price"
+  ],
+  "status": "candidate",
+  "generated_by": "2026-09-23 实测: Magento L2 (laganga.com), 纯HTTP 0卡片必须Playwright, 无JSON-LD, 价格靠 data-price-amount | probe2 (2026-09-25): 复核 5 产品 hide__rating+dataLayer=0+无评价区DOM+无BV/VTEX/第三方，确认无评价，reviews.source=none，capabilities 移除 reviews",
+  "anchor": "h1",
+  "search": {
+    "container": "li.product-item a.product-item-link",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        ".product-item-name"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "_note": "纯HTTP 0卡片必须Playwright; 渲染后 20 个 li.product-item",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        ".product-item-name"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "regex": "(Samsung|LG|Sony|Hisense|TCL|Sharp|Panasonic|Philips|Toshiba|Indurama|Riviera)",
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9-]{4,20})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "regex": "(\\d{2})\\s*(?:\"|inch|pulgadas)",
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[data-product-id]"
+      ],
+      "attr": "data-product-id",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-price-amount]",
+        ".price-final .price",
+        ".price-box .normal-price .price"
+      ],
+      "attr": "data-price-amount",
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[data-price-amount]"
+      ],
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "_note": "Magento body class hide__rating → 前端全局禁用评价UI; GA4 dataLayer item_reviews_count=0; listAjax 404 评价模块未启用; 零评价留空不造假 (probe2 2026-09-25 复核)",
+    "container": ".review-item, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "cocina",
+        "gas"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "_note": "纯HTTP 0卡片, 必须Playwright + domcontentloaded + 5s sleep + 3次scrollBy",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  }
+}

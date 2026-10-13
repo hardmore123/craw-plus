@@ -1,0 +1,262 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "sony_ca",
+  "name": "Sony（加拿大）",
+  "country": "Canada",
+  "channel": "Sony 官网",
+  "region": "ca",
+  "base_url": "https://www.sony.ca",
+  "currency": "CAD",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "status": "candidate",
+  "anchor": "h1",
+  "generated_by": "2026-09-24 实测: Sony.ca 官网（Hybris OCC + Akamai WAF），价格优先 JSON-LD offers.price；评价走 Sony-global BazaarVoice bfd 接口(同 sony_uk)",
+  "_design": {
+    "平台": "Sony.ca 官网（Hybris OCC + Akamai WAF）",
+    "waf": "Akamai edge WAF，对出口 IP 按 IP/ASN/geo 拦（403 Access Denied / TLS RESET）。_STEALTH_JS(webdriver/plugins/WebGL伪造)+human_like=True(鼠标移动+随机延迟)后同一被拦出口 IP 即从 hard-block(403) 变 200 OK——反爬非纯 IP 黑名单，指纹+行为也是判据",
+    "pdp_jsonld": "每页含 <script application/ld+json> Product.offers：{priceCurrency:'CAD', price:549.99}，sku 字段=型号，是当前价最可靠来源",
+    "list_price_dom": "划线原价在 p.product-pricing__amount-original-price（含 visually-hidden Original Price span）；当前价在 p.product-pricing__amount--sale",
+    "stock_signal": "页面正文含 'Out Of Stock' 字样→in_stock=0（Sony 缺货仍标价展示）；有价无该字样→in_stock=1",
+    "url_form": "DB 存的 url 缺 /en 前缀；规范 PDP 入口 https://www.sony.ca/en/tv-video/televisions/all-tvs/p/<code>（code 小写），sony.ca 自动 302 兼容两种",
+    "review_backend": "Sony-global BazaarVoice bfd 接口(同 sony_uk, reference §10.4)，client=sony-global, displayCode=12872_22_0, site=seu, locale=en_CA",
+    "bv_product_id": "PDP data-bv-product-id（系列 slug 如 bravia-7-ii），非 DB sku（K55XR70），必须 Playwright 读 PDP 取该属性",
+    "cross_product_risk": "BV 按系列聚合，评价会串尺寸；保留 ProductId 溯源（review_url#bv-src-product=<id>）"
+  },
+  "search": {
+    "container": "a[href*='/all-tvs/p/'], a[href*='/p/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 30,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        ".product-name"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9._\\-]{1,39})\\b",
+      "transform": "clean_text",
+      "_note": "product.sku 即型号(url末段)"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "jsonld": "sku",
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "p.product-pricing__amount--sale",
+        ".product-price"
+      ],
+      "transform": "money",
+      "_note": "优先 JSON-LD offers.price（比 CSS 选择器稳，Sony Angular 页 class 带 _ngcontent 哈希易漂）"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "CAD"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "p.product-pricing__amount-original-price"
+      ],
+      "transform": "money",
+      "_note": "list<=price 时置 None（无折扣）"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        "body"
+      ],
+      "attr": "content",
+      "transform": "in_stock",
+      "_note": "页面正文含 'Out Of Stock' → in_stock=0"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "bazaarvoice_bfd",
+    "bv": {
+      "client": "sony-global",
+      "display_code": "12872_22_0",
+      "site": "seu",
+      "locale": "en_CA",
+      "origin": "https://www.sony.ca",
+      "content_locale": "en_CA,en_US,fr_CA",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "_note": "★2026-09-25 _partial_reviews_fix 实测: sony.ca PDP 403 (Akamai Access Denied, 需加拿大IP), 但 BV bfd API (apps.bazaarvoice.com 域名) 可直连, 不受 PDP 403 影响(同 bestbuy_ca 套路)。用 DB product.sku(型号如 k55xr70/kd32w830k/kd55x77l/xr83a80l)作 productId 直接查 BV bfd API: 4产品各返回100条 review + summary(numReviews=9/78/56/13, BV 按系列聚合 TotalResults 475~768)。已入库 +400 review +4 summary。★不需要 PDP 读 data-bv-product-id, DB sku 即可用作 BV productId; 不需要加拿大IP(BV API 域名可直连)。",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        ".bv_avgRating_component_container",
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.ratingCount",
+      "selectors": [
+        ".bv_numReviews_text",
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "bv_api",
+      "max_reviews": 1000,
+      "max_pages": 20
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "bv_exhausted_or_page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "human_like": true,
+    "stealth_js": true,
+    "settle_ms": 5000,
+    "scroll_passes": 1,
+    "nav_timeout_ms": 30000,
+    "retail_page_wait": "h1",
+    "_note": "★Akamai WAF：stealth(_STEALTH_JS+human_like)后同一被拦出口 IP 可从 403 变 200；需加拿大/住宅出口 IP，数据中心 IP 被 hard-block",
+    "max_retries": 3
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}

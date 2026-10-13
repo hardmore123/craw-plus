@@ -1,0 +1,177 @@
+{
+  "code": "falabella_pe",
+  "name": "Falabella Peru",
+  "base_url": "https://www.falabella.com.pe",
+  "country": "PE",
+  "currency": "PEN",
+  "channel": "falabella",
+  "status": "approved",
+  "capabilities": [
+    "price"
+  ],
+  "fetch": {
+    "requires_browser": true,
+    "max_retries": 3,
+    "nav_timeout_ms": 30000,
+    "protection": "L2"
+  },
+  "search": {
+    "container": "a.pod",
+    "batch": {
+      "max_candidates": 60,
+      "keyword_template": "{brand} tv"
+    },
+    "search_url_template": "{base}/falabella-pe/search?Ntt={q}",
+    "sku": {
+      "self_attr": "href"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid='product-price']",
+        ".price",
+        ".jsx-3669149701"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "default": "PEN"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none",
+      "max_pages": 20
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "max_reviews": 50
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "#productTitle",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "[data-brand]",
+        "[class*='brand']",
+        "[itemprop='manufacturer']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[itemprop='mpn']",
+        "[data-testid*='model']",
+        "[data-model]"
+      ],
+      "attr": "content",
+      "jsonld": "mpn",
+      "regex": "\\b([A-Z0-9][A-Z0-9._-]{3,25})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|in|pulgada|Zoll|pollici|pouces|インチ|型)",
+      "transform": "size_inch"
+    },
+    "category": {
+      "selectors": [
+        "[itemprop='category']",
+        ".breadcrumb li:last-child",
+        ".breadcrumbs li:last-child"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "_autofix_search": {
+    "date": "2026-10-10",
+    "tool": "scripts/autofix_search.py",
+    "evidence": {
+      "links": 48,
+      "verified_models": [
+        "65T6C:1629.0",
+        "100Q7QG:7499.0"
+      ]
+    },
+    "tried": [
+      "{base}/falabella-pe/search?Ntt={q} [TCL tv] 200 links=48"
+    ]
+  }
+}

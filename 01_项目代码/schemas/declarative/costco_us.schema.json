@@ -1,0 +1,60 @@
+{
+  "_comment": "Costco 美国站抽取规则（草案）。需美国代理访问真实 PDP 后按实测 DOM/BazaarVoice 校准；价格/评分优先走 JSON-LD schema.org Product 兜底。",
+  "anchor": "h1",
+
+  "search": {
+    "container": "div.product-tile-set, div[automation-id='productList'] > div",
+    "sku": { "self_attr": "data-pdp-url" },
+    "title": { "selectors": ["span.description a", "p.description a"] },
+    "url_template": "https://www.costco.com/.product.{sku}.html"
+  },
+
+  "product": {
+    "title": { "selectors": ["h1[automation-id='productName']", "h1.product-title", "h1"], "transform": "clean_text" },
+    "brand": { "jsonld": "brand.name", "transform": "brand" },
+    "model": { "selectors": ["div[automation-id='modelNumber']", ".model-number"], "jsonld": "model", "transform": "clean_text" },
+    "size": { "selectors": ["[automation-id='screenSize']"], "transform": "size_inch" }
+  },
+
+  "price": {
+    "price": {
+      "selectors": ["div.price span.value", "span[automation-id='productPriceOutput']", ".product-price"],
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": { "jsonld": "offers.priceCurrency", "transform": "currency" },
+    "list_price": { "selectors": ["div.your-price .value"], "transform": "money" },
+    "in_stock": { "selectors": ["input[value='Add to Cart']", "button.add-to-cart-btn"], "transform": "in_stock" },
+    "raw_text": { "selectors": ["div.price span.value"], "transform": "clean_text" }
+  },
+
+  "specs": [
+    { "type": "kvlist", "container": "div.product-info-specs tr, table.spec-table tr", "limit": 150 }
+  ],
+
+  "summary": {
+    "avg_rating": {
+      "selectors": [".bv_avgRating_component_container", "[itemprop='ratingValue']"],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [".bv_numReviews_text", "[itemprop='reviewCount']"],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+
+  "reviews": {
+    "container": "ol.bv-content-list li.bv-content-item, div[itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "rating": { "selectors": [".bv-rating-stars-container .bv-off-screen", "[itemprop='ratingValue']"], "transform": "rating" },
+      "title": { "selectors": ["h3.bv-content-title", ".review-title"], "transform": "clean_text" },
+      "body": { "selectors": ["div.bv-content-summary-body-text p", ".bv-content-summary"], "transform": "clean_text" },
+      "author": { "selectors": [".bv-author", ".bv-content-author-name"], "transform": "clean_text" },
+      "review_date": { "selectors": ["meta[itemprop='datePublished']", ".bv-content-datetime-stamp"], "attr": "content", "transform": "clean_text" },
+      "helpful_count": { "selectors": [".bv-content-feedback-vote-count", ".helpful-count"], "transform": "int" }
+    }
+  }
+}

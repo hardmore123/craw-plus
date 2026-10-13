@@ -1,0 +1,252 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "evision_pa",
+  "name": "Evision",
+  "country": "Panama",
+  "channel": "Evision",
+  "region": "pa",
+  "base_url": "https://www.evisionstore.com",
+  "currency": "USD",
+  "capabilities": [
+    "price",
+    "reviews"
+  ],
+  "status": "candidate",
+  "generated_by": "2026-09-23 实测: 自建电商, JSON-LD CollectionPage + data-bb-value 价格",
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/products/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "_note": "品牌分类页 /category-brand/<brand>/televisores 有 JSON-LD CollectionPage.mainEntity.itemListElement",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9-]{4,20})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|pulgadas)",
+      "transform": "size_inch"
+    },
+    "sku": {
+      "jsonld": "sku",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "span[data-bb-value='product-price']",
+        "[class*='product-price']"
+      ],
+      "transform": "money"
+    },
+    "list_price": {
+      "selectors": [
+        "span[data-bb-value='product-original-price']",
+        "[class*='original-price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[data-bb-value='product-price']",
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "USD"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "jsonld",
+    "_note": "PDP JSON-LD Product 含 aggregateRating + review[]; 首屏 SSR 全量内联",
+    "container": ".review-item, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          ".bb-product-rating"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          ".review-item__body"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          ".fw-medium"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "klip",
+        "base",
+        "bracket"
+      ],
+      "url_contains_any": [
+        "accesorios"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  }
+}

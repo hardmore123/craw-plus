@@ -1,0 +1,278 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "todohogar_ec",
+  "name": "Todohogar",
+  "country": "Ecuador",
+  "channel": "Todohogar",
+  "region": "ec",
+  "base_url": "https://www.todohogar.com",
+  "currency": "USD",
+  "capabilities": [
+    "price"
+  ],
+  "status": "candidate",
+  "anchor": "h1",
+  "generated_by": "2026-09-24 实测: Next.js(comohogar 自建,后端 api.comohogar.com,与 sukasa_ec 同平台同后端)，seeComments=null + 全站无评价系统(PDP JSON-LD aggregateRating=null)",
+  "_design": {
+    "平台": "Next.js（comohogar 自建，后端 api.comohogar.com，与 sukasa_ec 同平台同后端；styled-components 随机类名）",
+    "review_backend": "无——全站无评价系统，三条探测线全空",
+    "site_config": "general-api/config/list_config/{formatId=6e929c38-0a98-11ec-a8ee-0e18b4f7d03b} 的 data.config: seeComments=null + enableReview=true（★与姊妹站 sukasa_ec 的 seeComments=False 区别：todohogar 是 null 即根本未启用评论可见性，sukasa 是显式 False；二者效果一致均不展示评论）",
+    "jsonld": "PDP <script application/ld+json> Product 节点 aggregateRating=null + review=null（SSR 已渲染但值为 null，全 44 产品一致）",
+    "next_data_product": "__NEXT_DATA__.props.pageProps.product 有 ~100 字段，无一与评价/评分相关（qualification=null，是分类限定非评分）",
+    "api_xhr": "PDP 触发 14 条 comohogar XHR 全是 catalog-api + cms-api + general-api(config)，零 review/opinion/rating/comment 端点",
+    "api_probe_404": "catalog-api/products/{id}/reviews|opinions + review-api/reviews/{id} 全 404 Whitelabel Error（comohogar 未暴露评价读取端点）",
+    "dom": "滚动 4 次后 0 个 [class*='review'/'opinion'/'calificacion'/'rating'/'rese']；西语评价标题全 0 命中",
+    "scripts": "PDP 25 个 <script src> 无一含 BV/Yotpo/PowerReviews/Feefo/Trustpilot/Turnto 挂件域名",
+    "search_404": "★搜索路径 /search?Ntt= 与 /buscar?q= 均无此路由（Next.js isFallback, pageProps 空），搜索路径在该站不存在。产品由 api.comohogar.com 客户端拉取后渲染进 DOM",
+    "real_entry": "分类页 /departamentos/video/<uuid> 200，渲染后 ~100 商品卡片（含 TV 子集+配件混在一起）",
+    "currency": "USD（厄瓜多尔美元化）"
+  },
+  "search": {
+    "container": "a[href*='/productos/'], .product-card",
+    "_note": "★搜索路径 404 不存在，用分类页 /departamentos/video/<uuid> 抓 <a href=\"/productos/<slug>/<uuid>\"><h3>标题</h3></a>；价格在 a 前 800 字符的 <div>$price1 - $price2</div>（取最低价为售价）",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 40,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid='brand']",
+        ".brand-name"
+      ],
+      "transform": "brand",
+      "_note": "Sylvox 本地品牌不在词表→留空"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9._\\-]{1,39})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(\\\"|inch|pulgadas)",
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[data-testid='sku']",
+        "[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "_note": "url 末段 UUID"
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        ".product-price",
+        "[data-price]"
+      ],
+      "transform": "money",
+      "_note": "价格是 $min - $max 区间(变体价)，取最低价"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "USD"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        ".old-price",
+        "[data-list-price]"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        ".stock"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "_note": "★全站无评价系统：PDP JSON-LD aggregateRating=null + review=null（44/44 一致）、comohogar API 无评价读取端点(全404)、无第三方挂件、seeComments=null（根本未启用评论可见性）。按红线留空不造假，不写 review/review_summary，只记 retail_task_status=no_reviews",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 0,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "adaptador",
+        "control remoto",
+        "remote",
+        "bracket",
+        "case",
+        "cover",
+        "soundbar",
+        "barra de sonido",
+        "parlante",
+        "bocina",
+        "proyector",
+        "projector",
+        "rack",
+        "antena",
+        "cleaner",
+        "limpiador",
+        "protector",
+        "pantalla"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1",
+    "_note": "搜索路径 404，用分类页；styled-components 随机类名不可靠，正则按 <a href=\"/productos/...\"><h3> 结构 + 价格在 a 前的 $price 范围提取最稳",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.8,
+    "price_fill_rate_min": 0.9,
+    "reviews": "no infrastructure, leave empty"
+  }
+}

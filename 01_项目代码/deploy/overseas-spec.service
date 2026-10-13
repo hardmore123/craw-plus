@@ -1,0 +1,26 @@
+[Unit]
+Description=日本电视品牌 SPEC weekly refresh (oneshot)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=hisense
+WorkingDirectory=/home/hisense/pro/overseas
+
+Environment="HOME=/home/hisense"
+Environment="PYTHONUNBUFFERED=1"
+Environment="PYTHONIOENCODING=utf-8"
+EnvironmentFile=-/home/hisense/pro/overseas/overseas.env
+
+# 统一编排器负责六品牌采集、Excel 导出和覆盖率校验。
+ExecStart=/home/hisense/pro/overseas/venv/bin/python \
+    /home/hisense/pro/overseas/scripts/refresh_spec.py \
+    --db /home/hisense/pro/overseas/data/overseas.db \
+    --output-dir /home/hisense/pro/overseas
+
+# TCL/REGZA 页面较重，给完整六品牌刷新留出时间。
+TimeoutStartSec=10800
+
+[Install]
+WantedBy=multi-user.target

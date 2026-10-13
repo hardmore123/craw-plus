@@ -1,0 +1,283 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "tcl_bo",
+  "name": "TCL（玻利维亚）",
+  "country": "Bolivia",
+  "channel": "TCL 官网",
+  "region": "bo",
+  "base_url": "https://web.tcl.bo",
+  "currency": "BOB",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "SA4 任务实测生成 (2026-09-27)：BrowserFetcher(human_like=True) 200 OK；自建 Vue 站；/search/tv 列 8 个 product-card-item (data-code=型号)；商品页 /tvs/<MODEL>；★展示型站无在线价格 (无 data-price/$/Bs)，price 选择器配齐抓不到即留空（缺价>错价）",
+  "status": "candidate",
+  "anchor": "h1, .product-card-item",
+  "search": {
+    "container": ".product-card-item",
+    "sku": {
+      "selectors": [
+        "li[data-code]"
+      ],
+      "attr": "data-code"
+    },
+    "title": {
+      "selectors": [
+        ".title.product-title-underline",
+        ".card-item-info-item",
+        "h1",
+        "h2"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "selectors": [
+        "a[href*='/tvs/']"
+      ],
+      "attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        ".product-detail-title",
+        ".title"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']",
+        "[data-brand]"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[data-code]",
+        "[data-model]",
+        "[itemprop='model']"
+      ],
+      "attr": "data-code",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        ".title"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[data-code]",
+        "li[data-code]"
+      ],
+      "attr": "data-code",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        ".price",
+        "[data-price]",
+        ".product-price",
+        ".buy-price"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[data-currency]",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "default": "BOB"
+    },
+    "list_price": {
+      "selectors": [
+        "del .price",
+        ".original-price",
+        "s"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-availability]",
+        ".stock",
+        ".buy-link-item a"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        ".price",
+        ".buy-link-item"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [],
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        ".star-rating",
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        ".review-count",
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": ".review, [itemprop='review'], .comment",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          ".star-rating",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          ".review-title",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          ".review-body",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".review-author",
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          ".review-date",
+          "time",
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_date"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "adaptador",
+        "control remoto",
+        "remote",
+        "bracket",
+        "case",
+        "cover",
+        "soundbar",
+        "barra de sonido",
+        "parlante",
+        "bocina",
+        "proyector",
+        "rack",
+        "antena"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1, .product-card-item",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.5
+  }
+}

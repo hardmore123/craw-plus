@@ -1,0 +1,255 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "ldlc_fr",
+  "name": "LDLC",
+  "country": "France",
+  "channel": "LDLC",
+  "region": "fr",
+  "base_url": "https://www.ldlc.com",
+  "currency": "EUR",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "south_eu_probe/2026-09-25",
+  "status": "candidate",
+  "anchor": "h1, script[type='application/ld+json']",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "_note": "分类页 /r/tv-televiseurs/ 已改版返404；改用搜索页 /recherche/<kw>/，HTTP 200，33 产品（a[href*='/fiche/']）",
+  "match": {
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "on_no_match": "skip"
+  },
+  "search": {
+    "container": ".title-3 a[href]",
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "max_candidates": 60,
+      "max_pages": 20,
+      "threshold": 10,
+      "keyword_template": "{brand} tv"
+    },
+    "search_url_template": "{base}/recherche/{q}/",
+    "sku": {
+      "self_attr": "href"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-price]",
+      ".price",
+      "[itemprop='price']"
+    ],
+    "transform": "money",
+    "jsonld": false,
+    "price": {
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency",
+      "default": "EUR"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "#productTitle",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "[data-brand]",
+        "[class*='brand']",
+        "[itemprop='manufacturer']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[itemprop='mpn']",
+        "[data-testid*='model']",
+        "[data-model]"
+      ],
+      "attr": "content",
+      "jsonld": "mpn",
+      "regex": "\\b([A-Z0-9][A-Z0-9._-]{3,25})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\"|inch|in|pulgada|Zoll|pollici|pouces|インチ|型)",
+      "transform": "size_inch"
+    },
+    "category": {
+      "selectors": [
+        "[itemprop='category']",
+        ".breadcrumb li:last-child",
+        ".breadcrumbs li:last-child"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [class*='review-item'], [data-testid*='review'], [data-hook='review'], [class*='review-card']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id",
+        "self_attr_alt": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']",
+          "[data-hook*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "[data-hook*='reviewTitle']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "[data-hook*='reviewText']",
+          "[data-hook*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']",
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time",
+          "[class*='review-date']",
+          "[data-hook*='review-date']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "limit": 5
+      }
+    }
+  },
+  "_autofix_search": {
+    "date": "2026-10-11",
+    "tool": "scripts/autofix_search.py",
+    "evidence": {
+      "links": 48,
+      "verified_models": [
+        "TQ55Q6F:429.9"
+      ]
+    },
+    "tried": [
+      "{base}/recherche/{q}/ [Samsung tv] 200 links=48"
+    ]
+  }
+}

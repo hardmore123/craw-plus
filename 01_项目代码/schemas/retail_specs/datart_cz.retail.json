@@ -1,0 +1,292 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "datart_cz",
+  "name": "Datart CZ",
+  "country": "Czech",
+  "channel": "Datart CZ",
+  "region": "cz",
+  "base_url": "https://www.datart.cz",
+  "currency": "CZK",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "_gen_eu_misc.py 2026-09-25",
+  "status": "candidate",
+  "anchor": "h1, script[type='application/ld+json']",
+  "shops": {
+    "mode": "single_shop"
+  },
+  "search": {
+    "container": "a[href*='/product'], a[href*='/pd/'], a[href*='/pdp/'], a[href*='/p/'], [class*='product'], [data-testid*='product']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} {model}",
+      "threshold": 10,
+      "max_candidates": 60,
+      "max_pages": 20,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']",
+        "[data-testid*='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[data-testid*='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "price": {
+    "jsonld": "offers.price",
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']",
+      "[data-price]",
+      ".price",
+      ".product-price",
+      "[itemprop='price']",
+      "meta[itemprop='price']"
+    ],
+    "currency": "CZK",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        "meta[itemprop='price']",
+        "[class*='price']:not([class*='old'])",
+        ".price:not(.old-price)",
+        ".product-price"
+      ],
+      "transform": "money"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='old-price']",
+        "[class*='original-price']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']",
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "sound bar",
+        "projektor",
+        "projector",
+        "wandhalterung",
+        "halterung",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "standfuß",
+        "stativ",
+        "kabel",
+        "cable",
+        "adapter",
+        "charger",
+        "lader",
+        "fernbedienung",
+        "remote",
+        "control",
+        "case",
+        "cover",
+        "protector",
+        "screen protector",
+        "zubehör",
+        "accessory",
+        "accessories",
+        "screw",
+        "schraube",
+        "speaker",
+        "lautsprecher"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {},
+  "incremental": {},
+  "fetch": {
+    "protection": "L2",
+    "requires_browser": true,
+    "detail_http": false,
+    "interval_sec": 6.0,
+    "retail_page_wait": "h1, script[type='application/ld+json']",
+    "nav_timeout_ms": 30000,
+    "max_retries": 3
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.9
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='avg-rating']"
+      ],
+      "attr": "content",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "[itemprop='review'], [class*='review-item'], [data-testid*='review'], [data-hook='review'], [class*='review-card']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id",
+        "self_attr_alt": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']",
+          "[data-hook*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "[data-hook*='reviewTitle']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "[data-hook*='reviewText']",
+          "[data-hook*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']",
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "time",
+          "[class*='review-date']",
+          "[data-hook*='review-date']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "limit": 5
+      }
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "retail_spec_version": "0.1",
+  "code": "walmart_us",
+  "name": "Walmart",
+  "country": "USA",
+  "channel": "Walmart",
+  "region": "us",
+  "base_url": "https://www.walmart.com",
+  "currency": "USD",
+  "capabilities": [
+    "price"
+  ],
+  "generated_by": "反抽象: sites/walmart_us/adapter.py + schema.json",
+  "status": "candidate",
+  "anchor": "h1",
+  "search": {
+    "container": "div[data-item-id], div[data-testid='list-view'] > div",
+    "sku": {
+      "self_attr": "data-item-id"
+    },
+    "title": {
+      "selectors": [
+        "a span[data-automation-id='product-title']",
+        "span.lh-title"
+      ]
+    },
+    "url_template": "https://www.walmart.com/ip/{sku}",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1[itemprop='name']",
+        "h1.prod-ProductTitle",
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "a[data-seo-id='brand-name']",
+        ".prod-brandName"
+      ],
+      "jsonld": "brand.name",
+      "transform": "brand"
+    },
+    "model": {
+      "jsonld": "model",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "[data-testid='screen-size']"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "price": {
+    "_price_note": "price 只走 JSON-LD。Extractor 是「选择器优先、JSON-LD 兜底」，若在此保留 CSS 选择器，页面上的推荐位/配件轮播价会先命中，并**绕过** walmart_common 的价格区校验（即 Amazon 32A4NV 把 $9.49 配件价记成电视价的同一形态）。CSS 兜底改由 walmart_common.pick_price_text 提供，那条路强制过祖先链校验，拿不到判定就留空。",
+    "price": {
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "transform": "currency",
+      "default": "USD"
+    },
+    "list_price": {
+      "selectors": [
+        "span.strike-through",
+        ".was-price"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "button[data-automation-id='atc']",
+        "[data-testid='add-to-cart']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": "div.specification-table tr, [data-testid='product-specs'] div",
+      "limit": 150
+    }
+  ],
+  "summary": {
+    "_summary_note": "汇总只认 JSON-LD aggregateRating（权威）与结构明确的 CSS。原先的 [itemprop='ratingValue']/[itemprop='reviewCount'] 已移除：评价卡内部也用这两个属性，而 Extractor 取的是**文档顺序第一个**匹配，可能把某条评价的星级当成整机均分。",
+    "avg_rating": {
+      "selectors": [
+        "span.rating-number"
+      ],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "a[data-testid='reviews-count']"
+      ],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+  "reviews": {
+    "container": "div[data-testid='reviews-section'] li, div.review-card, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          ".review-rating"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "h3.review-title",
+          ".review-title"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "span.review-text",
+          ".review-body"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".review-footer-userNickname",
+          ".author"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "div.review-date",
+          "time"
+        ],
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          ".like-button-count",
+          ".helpful-count"
+        ],
+        "transform": "int"
+      },
+      "review_key": {
+        "self_attr": "id"
+      }
+    },
+    "_review_key_note": "原 schema 无唯一评价键，review_key 用 self_attr id，缺则 Extractor 内容哈希兜底",
+    "media": {
+      "images": {
+        "selector": "img[class*='review-image'], img[class*='review-photo'], img[data-review-image], .review-image-tile img, img[itemprop='image'], .review-media img, [class*='customer-photo'] img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "logo",
+          "icon",
+          "sprite",
+          "placeholder",
+          "no-image",
+          "loading"
+        ],
+        "limit": 20
+      },
+      "videos": {
+        "selector": "video[class*='review'], [class*='review-video'] video, [data-review-video] video, .review-media video",
+        "attr": "src",
+        "exclude": [],
+        "limit": 5
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "wall mount",
+        "stand",
+        "screen protector",
+        "case",
+        "bracket",
+        "adapter"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  },
+  "paginate": {
+    "reviews": {
+      "type": "none"
+    }
+  },
+  "incremental": {
+    "key_field": "review_key",
+    "stop_when": "page_all_known"
+  },
+  "shops": {
+    "mode": "single_shop"
+  },
+  "export": {
+    "size_from": "title"
+  },
+  "fetch": {
+    "protection": "L3",
+    "requires_browser": true,
+    "interval_sec": 10.0,
+    "retail_page_wait": "body",
+    "max_retries": 3,
+    "nav_timeout_ms": 30000
+  },
+  "expected": {
+    "match_rate_min": 0.9,
+    "price_fill_rate_min": 0.95
+  }
+}
